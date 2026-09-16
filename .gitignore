@@ -1,0 +1,11 @@
+node_modules
+dist
+.env
+.env.*
+!.env.example
+.wrangler
+.wrangler-dry-run
+.pages-functions-build
+.dev.vars
+.sites-runtime
+*.log

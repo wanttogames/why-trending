@@ -1,0 +1,29 @@
+{
+  "name": "waetteo",
+  "private": true,
+  "version": "0.1.0",
+  "type": "module",
+  "scripts": {
+    "dev": "vite",
+    "dev:pages": "npm run build && wrangler pages dev dist --compatibility-date=2026-09-01",
+    "typecheck": "vue-tsc --noEmit",
+    "build": "vue-tsc --noEmit && vite build",
+    "preview": "vite preview",
+    "deploy:pages": "npm run build && wrangler pages deploy dist",
+    "deploy:collector": "wrangler deploy --config wrangler.collector.toml",
+    "cron:local": "wrangler dev --config wrangler.collector.toml --test-scheduled"
+  },
+  "dependencies": {
+    "@supabase/supabase-js": "^2.57.4",
+    "vue": "^3.5.22",
+    "vue-router": "^4.5.1"
+  },
+  "devDependencies": {
+    "@cloudflare/workers-types": "4.20250927.0",
+    "@vitejs/plugin-vue": "^6.0.1",
+    "typescript": "^5.9.2",
+    "vite": "^7.1.7",
+    "vue-tsc": "^3.0.8",
+    "wrangler": "4.40.2"
+  }
+}
