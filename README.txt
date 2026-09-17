@@ -1,19 +1,17 @@
-why-trending cumulative update: slug, DB optimization, TFT ambiguity fix
+why-trending Google AdSense integration
 
 프로젝트 루트에서 압축을 풀어 기존 파일을 덮어쓰세요.
 
-TFT 수정
-- 화면 keyword/category: TFT / 게임 유지
-- NAVER Search Trend: 롤토체스 + 전략적 팀 전투
-- NAVER News: 롤토체스
-- 실제 NAVER 요청에 TFT 약어를 사용하지 않아 Thin Film Transistor 데이터 혼입 방지
+광고 위치
+- 메인 이슈 4개 뒤: 2591810179
+- 메인 이슈 9개 뒤: 7460993477
+- 상세 뉴스 3개 뒤: 7544753959
+- 상세 뉴스 7개 뒤: 8227280233
 
-기존 오염 데이터 정리(선택)
-- supabase/migrations/20260917_cleanup_tft_semiconductor_data.sql
-- Supabase SQL Editor에서 내용을 검토한 후 실행
-- TFT의 기존 snapshot/news를 지우므로 실행 직후 Collector를 한 번 실행
+적용 후 확인
+npm run typecheck
+npm run build
 
-검증
-- npm run typecheck
-- npm run build
-- npx wrangler deploy --config wrangler.collector.toml --dry-run
+주의
+- 실제 adsbygoogle.push는 production 빌드에서만 실행됩니다.
+- AdSense Auto Ads를 함께 사용한다면 AdSense 관리자에서 자동 광고 수 또는 제외 영역을 조정하세요.
