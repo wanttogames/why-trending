@@ -52,6 +52,7 @@ const handleApiRequest = async (request: Request, env: Env): Promise<Response> =
   if (request.method !== 'GET') return methodNotAllowed()
 
   const url = new URL(request.url)
+  console.log('DATA_MODE =', env.DATA_MODE)
   const pathname = url.pathname.length > 1
     ? url.pathname.replace(/\/+$/, '')
     : url.pathname
@@ -59,7 +60,13 @@ const handleApiRequest = async (request: Request, env: Env): Promise<Response> =
   try {
     if (pathname === '/api/trends' || pathname === '/api/issues') {
       const category = url.searchParams.get('category')
-      return json(await getIssues(env, category, parseLimit(url)))
+      const result = await getIssues(env, category, parseLimit(url))
+      if (pathname === '/api/trends') {
+        return json({ ...result, mode: result.meta.mode }, {
+          headers: { 'X-Data-Mode': result.meta.mode },
+        })
+      }
+      return json(result)
     }
 
     if (pathname === '/api/search') return await search(url, env)
@@ -75,7 +82,7 @@ const handleApiRequest = async (request: Request, env: Env): Promise<Response> =
 
     return apiNotFound()
   } catch (error) {
-    return errorResponse(error)
+    return errorResponse(error, env.DATA_MODE ?? null)
   }
 }
 

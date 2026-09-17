@@ -62,7 +62,7 @@ cp .env.example .env
 npm run dev
 ```
 
-`npm run dev`는 Vite UI 개발 서버입니다. Worker API에 연결되지 않으면 프론트엔드가 자동으로 mock 데이터로 폴백합니다.
+`npm run dev`는 Vite UI 개발 서버입니다. Worker API 요청이 실패하면 mock 데이터로 대체하지 않고 오류 상태를 표시합니다.
 
 Worker API까지 함께 확인하려면:
 
@@ -154,6 +154,8 @@ Cloudflare Dashboard에서 Git 저장소를 Workers Builds에 연결합니다.
 - Deploy command: `npx wrangler deploy`
 - Environment variables: `DATA_MODE`, `SUPABASE_URL`
 - Secrets: `SUPABASE_SERVICE_ROLE_KEY`
+
+`wrangler.jsonc`의 기본 Production `DATA_MODE`는 `real`입니다. 로컬 mock 실행은 `.dev.vars`에서 `DATA_MODE=mock`으로 재정의합니다. Vite의 `import.meta.env`나 `VITE_DATA_MODE`는 서버 모드 결정에 사용하지 않습니다.
 
 CLI를 사용한다면:
 

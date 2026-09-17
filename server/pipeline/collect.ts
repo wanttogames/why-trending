@@ -1,4 +1,5 @@
 import type { CandidateKeyword, NewsSignal, TrendSignal, WorkerEnv } from '../../shared/types'
+import { resolveDataMode } from '../data-mode'
 import { NaverClient } from '../naver/client'
 import { MockCandidateProvider } from '../providers/mock-candidate'
 import { NaverNewsProvider } from '../providers/naver-news'
@@ -29,7 +30,7 @@ const getNewsSafely = async (provider: NewsProvider, keyword: string): Promise<N
 }
 
 export const runCollection = async (env: WorkerEnv): Promise<{ collected: number; mode: string }> => {
-  if ((env.DATA_MODE ?? 'mock') === 'mock') {
+  if (resolveDataMode(env) === 'mock') {
     console.info('[collector] mock mode: database write skipped')
     return { collected: 0, mode: 'mock' }
   }

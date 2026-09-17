@@ -1,4 +1,5 @@
 import type { WorkerEnv } from '../shared/types'
+import { resolveDataMode } from '../server/data-mode'
 import { runCollection } from '../server/pipeline/collect'
 
 export default {
@@ -7,7 +8,7 @@ export default {
   },
   async fetch(request: Request, env: WorkerEnv): Promise<Response> {
     const url = new URL(request.url)
-    if (url.pathname === '/health') return Response.json({ ok: true, mode: env.DATA_MODE ?? 'mock' })
+    if (url.pathname === '/health') return Response.json({ ok: true, mode: resolveDataMode(env) })
     if (url.pathname === '/__scheduled' && request.method === 'POST') return Response.json(await runCollection(env))
     return new Response('Not found', { status: 404 })
   },

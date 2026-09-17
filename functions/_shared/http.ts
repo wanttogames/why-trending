@@ -1,5 +1,6 @@
 import { mockIssues, mockUpdatedAt } from '../../shared/mock-data'
 import type { ApiEnvelope, Issue, WorkerEnv } from '../../shared/types'
+import { resolveDataMode } from '../../server/data-mode'
 import { createServerSupabase } from '../../server/supabase'
 
 export interface PagesContext {
@@ -11,15 +12,18 @@ export interface PagesContext {
 
 export const json = <T>(data: T, init: ResponseInit = {}): Response => Response.json(data, {
   ...init,
-  headers: { 'Cache-Control': 'public, max-age=60, s-maxage=300', ...init.headers },
+  headers: { 'Cache-Control': 'no-store', ...init.headers },
 })
 
-export const errorResponse = (error: unknown): Response => {
+export const errorResponse = (error: unknown, mode?: string | null): Response => {
   console.error('[api]', error)
-  return json({ error: '요청을 처리하지 못했습니다. 잠시 후 다시 시도해 주세요.' }, { status: 500 })
+  return json({
+    error: '요청을 처리하지 못했습니다. 잠시 후 다시 시도해 주세요.',
+    ...(mode !== undefined ? { mode } : {}),
+  }, { status: 500 })
 }
 
-export const isMock = (env: WorkerEnv): boolean => (env.DATA_MODE ?? 'mock') !== 'real'
+export const isMock = (env: WorkerEnv): boolean => resolveDataMode(env) === 'mock'
 
 const mapIssue = (row: Record<string, unknown>): Issue => {
   const snapshots = Array.isArray(row.keyword_snapshots) ? row.keyword_snapshots as Array<Record<string, unknown>> : []
