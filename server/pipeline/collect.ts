@@ -7,7 +7,7 @@ import { NaverNewsProvider } from '../providers/naver-news'
 import { NaverSearchTrendProvider } from '../providers/naver-trend'
 import type { CandidateProvider, NewsProvider, TrendProvider } from '../providers/interfaces'
 import { createServerSupabase } from '../supabase'
-import { deduplicateCandidates, normalizeCandidates, slugify } from './normalize'
+import { deduplicateCandidates, keywordHash, normalizeCandidates, slugify } from './normalize'
 import { calculateIssueScore, determineStatus } from './scoring'
 
 interface Providers { candidate: CandidateProvider; trend: TrendProvider; news: NewsProvider }
@@ -44,6 +44,7 @@ interface PreviousSnapshot {
 interface ExistingKeywordRow {
   id: number
   keyword: string
+  slug: string
   first_detected_at: string
   status: string
   keyword_snapshots?: PreviousSnapshot[]
@@ -87,6 +88,77 @@ const logSaveError = (stage: string, error: unknown, payload: unknown): void => 
     ...getSupabaseErrorFields(error),
     payload,
   })
+}
+
+interface KeywordUpsertPayload {
+  keyword: string
+  slug: string
+  category: CandidateKeyword['category']
+  last_detected_at: string
+  status: ReturnType<typeof determineStatus>
+  reason: string
+  updated_at: string
+}
+
+const encodedKeywordSlug = (keyword: string): string => {
+  const bytes = new TextEncoder().encode(normalizeKeywordForSlug(keyword))
+  const encoded = [...bytes].map((byte) => byte.toString(16).padStart(2, '0')).join('')
+  return `issue-${encoded}`
+}
+
+const normalizeKeywordForSlug = (keyword: string): string =>
+  keyword.normalize('NFKC').trim().toLocaleLowerCase('ko-KR')
+
+const ensureUniqueSlugs = (
+  payload: KeywordUpsertPayload[],
+  existingRows: ExistingKeywordRow[],
+): KeywordUpsertPayload[] => {
+  const payloadGroups = new Map<string, string[]>()
+  for (const item of payload) {
+    const keywords = payloadGroups.get(item.slug) ?? []
+    keywords.push(item.keyword)
+    payloadGroups.set(item.slug, keywords)
+  }
+  const duplicates = [...payloadGroups.entries()]
+    .filter(([, keywords]) => keywords.length > 1)
+    .map(([slug, keywords]) => ({ slug, keywords }))
+  if (duplicates.length > 0) {
+    console.error('[collector] duplicate slugs before upsert =', duplicates)
+  }
+
+  const slugOwners = new Map(existingRows.map((row) => [row.slug, row.keyword]))
+  const resolved = payload.map((item) => {
+    let slug = item.slug
+    const owner = slugOwners.get(slug)
+    if ((owner && owner !== item.keyword) || (payloadGroups.get(slug)?.length ?? 0) > 1) {
+      const originalSlug = slug
+      slug = `${slug}-${keywordHash(`slug:${item.keyword}`)}`
+      if (slugOwners.has(slug) && slugOwners.get(slug) !== item.keyword) {
+        slug = encodedKeywordSlug(item.keyword)
+      }
+      console.warn('[collector] slug collision resolved', {
+        keyword: item.keyword,
+        originalSlug,
+        resolvedSlug: slug,
+        existingOwner: owner ?? null,
+      })
+    }
+    slugOwners.set(slug, item.keyword)
+    return { ...item, slug }
+  })
+
+  const remainingDuplicates = new Map<string, string[]>()
+  for (const item of resolved) {
+    const keywords = remainingDuplicates.get(item.slug) ?? []
+    keywords.push(item.keyword)
+    remainingDuplicates.set(item.slug, keywords)
+  }
+  const unresolved = [...remainingDuplicates.entries()].filter(([, keywords]) => keywords.length > 1)
+  if (unresolved.length > 0) {
+    throw new Error(`slug uniqueness check failed: ${JSON.stringify(unresolved)}`)
+  }
+  console.info('[collector] slug uniqueness check passed =', resolved.length)
+  return resolved
 }
 
 const realProviders = (env: WorkerEnv): Providers => {
@@ -157,7 +229,7 @@ export const runCollection = async (env: WorkerEnv): Promise<CollectionResult> =
   const supabase = createServerSupabase(env)
   const { data: existing, error: existingError } = await supabase
     .from('keywords')
-    .select('id,keyword,first_detected_at,status,keyword_snapshots(issue_score,rank,collected_at)')
+    .select('id,keyword,slug,first_detected_at,status,keyword_snapshots(issue_score,rank,collected_at)')
     .order('collected_at', { referencedTable: 'keyword_snapshots', ascending: false })
     .limit(1, { referencedTable: 'keyword_snapshots' })
   if (existingError) {
@@ -210,7 +282,7 @@ export const runCollection = async (env: WorkerEnv): Promise<CollectionResult> =
     }
   })
 
-  const keywordPayload = rankedCandidates.map((item) => ({
+  const rawKeywordPayload: KeywordUpsertPayload[] = rankedCandidates.map((item) => ({
     keyword: item.candidate.keyword,
     slug: slugify(item.candidate.keyword),
     category: item.candidate.category,
@@ -219,6 +291,7 @@ export const runCollection = async (env: WorkerEnv): Promise<CollectionResult> =
     reason: `${item.candidate.keyword} 관련 검색 관심도와 최근 뉴스 언급이 함께 증가하고 있어요.`,
     updated_at: collectedAt,
   }))
+  const keywordPayload = ensureUniqueSlugs(rawKeywordPayload, existingRows)
 
   console.info('[collector] keyword upsert payload =', keywordPayload)
   const { data: keywordRows, error: keywordError } = await supabase

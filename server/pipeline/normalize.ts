@@ -20,7 +20,23 @@ export const deduplicateCandidates = (items: CandidateKeyword[]): CandidateKeywo
   })
 }
 
+export const keywordHash = (keyword: string): string => {
+  const bytes = new TextEncoder().encode(normalizeKeyword(keyword).toLocaleLowerCase('ko-KR'))
+  let hash = 0xcbf29ce484222325n
+  for (const byte of bytes) {
+    hash ^= BigInt(byte)
+    hash = BigInt.asUintN(64, hash * 0x100000001b3n)
+  }
+  return hash.toString(16).padStart(16, '0')
+}
+
 export const slugify = (keyword: string): string => {
-  const ascii = keyword.normalize('NFKD').toLowerCase().replace(/[^a-z0-9가-힣]+/g, '-').replace(/^-|-$/g, '')
-  return ascii || `issue-${crypto.randomUUID().slice(0, 8)}`
+  const normalized = normalizeKeyword(keyword).toLocaleLowerCase('ko-KR')
+  const readable = normalized.replace(/[^a-z0-9]+/g, '-').replace(/^-|-$/g, '').slice(0, 48)
+  const safelyReadable = /^[a-z0-9]+(?:[\s_-]+[a-z0-9]+)*$/.test(normalized)
+
+  if (safelyReadable && readable) return readable
+
+  const prefix = /[a-z]/.test(readable) ? readable : 'issue'
+  return `${prefix}-${keywordHash(normalized)}`
 }
