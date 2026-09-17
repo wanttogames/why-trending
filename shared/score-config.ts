@@ -17,6 +17,7 @@ export const COLLECTION = {
   newsDisplay: 20,
   newsApiDisplay: 100,
   topN: 20,
+  maxSavedCandidates: 32,
   minIssueScore: 0,
   minTrendScore: 0,
   minNewsCount: 0,

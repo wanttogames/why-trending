@@ -28,6 +28,27 @@ interface CollectionResult {
   counts: CollectionCounts
 }
 
+interface SupabaseErrorFields {
+  message: string | null
+  code: string | null
+  details: string | null
+  hint: string | null
+}
+
+interface PreviousSnapshot {
+  issue_score: number | string
+  rank: number
+  collected_at: string
+}
+
+interface ExistingKeywordRow {
+  id: number
+  keyword: string
+  first_detected_at: string
+  status: string
+  keyword_snapshots?: PreviousSnapshot[]
+}
+
 const emptyCounts = (): CollectionCounts => ({
   rawCandidates: 0,
   normalizedCandidates: 0,
@@ -40,6 +61,32 @@ const emptyCounts = (): CollectionCounts => ({
 
 const logCount = (stage: keyof CollectionCounts, count: number): void => {
   console.info(`[collector] ${stage} =`, count)
+}
+
+const errorValue = (value: unknown): string | null =>
+  typeof value === 'string' && value.length > 0 ? value : null
+
+const getSupabaseErrorFields = (error: unknown): SupabaseErrorFields => {
+  if (error instanceof Error) {
+    return { message: error.message, code: null, details: error.stack ?? null, hint: null }
+  }
+  if (typeof error !== 'object' || error === null) {
+    return { message: errorValue(error), code: null, details: null, hint: null }
+  }
+  const record = error as Record<string, unknown>
+  return {
+    message: errorValue(record.message),
+    code: errorValue(record.code),
+    details: errorValue(record.details),
+    hint: errorValue(record.hint),
+  }
+}
+
+const logSaveError = (stage: string, error: unknown, payload: unknown): void => {
+  console.error(`[collector] ${stage} failed`, {
+    ...getSupabaseErrorFields(error),
+    payload,
+  })
 }
 
 const realProviders = (env: WorkerEnv): Providers => {
@@ -55,7 +102,10 @@ const getNewsSafely = async (provider: NewsProvider, keyword: string): Promise<N
   try {
     return await provider.getNews(keyword)
   } catch (error) {
-    console.error('[collector] news failed', { keyword, error: error instanceof Error ? error.message : String(error) })
+    console.error('[collector] news check failed', {
+      keyword,
+      ...getSupabaseErrorFields(error),
+    })
     return null
   }
 }
@@ -107,15 +157,23 @@ export const runCollection = async (env: WorkerEnv): Promise<CollectionResult> =
   const supabase = createServerSupabase(env)
   const { data: existing, error: existingError } = await supabase
     .from('keywords')
-    .select('id,keyword,first_detected_at,status')
-  if (existingError) throw existingError
-  const existingMap = new Map((existing ?? []).map((row) => [String(row.keyword), row]))
+    .select('id,keyword,first_detected_at,status,keyword_snapshots(issue_score,rank,collected_at)')
+    .order('collected_at', { referencedTable: 'keyword_snapshots', ascending: false })
+    .limit(1, { referencedTable: 'keyword_snapshots' })
+  if (existingError) {
+    logSaveError('existing keywords read', existingError, { table: 'keywords' })
+    throw existingError
+  }
+
+  const existingRows = (existing ?? []) as ExistingKeywordRow[]
+  const existingMap = new Map(existingRows.map((row) => [row.keyword, row]))
 
   console.info('[collector] qualification thresholds =', {
     minIssueScore: COLLECTION.minIssueScore,
     minTrendScore: COLLECTION.minTrendScore,
     minNewsCount: COLLECTION.minNewsCount,
-    topN: COLLECTION.topN,
+    maxSavedCandidates: COLLECTION.maxSavedCandidates,
+    publicTopN: COLLECTION.topN,
   })
 
   const qualifiedCandidates = uniqueCandidates
@@ -123,8 +181,9 @@ export const runCollection = async (env: WorkerEnv): Promise<CollectionResult> =
       const trend = trendMap.get(candidate.keyword) ?? { keyword: candidate.keyword, current: 0, previous: 0, growthRate: 0 }
       const news = newsMap.get(candidate.keyword) ?? emptyNewsSignal(candidate.keyword)
       const old = existingMap.get(candidate.keyword)
-      const activeHours = old ? (Date.now() - Date.parse(String(old.first_detected_at))) / 3_600_000 : 0
-      return { candidate, trend, news, old, score: calculateIssueScore({ trend, news, activeHours }) }
+      const previous = old?.keyword_snapshots?.[0]
+      const activeHours = old ? (Date.now() - Date.parse(old.first_detected_at)) / 3_600_000 : 0
+      return { candidate, trend, news, old, previous, score: calculateIssueScore({ trend, news, activeHours }) }
     })
     .filter((item) =>
       (trendMap.has(item.candidate.keyword) || newsMap.has(item.candidate.keyword))
@@ -137,67 +196,107 @@ export const runCollection = async (env: WorkerEnv): Promise<CollectionResult> =
   counts.qualifiedCandidates = qualifiedCandidates.length
   logCount('qualifiedCandidates', counts.qualifiedCandidates)
 
-  const topCandidates = qualifiedCandidates.slice(0, COLLECTION.topN)
+  const saveCandidates = qualifiedCandidates.slice(0, COLLECTION.maxSavedCandidates)
   const collectedAt = new Date().toISOString()
+  const rankedCandidates = saveCandidates.map((item, index) => {
+    const rank = index + 1
+    const rankChange = item.previous ? Number(item.previous.rank) - rank : 0
+    const scoreDelta = item.previous ? item.score - Number(item.previous.issue_score) : item.score
+    return {
+      ...item,
+      rank,
+      rankChange,
+      status: determineStatus(!item.old, scoreDelta, rankChange),
+    }
+  })
 
-  for (const [index, item] of topCandidates.entries()) {
-    try {
-      const { data: previous, error: previousError } = await supabase
-        .from('keyword_snapshots')
-        .select('issue_score,rank')
-        .eq('keyword_id', item.old?.id ?? -1)
-        .order('collected_at', { ascending: false })
-        .limit(1)
-        .maybeSingle()
-      if (previousError) throw previousError
+  const keywordPayload = rankedCandidates.map((item) => ({
+    keyword: item.candidate.keyword,
+    slug: slugify(item.candidate.keyword),
+    category: item.candidate.category,
+    last_detected_at: collectedAt,
+    status: item.status,
+    reason: `${item.candidate.keyword} 관련 검색 관심도와 최근 뉴스 언급이 함께 증가하고 있어요.`,
+    updated_at: collectedAt,
+  }))
 
-      const rank = index + 1
-      const rankChange = previous ? Number(previous.rank) - rank : 0
-      const scoreDelta = previous ? item.score - Number(previous.issue_score) : item.score
-      const status = determineStatus(!item.old, scoreDelta, rankChange)
-      const { data: keywordRow, error: keywordError } = await supabase.from('keywords').upsert({
-        keyword: item.candidate.keyword,
-        slug: slugify(item.candidate.keyword),
-        category: item.candidate.category,
-        last_detected_at: collectedAt,
-        status,
-        reason: `${item.candidate.keyword} 관련 검색 관심도와 최근 뉴스 언급이 함께 증가하고 있어요.`,
-        updated_at: collectedAt,
-      }, { onConflict: 'keyword' }).select('id').single()
-      if (keywordError || !keywordRow) throw keywordError ?? new Error('keyword upsert failed')
+  console.info('[collector] keyword upsert payload =', keywordPayload)
+  const { data: keywordRows, error: keywordError } = await supabase
+    .from('keywords')
+    .upsert(keywordPayload, { onConflict: 'keyword', defaultToNull: false })
+    .select('id,keyword')
+  if (keywordError) {
+    logSaveError('keyword upsert', keywordError, keywordPayload)
+    return { collected: 0, mode: 'real', counts }
+  }
 
-      const { error: snapshotError } = await supabase.from('keyword_snapshots').insert({
-        keyword_id: keywordRow.id,
-        collected_at: collectedAt,
-        trend_score: item.trend.current,
-        news_count: item.news.recentCount,
-        issue_score: item.score,
-        rank,
-        rank_change: rankChange,
-      })
-      if (snapshotError) throw snapshotError
+  const keywordIdMap = new Map((keywordRows ?? []).map((row) => [String(row.keyword), Number(row.id)]))
+  const snapshotPayload = rankedCandidates.flatMap((item) => {
+    const keywordId = keywordIdMap.get(item.candidate.keyword)
+    if (!keywordId) return []
+    return [{
+      keyword_id: keywordId,
+      collected_at: collectedAt,
+      trend_score: item.trend.current,
+      news_count: item.news.recentCount,
+      issue_score: item.score,
+      rank: item.rank,
+      rank_change: item.rankChange,
+    }]
+  })
 
-      if (item.news.articles.length) {
-        const { error: newsError } = await supabase.from('news_articles').upsert(
-          item.news.articles.map((article) => ({
-            keyword_id: keywordRow.id,
-            title: article.title,
-            description: article.description,
-            url: article.url,
-            publisher: article.publisher,
-            published_at: article.publishedAt,
-            collected_at: collectedAt,
-          })),
-          { onConflict: 'url', ignoreDuplicates: true },
-        )
-        if (newsError) console.error('[collector] news save failed', { keyword: item.candidate.keyword, error: newsError.message })
+  console.info('[collector] snapshot insert payload =', snapshotPayload)
+  const { data: savedSnapshots, error: snapshotError } = await supabase
+    .from('keyword_snapshots')
+    .insert(snapshotPayload)
+    .select('keyword_id')
+  if (snapshotError) {
+    logSaveError('snapshot insert', snapshotError, snapshotPayload)
+    return { collected: 0, mode: 'real', counts }
+  }
+
+  counts.savedCandidates = savedSnapshots?.length ?? snapshotPayload.length
+
+  const newsByUrl = new Map<string, {
+    keyword_id: number
+    title: string
+    description: string
+    url: string
+    publisher: string
+    published_at: string
+    collected_at: string
+  }>()
+  for (const item of rankedCandidates) {
+    const keywordId = keywordIdMap.get(item.candidate.keyword)
+    if (!keywordId) continue
+    for (const article of item.news.articles.slice(0, COLLECTION.newsDisplay)) {
+      if (!newsByUrl.has(article.url)) {
+        newsByUrl.set(article.url, {
+          keyword_id: keywordId,
+          title: article.title,
+          description: article.description,
+          url: article.url,
+          publisher: article.publisher,
+          published_at: article.publishedAt,
+          collected_at: collectedAt,
+        })
       }
+    }
+  }
+  const newsPayload = [...newsByUrl.values()]
+  console.info('[collector] news upsert payload =', {
+    articleCount: newsPayload.length,
+    urls: newsPayload.map((article) => article.url),
+  })
 
-      counts.savedCandidates += 1
-    } catch (error) {
-      console.error('[collector] candidate save failed', {
-        keyword: item.candidate.keyword,
-        error: error instanceof Error ? error.message : String(error),
+  if (newsPayload.length > 0) {
+    const { error: newsError } = await supabase
+      .from('news_articles')
+      .upsert(newsPayload, { onConflict: 'url', ignoreDuplicates: true, defaultToNull: false })
+    if (newsError) {
+      logSaveError('news upsert', newsError, {
+        articleCount: newsPayload.length,
+        urls: newsPayload.map((article) => article.url),
       })
     }
   }
