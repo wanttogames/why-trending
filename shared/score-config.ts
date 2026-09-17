@@ -16,4 +16,8 @@ export const COLLECTION = {
   intervalMinutes: 10,
   newsDisplay: 20,
   newsApiDisplay: 100,
+  topN: 20,
+  minIssueScore: 0,
+  minTrendScore: 0,
+  minNewsCount: 0,
 } as const

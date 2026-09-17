@@ -3,6 +3,12 @@ import type { CandidateKeyword } from '../../shared/types'
 export const normalizeKeyword = (value: string): string =>
   value.normalize('NFKC').replace(/[\u200B-\u200D\uFEFF]/g, '').replace(/\s+/g, ' ').trim()
 
+export const normalizeCandidates = (items: CandidateKeyword[]): CandidateKeyword[] =>
+  items.flatMap((item) => {
+    const keyword = normalizeKeyword(item.keyword)
+    return keyword ? [{ ...item, keyword }] : []
+  })
+
 export const deduplicateCandidates = (items: CandidateKeyword[]): CandidateKeyword[] => {
   const seen = new Set<string>()
   return items.flatMap((item) => {
