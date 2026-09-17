@@ -15,11 +15,11 @@ Cloudflare Cron Worker (10분)
   └─ Supabase PostgreSQL 저장
 
 Vue 3 Frontend
-  └─ Cloudflare Pages Functions /api/*
+  └─ Cloudflare Worker /api/*
        └─ Supabase REST (Service Role은 서버에서만 사용)
 ```
 
-Cloudflare Pages는 프론트엔드와 조회 API를 제공하고, 별도 Worker가 Cron Trigger로 수집을 실행합니다. 브라우저는 NAVER 및 Supabase Service Role에 직접 접근하지 않습니다.
+Cloudflare Worker가 `/api/*`를 먼저 처리하고, 나머지 요청은 Static Assets 바인딩으로 Vue 앱에 전달합니다. 별도 Collector Worker가 Cron Trigger로 수집을 실행합니다. 브라우저는 NAVER 및 Supabase Service Role에 직접 접근하지 않습니다.
 
 ## 주요 기능
 
@@ -40,7 +40,8 @@ Cloudflare Pages는 프론트엔드와 조회 API를 제공하고, 별도 Worker
 src/                         Vue 3 UI
   components/                순위, 점수, 그래프, 뉴스 등 UI 컴포넌트
   pages/                     홈, 이슈 상세
-functions/api/               Cloudflare Pages Functions 조회 API
+functions/api/               기존 Pages Functions 호환 코드
+worker/index.ts              API 라우터 + Static Assets 진입점
 worker/collector.ts          10분 주기 Cron Worker 진입점
 server/
   naver/client.ts            NAVER API HUB 공통 client
@@ -61,14 +62,14 @@ cp .env.example .env
 npm run dev
 ```
 
-`npm run dev`는 Vite UI 개발 서버입니다. Pages Function에 연결되지 않으면 프론트엔드가 자동으로 mock 데이터로 폴백합니다.
+`npm run dev`는 Vite UI 개발 서버입니다. Worker API에 연결되지 않으면 프론트엔드가 자동으로 mock 데이터로 폴백합니다.
 
-Pages Functions까지 함께 확인하려면:
+Worker API까지 함께 확인하려면:
 
 ```bash
 npm run build
 cp .env.example .dev.vars
-npm run dev:pages
+npm run dev:worker
 ```
 
 타입과 빌드 검증:
@@ -84,10 +85,10 @@ npm run build
 | --- | --- | --- |
 | `NAVER_CLIENT_ID` | Worker secret | NAVER API HUB Client ID |
 | `NAVER_CLIENT_SECRET` | Worker secret | NAVER API HUB Client Secret |
-| `SUPABASE_URL` | Pages/Worker secret | Supabase 프로젝트 URL |
+| `SUPABASE_URL` | Worker secret | Supabase 프로젝트 URL |
 | `SUPABASE_ANON_KEY` | 선택 | 현재 MVP 프론트에서는 사용하지 않음 |
-| `SUPABASE_SERVICE_ROLE_KEY` | Pages/Worker secret | 서버 전용 DB 접근 키 |
-| `DATA_MODE` | Pages/Worker variable | `mock` 또는 `real` |
+| `SUPABASE_SERVICE_ROLE_KEY` | Worker secret | 서버 전용 DB 접근 키 |
+| `DATA_MODE` | Worker variable | `mock` 또는 `real` |
 
 `VITE_` 접두사가 붙은 Secret을 만들지 마세요. Vite의 `VITE_*` 값은 브라우저 번들에 포함됩니다.
 
@@ -96,7 +97,7 @@ npm run build
 1. Supabase 프로젝트를 생성합니다.
 2. SQL Editor에서 `supabase/migrations/001_initial_schema.sql`을 실행합니다.
 3. Project Settings → API에서 Project URL과 Service Role Key를 확인합니다.
-4. Cloudflare Pages와 Collector Worker에 `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`를 Secret으로 등록합니다.
+4. Cloudflare API Worker와 Collector Worker에 `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`를 Secret으로 등록합니다.
 
 Migration은 다음 테이블을 만듭니다.
 
@@ -145,13 +146,12 @@ NAVER와 Supabase Secret이 모두 필요합니다. 현재 후보 생성은 `Moc
 
 ## Cloudflare 배포
 
-### 1. Pages
+### 1. API + Static Assets Worker
 
-Cloudflare Dashboard에서 Git 저장소를 Pages에 연결합니다.
+Cloudflare Dashboard에서 Git 저장소를 Workers Builds에 연결합니다.
 
-- Framework preset: `Vue`
 - Build command: `npm run build`
-- Build output directory: `dist`
+- Deploy command: `npx wrangler deploy`
 - Environment variables: `DATA_MODE`, `SUPABASE_URL`
 - Secrets: `SUPABASE_SERVICE_ROLE_KEY`
 
@@ -159,10 +159,10 @@ CLI를 사용한다면:
 
 ```bash
 npx wrangler login
-npm run deploy:pages
+npm run deploy
 ```
 
-Pages Functions는 `functions/` 폴더에서 자동 배포됩니다.
+`worker/index.ts`가 `/api/*`를 처리하며, 나머지 경로는 `env.ASSETS.fetch(request)`로 Vue 앱에 전달됩니다.
 
 ### 2. Cron Collector Worker
 
@@ -183,6 +183,7 @@ Cron은 `*/10 * * * *`로 설정되어 10분마다 실행됩니다. 로컬에서
 
 ## API
 
+- `GET /api/trends?category=전체&limit=20`
 - `GET /api/issues?category=전체&limit=20`
 - `GET /api/issues/:slug`
 - `GET /api/issues/:slug/history`

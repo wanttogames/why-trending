@@ -5,11 +5,11 @@
   "type": "module",
   "scripts": {
     "dev": "vite",
-    "dev:pages": "npm run build && wrangler pages dev dist --compatibility-date=2026-09-01",
+    "dev:worker": "npm run build && wrangler dev",
     "typecheck": "vue-tsc --noEmit",
     "build": "vue-tsc --noEmit && vite build",
     "preview": "vite preview",
-    "deploy:pages": "npm run build && wrangler pages deploy dist",
+    "deploy": "npm run build && wrangler deploy",
     "deploy:collector": "wrangler deploy --config wrangler.collector.toml",
     "cron:local": "wrangler dev --config wrangler.collector.toml --test-scheduled"
   },
