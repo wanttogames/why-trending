@@ -18,6 +18,8 @@ export const COLLECTION = {
   newsApiDisplay: 100,
   topN: 20,
   maxSavedCandidates: 32,
+  snapshotRetentionDays: 30,
+  newsRetentionDays: 90,
   minIssueScore: 0,
   minTrendScore: 0,
   minNewsCount: 0,

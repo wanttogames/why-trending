@@ -42,7 +42,13 @@ export const getIssues = async (env: WorkerEnv, category: string | null, limit: 
     return { data: filtered.slice(0, limit).map(({ history: _history, news: _news, ...issue }) => issue), meta: { updatedAt: mockUpdatedAt, mode: 'mock' } }
   }
   const supabase = createServerSupabase(env)
-  let query = supabase.from('keywords').select('*,keyword_snapshots(*)').order('last_detected_at', { ascending: false }).limit(limit)
+  let query = supabase
+    .from('keywords')
+    .select('id,keyword,slug,category,status,first_detected_at,last_detected_at,reason,related_keywords,keyword_snapshots(issue_score,rank,rank_change,collected_at)')
+    .order('last_detected_at', { ascending: false })
+    .order('collected_at', { referencedTable: 'keyword_snapshots', ascending: false })
+    .limit(1, { referencedTable: 'keyword_snapshots' })
+    .limit(limit)
   if (category && category !== '전체') query = query.eq('category', category)
   const { data, error } = await query
   if (error) throw error
@@ -56,7 +62,17 @@ export const getIssue = async (env: WorkerEnv, slug: string): Promise<ApiEnvelop
     return issue ? { data: issue, meta: { updatedAt: mockUpdatedAt, mode: 'mock' } } : null
   }
   const supabase = createServerSupabase(env)
-  const { data, error } = await supabase.from('keywords').select('*,keyword_snapshots(*),news_articles(*)').eq('slug', slug).order('collected_at', { referencedTable: 'keyword_snapshots', ascending: true }).order('published_at', { referencedTable: 'news_articles', ascending: false }).maybeSingle()
+  const historySince = new Date(Date.now() - 24 * 60 * 60_000).toISOString()
+  const { data, error } = await supabase
+    .from('keywords')
+    .select('*,keyword_snapshots(*),news_articles(*)')
+    .eq('slug', slug)
+    .gte('keyword_snapshots.collected_at', historySince)
+    .order('collected_at', { referencedTable: 'keyword_snapshots', ascending: true })
+    .limit(145, { referencedTable: 'keyword_snapshots' })
+    .order('published_at', { referencedTable: 'news_articles', ascending: false })
+    .limit(20, { referencedTable: 'news_articles' })
+    .maybeSingle()
   if (error) throw error
   if (!data) return null
   const issue = mapIssue(data as Record<string, unknown>)

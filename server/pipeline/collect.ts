@@ -161,6 +161,38 @@ const ensureUniqueSlugs = (
   return resolved
 }
 
+const cleanupExpiredData = async (
+  supabase: ReturnType<typeof createServerSupabase>,
+  now: Date,
+): Promise<void> => {
+  const snapshotCutoff = new Date(
+    now.getTime() - COLLECTION.snapshotRetentionDays * 24 * 60 * 60_000,
+  ).toISOString()
+  const newsCutoff = new Date(
+    now.getTime() - COLLECTION.newsRetentionDays * 24 * 60 * 60_000,
+  ).toISOString()
+
+  const { error: snapshotCleanupError } = await supabase
+    .from('keyword_snapshots')
+    .delete()
+    .lt('collected_at', snapshotCutoff)
+  if (snapshotCleanupError) {
+    logSaveError('snapshot retention cleanup', snapshotCleanupError, { snapshotCutoff })
+  } else {
+    console.info('[collector] snapshot retention cleanup completed', { snapshotCutoff })
+  }
+
+  const { error: newsCleanupError } = await supabase
+    .from('news_articles')
+    .delete()
+    .lt('collected_at', newsCutoff)
+  if (newsCleanupError) {
+    logSaveError('news retention cleanup', newsCleanupError, { newsCutoff })
+  } else {
+    console.info('[collector] news retention cleanup completed', { newsCutoff })
+  }
+}
+
 const realProviders = (env: WorkerEnv): Providers => {
   const client = new NaverClient(env)
   return {
@@ -373,6 +405,8 @@ export const runCollection = async (env: WorkerEnv): Promise<CollectionResult> =
       })
     }
   }
+
+  await cleanupExpiredData(supabase, new Date(collectedAt))
 
   logCount('savedCandidates', counts.savedCandidates)
   console.info('[collector] stage counts =', counts)

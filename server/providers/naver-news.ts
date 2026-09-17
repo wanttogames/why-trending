@@ -1,4 +1,5 @@
 import type { NewsArticle, NewsSignal } from '../../shared/types'
+import { getNewsQuery } from '../../shared/keyword-search-config'
 import { NaverClient } from '../naver/client'
 import type { NewsProvider } from './interfaces'
 
@@ -26,7 +27,11 @@ export class NaverNewsProvider implements NewsProvider {
   constructor(private readonly client: NaverClient) {}
 
   async getNews(keyword: string): Promise<NewsSignal> {
-    const params = new URLSearchParams({ query: keyword, display: '100', start: '1', sort: 'date', format: 'json' })
+    const query = getNewsQuery(keyword)
+    if (query !== keyword) {
+      console.info('[collector] news query override', { keyword, query })
+    }
+    const params = new URLSearchParams({ query, display: '100', start: '1', sort: 'date', format: 'json' })
     const response = await this.client.request<NewsResponse>(`/search/v1/news?${params}`)
     const seen = new Set<string>()
     const articles: NewsArticle[] = response.items.flatMap((item, index) => {

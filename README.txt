@@ -1,19 +1,19 @@
-why-trending Collector slug collision fix
+why-trending cumulative update: slug, DB optimization, TFT ambiguity fix
 
-포함 파일:
-- server/pipeline/normalize.ts
-- server/pipeline/collect.ts
+프로젝트 루트에서 압축을 풀어 기존 파일을 덮어쓰세요.
 
-프로젝트 루트에서 이 압축 파일을 풀어 기존 파일을 덮어쓴 뒤 커밋/푸시하세요.
-Cloudflare Git 연동이 main push를 감지하면 Collector Worker가 다시 빌드·배포됩니다.
+TFT 수정
+- 화면 keyword/category: TFT / 게임 유지
+- NAVER Search Trend: 롤토체스 + 전략적 팀 전투
+- NAVER News: 롤토체스
+- 실제 NAVER 요청에 TFT 약어를 사용하지 않아 Thin Film Transistor 데이터 혼입 방지
 
-배포 후 확인:
-1. npx wrangler tail waetteo-collector
-2. Collector 수동 실행 또는 Cron 대기
-3. 로그에서 다음 값을 확인
-   [collector] slug uniqueness check passed = 32
-   [collector] qualifiedCandidates = 32
-   [collector] savedCandidates = 32
-4. curl.exe "https://why-trending.wanttogames.workers.dev/api/trends?limit=100"
+기존 오염 데이터 정리(선택)
+- supabase/migrations/20260917_cleanup_tft_semiconductor_data.sql
+- Supabase SQL Editor에서 내용을 검토한 후 실행
+- TFT의 기존 snapshot/news를 지우므로 실행 직후 Collector를 한 번 실행
 
-참고: /api/issues 기본 limit은 20이며 화면도 반환 배열 전체를 표시합니다.
+검증
+- npm run typecheck
+- npm run build
+- npx wrangler deploy --config wrangler.collector.toml --dry-run

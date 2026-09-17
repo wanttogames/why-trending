@@ -1,4 +1,5 @@
 import { TREND_BATCH } from '../../shared/score-config'
+import { getTrendTerms } from '../../shared/keyword-search-config'
 import type { CandidateKeyword, TrendSignal } from '../../shared/types'
 import { NaverClient } from '../naver/client'
 import type { TrendProvider } from './interfaces'
@@ -27,7 +28,10 @@ export class NaverSearchTrendProvider implements TrendProvider {
           startDate: dateOnly(start),
           endDate: dateOnly(end),
           timeUnit: 'date',
-          keywordGroups: batch.map(({ keyword }) => ({ groupName: keyword, keywords: [keyword] })),
+          keywordGroups: batch.map(({ keyword }) => ({
+            groupName: keyword,
+            keywords: getTrendTerms(keyword),
+          })),
         },
       })
       for (const result of response.results) {
