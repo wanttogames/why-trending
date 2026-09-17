@@ -45,6 +45,31 @@ export interface ApiEnvelope<T> {
 export interface CandidateKeyword {
   keyword: string
   category: Exclude<Category, '전체'>
+  searchTerms?: string[]
+  relatedKeywords?: string[]
+  newsSignal?: NewsSignal
+  newsMetrics?: NewsCandidateMetrics
+}
+
+export interface NewsCandidateMetrics {
+  newsFrequencyScore: number
+  recentnessScore: number
+  sourceDiversityScore: number
+  articleCount: number
+}
+
+export interface CandidateDiscoveryStats {
+  newsSearchRequests: number
+  rawArticles: number
+  uniqueArticles: number
+  extractedCandidates: number
+  dedupedCandidates: number
+  fallbackUsed: boolean
+}
+
+export interface CandidateDiscoveryResult {
+  candidates: CandidateKeyword[]
+  stats: CandidateDiscoveryStats
 }
 
 export interface TrendSignal {
@@ -52,6 +77,10 @@ export interface TrendSignal {
   current: number
   previous: number
   growthRate: number
+  recentAverage: number
+  previousAverage: number
+  growthScore: number
+  levelScore: number
 }
 
 export interface NewsSignal {

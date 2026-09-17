@@ -1,4 +1,5 @@
 import type { WorkerEnv } from '../../shared/types'
+import { SubrequestCounter, type SubrequestKind } from '../metrics/subrequest-counter'
 
 const BASE_URL = 'https://naverapihub.apigw.ntruss.com'
 
@@ -41,7 +42,10 @@ const parseError = async (response: Response): Promise<NaverApiError> => {
 const delay = (ms: number) => new Promise((resolve) => setTimeout(resolve, ms))
 
 export class NaverClient {
-  constructor(private readonly env: WorkerEnv) {}
+  constructor(
+    private readonly env: WorkerEnv,
+    private readonly counter?: SubrequestCounter,
+  ) {}
 
   async request<T>(path: string, options: RequestOptions = {}): Promise<T> {
     const { method = 'GET', body, timeoutMs = 8_000, retries = 2 } = options
@@ -53,6 +57,10 @@ export class NaverClient {
       const controller = new AbortController()
       const timer = setTimeout(() => controller.abort(), timeoutMs)
       try {
+        const kind: SubrequestKind = path.startsWith('/search/v1/news') ? 'naverNews'
+          : path.startsWith('/search-trend/') ? 'datalab'
+            : 'other'
+        this.counter?.increment(kind)
         const response = await fetch(`${BASE_URL}${path}`, {
           method,
           headers: {

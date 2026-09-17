@@ -60,7 +60,7 @@ const handleApiRequest = async (request: Request, env: Env): Promise<Response> =
   try {
     if (pathname === '/api/trends' || pathname === '/api/issues') {
       const category = url.searchParams.get('category')
-      const result = await getIssues(env, category, parseLimit(url))
+      const result = await getIssues(env, category, parseLimit(url), true)
       if (pathname === '/api/trends') {
         return json({ ...result, mode: result.meta.mode }, {
           headers: { 'X-Data-Mode': result.meta.mode },

@@ -1,4 +1,4 @@
-import type { CandidateKeyword } from '../../shared/types'
+import type { CandidateDiscoveryResult, CandidateKeyword } from '../../shared/types'
 import type { CandidateProvider } from './interfaces'
 
 const candidates: CandidateKeyword[] = [
@@ -37,7 +37,17 @@ const candidates: CandidateKeyword[] = [
 ]
 
 export class MockCandidateProvider implements CandidateProvider {
-  async getCandidates(): Promise<CandidateKeyword[]> {
-    return candidates
+  async getCandidates(): Promise<CandidateDiscoveryResult> {
+    return {
+      candidates,
+      stats: {
+        newsSearchRequests: 0,
+        rawArticles: 0,
+        uniqueArticles: 0,
+        extractedCandidates: candidates.length,
+        dedupedCandidates: candidates.length,
+        fallbackUsed: true,
+      },
+    }
   }
 }

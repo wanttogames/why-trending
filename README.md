@@ -8,9 +8,9 @@
 
 ```text
 Cloudflare Cron Worker (10분)
-  ├─ CandidateProvider (MVP: MockCandidateProvider)
-  ├─ NaverSearchTrendProvider (후보 관심도 검증)
-  ├─ NaverNewsProvider (뉴스 증가량·최신성·언론사 확산)
+  ├─ NaverNewsCandidateProvider (최신 뉴스 6개 seed 검색)
+  ├─ 제목 정제 / 반복 2~4-gram phrase 추출 / 유사 후보 제거
+  ├─ NaverSearchTrendProvider (상위 후보 25개 batch 검증)
   ├─ Issue Score / 순위 / 상태 계산
   └─ Supabase PostgreSQL 저장
 
@@ -124,7 +124,7 @@ X-NCP-APIGW-API-KEY
 
 구형 `X-Naver-Client-Id`, `X-Naver-Client-Secret` 헤더는 사용하지 않습니다.
 
-Search Trend는 후보 키워드를 생성하지 않습니다. `CandidateProvider`가 만든 후보를 최대 5개 그룹씩 묶어 상대적 관심도 상승을 검증합니다. 그룹 내부는 향후 동의어를 최대 20개까지 넣을 수 있습니다. News API는 후보별 최신 기사 100개를 받아 URL 중복을 제거하고 최근 구간 증가량, 최신 기사 시각, 언론사 수를 계산합니다.
+Search Trend는 후보 키워드를 생성하지 않습니다. Collector는 사회·경제·연예·스포츠·게임·IT 뉴스 검색 결과를 최신순으로 수집하고 URL과 정제 제목을 기준으로 중복을 제거합니다. 정제된 제목에서 여러 기사에 반복되는 2~4단어 phrase를 추출하고 뉴스 빈도·최신성·언론사 다양성으로 25개를 선정합니다. Search Trend는 후보를 최대 5개 그룹씩 묶어 최근 2일과 이전 5일의 상대적 관심도 상승을 검증합니다.
 
 ## mock / real 모드
 
@@ -142,7 +142,7 @@ DATA_MODE=mock
 DATA_MODE=real
 ```
 
-NAVER와 Supabase Secret이 모두 필요합니다. 현재 후보 생성은 `MockCandidateProvider`의 고정 후보를 사용하고, 그 후보에 대한 실제 Search Trend/News 신호를 수집합니다.
+NAVER와 Supabase Secret이 모두 필요합니다. 정상 실행에서는 뉴스 제목에서 후보를 자동 생성합니다. 뉴스 후보가 5개 미만인 비정상 상황에서만 `MockCandidateProvider`의 고정 목록을 fallback으로 사용합니다.
 
 ## Cloudflare 배포
 
@@ -196,19 +196,19 @@ Cron은 `*/10 * * * *`로 설정되어 10분마다 실행됩니다. 로컬에서
 
 가중치는 `shared/score-config.ts`에서 관리합니다.
 
-- 검색 트렌드 상승 40
-- 뉴스 언급 증가 30
-- 뉴스 발생 속도 15
-- 언론사 확산 10
-- 지속성 5
+- 검색 트렌드 상승 35
+- 뉴스 출현 빈도 25
+- 뉴스 최신성 20
+- 언론사 다양성 10
+- 검색 관심도 수준 10
 
-각 신호는 0~1 범위로 정규화한 뒤 합산하여 0~100 점수로 만듭니다. 운영 데이터가 쌓이면 분포 기반 정규화와 카테고리별 보정을 추가하는 것이 좋습니다.
+각 신호는 0~100 범위로 정규화한 뒤 합산합니다. 원래 검색량이 큰 상시 키워드보다 최근 상승 변화량에 더 큰 가중치를 둡니다. 뉴스 6회와 DataLab 5회, Supabase bulk 4회로 일반 실행의 외부 subrequest는 약 15회입니다. 10분 주기이면 DataLab은 하루 약 720회를 사용합니다.
 
-## 현재 MVP에서 mock인 부분
+## 현재 MVP에서 규칙 기반인 부분
 
-- 후보 키워드 생성: `MockCandidateProvider`의 고정 목록
 - 이슈 이유: 규칙 기반 문장. LLM 요약은 제외 범위
-- 로컬 Vite 단독 실행 시 API 실패 폴백 데이터
-- 관련 키워드 자동 추출
+- 후보 phrase와 관련 키워드: 형태소 분석기 없이 반복 n-gram과 불용어 규칙으로 추출
+- 고정 후보 목록: 뉴스 후보가 5개 미만일 때만 fallback
+- `DATA_MODE=mock`: API 키 없이 UI를 확인하기 위한 샘플 데이터
 
-다음 단계는 NAVER 뉴스 제목의 명사/개체명 빈도와 기존 키워드 제외 목록을 이용하는 `NewsTitleCandidateProvider`를 추가하는 것입니다. 그 다음 실제 수집 결과의 분포를 관찰해 이슈지수 정규화와 상태 임계값을 조정하는 순서가 적절합니다.
+운영 로그에서 후보 분포를 관찰한 뒤 불용어와 유사 후보 기준, 최소 이슈지수 임계값을 조정하는 것이 다음 단계입니다.

@@ -36,7 +36,12 @@ const mapIssue = (row: Record<string, unknown>): Issue => {
   }
 }
 
-export const getIssues = async (env: WorkerEnv, category: string | null, limit: number): Promise<ApiEnvelope<Issue[]>> => {
+export const getIssues = async (
+  env: WorkerEnv,
+  category: string | null,
+  limit: number,
+  activeOnly = false,
+): Promise<ApiEnvelope<Issue[]>> => {
   if (isMock(env)) {
     const filtered = category && category !== '전체' ? mockIssues.filter((issue) => issue.category === category) : mockIssues
     return { data: filtered.slice(0, limit).map(({ history: _history, news: _news, ...issue }) => issue), meta: { updatedAt: mockUpdatedAt, mode: 'mock' } }
@@ -50,6 +55,9 @@ export const getIssues = async (env: WorkerEnv, category: string | null, limit: 
     .limit(1, { referencedTable: 'keyword_snapshots' })
     .limit(limit)
   if (category && category !== '전체') query = query.eq('category', category)
+  if (activeOnly) {
+    query = query.gte('last_detected_at', new Date(Date.now() - 30 * 60_000).toISOString())
+  }
   const { data, error } = await query
   if (error) throw error
   const issues = (data ?? []).map((row) => mapIssue(row as Record<string, unknown>)).sort((a, b) => a.rank - b.rank)

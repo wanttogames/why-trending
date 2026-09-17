@@ -1,25 +1,28 @@
-import { COLLECTION } from '../../shared/score-config'
-import type { CandidateKeyword, NewsSignal, WorkerEnv } from '../../shared/types'
+import { COLLECTION, NEWS_DISCOVERY } from '../../shared/score-config'
+import type { CandidateKeyword, NewsCandidateMetrics, NewsSignal, TrendSignal, WorkerEnv } from '../../shared/types'
 import { resolveDataMode } from '../data-mode'
+import { SubrequestCounter } from '../metrics/subrequest-counter'
 import { NaverClient } from '../naver/client'
 import { MockCandidateProvider } from '../providers/mock-candidate'
-import { NaverNewsProvider } from '../providers/naver-news'
+import { NaverNewsCandidateProvider } from '../providers/naver-news-candidate'
 import { NaverSearchTrendProvider } from '../providers/naver-trend'
-import type { CandidateProvider, NewsProvider, TrendProvider } from '../providers/interfaces'
+import type { CandidateProvider, TrendProvider } from '../providers/interfaces'
 import { createServerSupabase } from '../supabase'
 import { deduplicateCandidates, keywordHash, normalizeCandidates, slugify } from './normalize'
 import { calculateIssueScore, determineStatus } from './scoring'
 
-interface Providers { candidate: CandidateProvider; trend: TrendProvider; news: NewsProvider }
+interface Providers { candidate: CandidateProvider; trend: TrendProvider }
 
 interface CollectionCounts {
-  rawCandidates: number
-  normalizedCandidates: number
-  uniqueCandidates: number
-  trendCheckedCandidates: number
-  newsCheckedCandidates: number
+  newsSearchRequests: number
+  rawArticles: number
+  uniqueArticles: number
+  extractedCandidates: number
+  dedupedCandidates: number
+  datalabCandidates: number
   qualifiedCandidates: number
   savedCandidates: number
+  publicTopN: number
 }
 
 interface CollectionResult {
@@ -51,13 +54,15 @@ interface ExistingKeywordRow {
 }
 
 const emptyCounts = (): CollectionCounts => ({
-  rawCandidates: 0,
-  normalizedCandidates: 0,
-  uniqueCandidates: 0,
-  trendCheckedCandidates: 0,
-  newsCheckedCandidates: 0,
+  newsSearchRequests: 0,
+  rawArticles: 0,
+  uniqueArticles: 0,
+  extractedCandidates: 0,
+  dedupedCandidates: 0,
+  datalabCandidates: 0,
   qualifiedCandidates: 0,
   savedCandidates: 0,
+  publicTopN: COLLECTION.topN,
 })
 
 const logCount = (stage: keyof CollectionCounts, count: number): void => {
@@ -97,6 +102,7 @@ interface KeywordUpsertPayload {
   last_detected_at: string
   status: ReturnType<typeof determineStatus>
   reason: string
+  related_keywords: string[]
   updated_at: string
 }
 
@@ -193,24 +199,11 @@ const cleanupExpiredData = async (
   }
 }
 
-const realProviders = (env: WorkerEnv): Providers => {
-  const client = new NaverClient(env)
+const realProviders = (env: WorkerEnv, counter: SubrequestCounter): Providers => {
+  const client = new NaverClient(env, counter)
   return {
-    candidate: new MockCandidateProvider(),
+    candidate: new NaverNewsCandidateProvider(client, new MockCandidateProvider()),
     trend: new NaverSearchTrendProvider(client),
-    news: new NaverNewsProvider(client),
-  }
-}
-
-const getNewsSafely = async (provider: NewsProvider, keyword: string): Promise<NewsSignal | null> => {
-  try {
-    return await provider.getNews(keyword)
-  } catch (error) {
-    console.error('[collector] news check failed', {
-      keyword,
-      ...getSupabaseErrorFields(error),
-    })
-    return null
   }
 }
 
@@ -223,42 +216,58 @@ const emptyNewsSignal = (keyword: string): NewsSignal => ({
   latestPublishedAt: null,
 })
 
-export const runCollection = async (env: WorkerEnv): Promise<CollectionResult> => {
+const emptyNewsMetrics = (): NewsCandidateMetrics => ({
+  newsFrequencyScore: 0,
+  recentnessScore: 0,
+  sourceDiversityScore: 0,
+  articleCount: 0,
+})
+
+const emptyTrendSignal = (keyword: string): TrendSignal => ({
+  keyword,
+  current: 0,
+  previous: 0,
+  growthRate: 0,
+  recentAverage: 0,
+  previousAverage: 0,
+  growthScore: 0,
+  levelScore: 0,
+})
+
+const runCollectionWithCounter = async (
+  env: WorkerEnv,
+  counter: SubrequestCounter,
+): Promise<CollectionResult> => {
   if (resolveDataMode(env) === 'mock') {
     console.info('[collector] mock mode: database write skipped')
     return { collected: 0, mode: 'mock', counts: emptyCounts() }
   }
 
   const counts = emptyCounts()
-  const providers = realProviders(env)
+  const providers = realProviders(env, counter)
 
-  const rawCandidates = await providers.candidate.getCandidates()
-  counts.rawCandidates = rawCandidates.length
-  logCount('rawCandidates', counts.rawCandidates)
+  const discovery = await providers.candidate.getCandidates()
+  counts.newsSearchRequests = discovery.stats.newsSearchRequests
+  counts.rawArticles = discovery.stats.rawArticles
+  counts.uniqueArticles = discovery.stats.uniqueArticles
+  counts.extractedCandidates = discovery.stats.extractedCandidates
+  counts.dedupedCandidates = discovery.stats.dedupedCandidates
+  logCount('newsSearchRequests', counts.newsSearchRequests)
+  logCount('rawArticles', counts.rawArticles)
+  logCount('uniqueArticles', counts.uniqueArticles)
+  logCount('extractedCandidates', counts.extractedCandidates)
+  logCount('dedupedCandidates', counts.dedupedCandidates)
+  console.info('[collector] fixed candidate fallback =', discovery.stats.fallbackUsed)
 
-  const normalizedCandidates = normalizeCandidates(rawCandidates)
-  counts.normalizedCandidates = normalizedCandidates.length
-  logCount('normalizedCandidates', counts.normalizedCandidates)
+  const uniqueCandidates = deduplicateCandidates(normalizeCandidates(discovery.candidates))
+  const datalabCandidates = uniqueCandidates.slice(0, NEWS_DISCOVERY.datalabCandidateLimit)
+  counts.datalabCandidates = datalabCandidates.length
+  logCount('datalabCandidates', counts.datalabCandidates)
 
-  const uniqueCandidates = deduplicateCandidates(normalizedCandidates)
-  counts.uniqueCandidates = uniqueCandidates.length
-  logCount('uniqueCandidates', counts.uniqueCandidates)
-
-  const trends = await providers.trend.getTrendSignals(uniqueCandidates)
+  const trends = await providers.trend.getTrendSignals(datalabCandidates)
   const trendMap = new Map(trends.map((signal) => [signal.keyword, signal]))
-  counts.trendCheckedCandidates = uniqueCandidates.filter((candidate) => trendMap.has(candidate.keyword)).length
-  logCount('trendCheckedCandidates', counts.trendCheckedCandidates)
 
-  const newsSignals: NewsSignal[] = []
-  for (const candidate of uniqueCandidates) {
-    const signal = await getNewsSafely(providers.news, candidate.keyword)
-    if (signal) newsSignals.push(signal)
-  }
-  const newsMap = new Map(newsSignals.map((signal) => [signal.keyword, signal]))
-  counts.newsCheckedCandidates = uniqueCandidates.filter((candidate) => newsMap.has(candidate.keyword)).length
-  logCount('newsCheckedCandidates', counts.newsCheckedCandidates)
-
-  const supabase = createServerSupabase(env)
+  const supabase = createServerSupabase(env, counter)
   const { data: existing, error: existingError } = await supabase
     .from('keywords')
     .select('id,keyword,slug,first_detected_at,status,keyword_snapshots(issue_score,rank,collected_at)')
@@ -274,33 +283,47 @@ export const runCollection = async (env: WorkerEnv): Promise<CollectionResult> =
 
   console.info('[collector] qualification thresholds =', {
     minIssueScore: COLLECTION.minIssueScore,
-    minTrendScore: COLLECTION.minTrendScore,
-    minNewsCount: COLLECTION.minNewsCount,
+    minTrendGrowthScore: COLLECTION.minTrendGrowthScore,
+    minNewsFrequencyScore: COLLECTION.minNewsFrequencyScore,
     maxSavedCandidates: COLLECTION.maxSavedCandidates,
     publicTopN: COLLECTION.topN,
   })
 
-  const qualifiedCandidates = uniqueCandidates
+  const thresholdCandidates = datalabCandidates
     .map((candidate) => {
-      const trend = trendMap.get(candidate.keyword) ?? { keyword: candidate.keyword, current: 0, previous: 0, growthRate: 0 }
-      const news = newsMap.get(candidate.keyword) ?? emptyNewsSignal(candidate.keyword)
+      const trend = trendMap.get(candidate.keyword) ?? emptyTrendSignal(candidate.keyword)
+      const news = candidate.newsSignal ?? emptyNewsSignal(candidate.keyword)
+      const newsMetrics = candidate.newsMetrics ?? emptyNewsMetrics()
       const old = existingMap.get(candidate.keyword)
-      const previous = old?.keyword_snapshots?.[0]
-      const activeHours = old ? (Date.now() - Date.parse(old.first_detected_at)) / 3_600_000 : 0
-      return { candidate, trend, news, old, previous, score: calculateIssueScore({ trend, news, activeHours }) }
+      const latestSnapshot = old?.keyword_snapshots?.[0]
+      const previous = latestSnapshot
+        && Date.now() - Date.parse(latestSnapshot.collected_at) <= 30 * 60_000
+        ? latestSnapshot
+        : undefined
+      return {
+        candidate,
+        trend,
+        news,
+        newsMetrics,
+        old,
+        previous,
+        score: calculateIssueScore({ trend, news: newsMetrics }),
+      }
     })
     .filter((item) =>
-      (trendMap.has(item.candidate.keyword) || newsMap.has(item.candidate.keyword))
+      trendMap.has(item.candidate.keyword)
       && item.score >= COLLECTION.minIssueScore
-      && item.trend.current >= COLLECTION.minTrendScore
-      && item.news.recentCount >= COLLECTION.minNewsCount,
+      && item.trend.growthScore >= COLLECTION.minTrendGrowthScore
+      && (discovery.stats.fallbackUsed
+        || item.newsMetrics.newsFrequencyScore >= COLLECTION.minNewsFrequencyScore),
     )
     .sort((a, b) => b.score - a.score)
 
+  const qualifiedCandidates = thresholdCandidates.slice(0, COLLECTION.topN)
   counts.qualifiedCandidates = qualifiedCandidates.length
   logCount('qualifiedCandidates', counts.qualifiedCandidates)
 
-  const saveCandidates = qualifiedCandidates.slice(0, COLLECTION.maxSavedCandidates)
+  const saveCandidates = qualifiedCandidates
   const collectedAt = new Date().toISOString()
   const rankedCandidates = saveCandidates.map((item, index) => {
     const rank = index + 1
@@ -310,9 +333,18 @@ export const runCollection = async (env: WorkerEnv): Promise<CollectionResult> =
       ...item,
       rank,
       rankChange,
-      status: determineStatus(!item.old, scoreDelta, rankChange),
+      status: determineStatus(!item.previous, scoreDelta, rankChange),
     }
   })
+
+  console.info('[collector] top candidates =', rankedCandidates.map((item) => ({
+    rank: item.rank,
+    keyword: item.candidate.keyword,
+    category: item.candidate.category,
+    issueScore: item.score,
+    trendGrowthScore: Math.round(item.trend.growthScore),
+    newsFrequencyScore: Math.round(item.newsMetrics.newsFrequencyScore),
+  })))
 
   const rawKeywordPayload: KeywordUpsertPayload[] = rankedCandidates.map((item) => ({
     keyword: item.candidate.keyword,
@@ -320,7 +352,8 @@ export const runCollection = async (env: WorkerEnv): Promise<CollectionResult> =
     category: item.candidate.category,
     last_detected_at: collectedAt,
     status: item.status,
-    reason: `${item.candidate.keyword} 관련 검색 관심도와 최근 뉴스 언급이 함께 증가하고 있어요.`,
+    reason: `${item.candidate.keyword} 관련 보도가 ${item.newsMetrics.articleCount}건 포착됐고 검색 관심도 상승 신호가 확인됐어요.`,
+    related_keywords: item.candidate.relatedKeywords ?? [],
     updated_at: collectedAt,
   }))
   const keywordPayload = ensureUniqueSlugs(rawKeywordPayload, existingRows)
@@ -342,8 +375,8 @@ export const runCollection = async (env: WorkerEnv): Promise<CollectionResult> =
     return [{
       keyword_id: keywordId,
       collected_at: collectedAt,
-      trend_score: item.trend.current,
-      news_count: item.news.recentCount,
+      trend_score: item.trend.growthScore,
+      news_count: item.newsMetrics.articleCount,
       issue_score: item.score,
       rank: item.rank,
       rank_change: item.rankChange,
@@ -406,9 +439,22 @@ export const runCollection = async (env: WorkerEnv): Promise<CollectionResult> =
     }
   }
 
-  await cleanupExpiredData(supabase, new Date(collectedAt))
+  const collectedDate = new Date(collectedAt)
+  const shouldRunDailyCleanup = collectedDate.getUTCHours() === 18
+    && collectedDate.getUTCMinutes() < COLLECTION.intervalMinutes
+  if (shouldRunDailyCleanup) await cleanupExpiredData(supabase, collectedDate)
 
   logCount('savedCandidates', counts.savedCandidates)
+  logCount('publicTopN', counts.publicTopN)
   console.info('[collector] stage counts =', counts)
   return { collected: counts.savedCandidates, mode: 'real', counts }
+}
+
+export const runCollection = async (env: WorkerEnv): Promise<CollectionResult> => {
+  const counter = new SubrequestCounter()
+  try {
+    return await runCollectionWithCounter(env, counter)
+  } finally {
+    console.info('[collector] subrequests =', counter.snapshot())
+  }
 }

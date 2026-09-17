@@ -1,7 +1,7 @@
-import type { CandidateKeyword, NewsSignal, TrendSignal } from '../../shared/types'
+import type { CandidateDiscoveryResult, CandidateKeyword, NewsSignal, TrendSignal } from '../../shared/types'
 
 export interface CandidateProvider {
-  getCandidates(): Promise<CandidateKeyword[]>
+  getCandidates(): Promise<CandidateDiscoveryResult>
 }
 
 export interface TrendProvider {
