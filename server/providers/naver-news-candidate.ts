@@ -1,5 +1,6 @@
 import { NEWS_DISCOVERY } from '../../shared/score-config'
 import type { CandidateDiscoveryResult, CandidateKeyword, NewsArticle } from '../../shared/types'
+import { NaverNewsProvider } from './naver-news'
 import { NaverClient } from '../naver/client'
 import { cleanNewsTitle, extractNewsCandidates, type DiscoveryArticle } from '../pipeline/news-candidate-extractor'
 import type { CandidateProvider } from './interfaces'
@@ -31,7 +32,7 @@ const mergeCategoryHint = (article: DiscoveryArticle, category: CandidateKeyword
 export class NaverNewsCandidateProvider implements CandidateProvider {
   constructor(
     private readonly client: NaverClient,
-    private readonly fallback: CandidateProvider,
+    
   ) {}
 
   async getCandidates(): Promise<CandidateDiscoveryResult> {
@@ -40,9 +41,11 @@ export class NaverNewsCandidateProvider implements CandidateProvider {
     let rawArticles = 0
     let newsSearchRequests = 0
 
+    const rotation = Math.floor(Date.now() / 600_000) % 3
     for (const seed of NEWS_DISCOVERY.seeds) {
+      const query = seed.queries[rotation]
       const params = new URLSearchParams({
-        query: seed.query,
+        query: query,
         display: String(NEWS_DISCOVERY.articlesPerSeed),
         start: '1',
         sort: 'date',
@@ -54,7 +57,7 @@ export class NaverNewsCandidateProvider implements CandidateProvider {
         response = await this.client.request<NewsResponse>(`/search/v1/news?${params}`)
       } catch (error) {
         console.error('[collector] seed news search failed', {
-          query: seed.query,
+          query: query,
           message: error instanceof Error ? error.message : String(error),
         })
         continue
@@ -64,7 +67,7 @@ export class NaverNewsCandidateProvider implements CandidateProvider {
       for (const [index, item] of response.items.entries()) {
         const url = item.originallink || item.link
         const cleanedTitle = cleanNewsTitle(item.title)
-        if (!url || !cleanedTitle) continue
+        if (!/^https?:\/\//i.test(url) || !cleanedTitle) continue
         const titleKey = cleanedTitle.toLocaleLowerCase('ko-KR')
         const existing = uniqueByUrl.get(url) ?? uniqueByTitle.get(titleKey)
         if (existing) {
@@ -72,9 +75,9 @@ export class NaverNewsCandidateProvider implements CandidateProvider {
           continue
         }
         const publishedAt = new Date(item.pubDate)
-        if (Number.isNaN(publishedAt.getTime())) continue
+        if (Number.isNaN(publishedAt.getTime()) || Date.now() - publishedAt.getTime() > 24 * 3_600_000 || publishedAt.getTime() > Date.now()) continue
         const article: DiscoveryArticle = {
-          id: `${publishedAt.getTime()}-${index}-${seed.query}`,
+          id: `${publishedAt.getTime()}-${index}-${query}`,
           title: cleanedTitle,
           cleanedTitle,
           description: stripHtml(item.description),
@@ -89,20 +92,36 @@ export class NaverNewsCandidateProvider implements CandidateProvider {
     }
 
     const uniqueArticles = [...uniqueByUrl.values()]
-    const extraction = extractNewsCandidates(uniqueArticles)
+    let extraction = extractNewsCandidates(uniqueArticles)
+    const targeted = new NaverNewsProvider(this.client)
+    for (const candidate of extraction.candidates.slice(0, 2)) {
+      newsSearchRequests += 1
+      try {
+        const result = await targeted.getNews(candidate.keyword)
+        rawArticles += result.articles.length
+        for (const article of result.articles) {
+          const cleanedTitle = cleanNewsTitle(article.title)
+          const key = cleanedTitle.toLocaleLowerCase('ko-KR')
+          if (uniqueByUrl.has(article.url) || uniqueByTitle.has(key)) continue
+          const entry = { ...article, cleanedTitle, categoryHints: [candidate.category] }
+          uniqueByUrl.set(article.url, entry)
+          uniqueByTitle.set(key, entry)
+        }
+      } catch (error) {
+        console.warn('[collector] targeted news unavailable', { keyword: candidate.keyword, message: error instanceof Error ? error.message : 'unknown' })
+      }
+    }
+    extraction = extractNewsCandidates([...uniqueByUrl.values()])
     const stats = {
       newsSearchRequests,
       rawArticles,
-      uniqueArticles: uniqueArticles.length,
+      uniqueArticles: uniqueByUrl.size,
       extractedCandidates: extraction.extractedCandidates,
       dedupedCandidates: extraction.dedupedCandidates,
-      fallbackUsed: extraction.candidates.length < NEWS_DISCOVERY.minimumCandidateCount,
+      fallbackUsed: false,
     }
 
-    if (!stats.fallbackUsed) return { candidates: extraction.candidates, stats }
-
-    console.warn('[collector] news candidate discovery fallback', stats)
-    const fallbackResult = await this.fallback.getCandidates()
-    return { candidates: fallbackResult.candidates, stats }
+    if (newsSearchRequests > 0 && rawArticles === 0) throw new Error('뉴스 수집 결과가 없습니다. 기존 결과를 유지합니다.')
+    return { candidates: extraction.candidates, stats }
   }
 }

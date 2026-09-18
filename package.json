@@ -11,7 +11,8 @@
     "preview": "vite preview",
     "deploy": "npm run build && wrangler deploy",
     "deploy:collector": "wrangler deploy --config wrangler.collector.toml",
-    "cron:local": "wrangler dev --config wrangler.collector.toml --test-scheduled"
+    "cron:local": "wrangler dev --config wrangler.collector.toml --test-scheduled",
+    "test": "node tests/run.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.57.4",
@@ -21,6 +22,7 @@
   "devDependencies": {
     "@cloudflare/workers-types": "^5.20260916.1",
     "@vitejs/plugin-vue": "^6.0.1",
+    "esbuild": "^0.25.12",
     "typescript": "^5.9.2",
     "vite": "^7.1.7",
     "vue-tsc": "^3.0.8",

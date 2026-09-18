@@ -36,7 +36,8 @@ export class NaverNewsProvider implements NewsProvider {
     const seen = new Set<string>()
     const articles: NewsArticle[] = response.items.flatMap((item, index) => {
       const url = item.originallink || item.link
-      if (seen.has(url)) return []
+      const age = Date.now() - Date.parse(item.pubDate)
+      if (!/^https?:\/\//i.test(url) || !Number.isFinite(age) || age < 0 || age > 86_400_000 || seen.has(url)) return []
       seen.add(url)
       return [{
         id: `${Date.parse(item.pubDate)}-${index}`,

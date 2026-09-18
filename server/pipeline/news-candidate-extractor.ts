@@ -24,7 +24,7 @@ const ENDING_WORDS = new Set([
   '한다', '했다', '된다', '됐다', '나서', '밝혔다', '말했다', '전했다', '보인다', '있다', '없다',
 ])
 
-const PARTICLE_SUFFIXES = ['으로는', '에서는', '에게는', '까지는', '부터는', '으로', '에서', '에게', '까지', '부터', '처럼', '보다', '에도', '에는', '이라', '라고', '은', '는', '이', '가', '을', '를', '의', '에', '와', '과', '로']
+const PARTICLE_SUFFIXES = ['으로는', '에서는', '에게는', '까지는', '부터는', '에서', '에게', '까지', '부터']
 
 const decodeHtml = (value: string): string => value
   .replace(/<[^>]+>/g, ' ')
@@ -34,7 +34,7 @@ const decodeHtml = (value: string): string => value
   .replace(/&lt;|&#60;/gi, '<')
   .replace(/&gt;|&#62;/gi, '>')
   .replace(/&nbsp;|&#160;/gi, ' ')
-  .replace(/&#(\d+);/g, (_, code: string) => String.fromCodePoint(Number(code)))
+  .replace(/&#(\d+);/g, (_, code: string) => Number(code) <= 0x10ffff ? String.fromCodePoint(Number(code)) : '')
 
 export const cleanNewsTitle = (title: string): string => decodeHtml(title)
   .normalize('NFKC')
@@ -85,6 +85,17 @@ const candidateScore = (metrics: NewsCandidateMetrics, tokenCount: number): numb
   + Math.min(4, Math.max(0, tokenCount - 2) * 2)
 
 const dominantCategory = (articles: DiscoveryArticle[]): IssueCategory => {
+  const text = articles.map(a => a.cleanedTitle).join(' ')
+  const rules: Array<[IssueCategory, RegExp]> = [
+    ['게임', /롤토체스|리그오브레전드|e스포츠|게임|게이머/gi],
+    ['스포츠', /축구|야구|선수|올림픽|월드컵|리그/gi],
+    ['연예', /배우|가수|드라마|앨범|콘서트|아이돌/gi],
+    ['경제', /금리|증시|주가|실적|금융|매출/gi],
+    ['IT', /반도체|HBM\d*|인공지능|소프트웨어|보안|스마트폰/gi],
+    ['사회', /경찰|수사|사고|법원|판결|재난/gi],
+  ]
+  const semantic = rules.map(([category, pattern]) => ({ category, count: (text.match(pattern) ?? []).length })).sort((a,b) => b.count-a.count)
+  if (semantic[0].count > 0) return semantic[0].category
   const votes = new Map<IssueCategory, number>()
   for (const article of articles) {
     const weight = 1 / Math.max(1, article.categoryHints.length)
@@ -189,7 +200,22 @@ export const extractNewsCandidates = (
 
   const deduped: CandidateKeyword[] = []
   for (const entry of extracted) {
-    if (deduped.some((candidate) => isSimilarCandidate(candidate.keyword, entry.candidate.keyword))) continue
+    const duplicate = deduped.find(candidate => {
+      if (!isSimilarCandidate(candidate.keyword, entry.candidate.keyword)) return false
+      const urls = new Set(candidate.newsSignal?.articles.map(a => a.url))
+      const other = entry.candidate.newsSignal.articles
+      return other.filter(a => urls.has(a.url)).length / Math.max(1, Math.min(urls.size, other.length)) >= 0.8
+    })
+    if (duplicate && duplicate.newsSignal) {
+      const merged = [...new Map([...duplicate.newsSignal.articles, ...entry.candidate.newsSignal.articles].map(a => [a.url, a])).values()]
+      duplicate.newsSignal.articles = merged
+      duplicate.newsSignal.publisherCount = new Set(merged.map(a => a.publisher)).size
+      duplicate.newsSignal.recentCount = merged.filter(a => now - Date.parse(a.publishedAt) <= 3_600_000).length
+      duplicate.newsSignal.previousCount = merged.filter(a => { const age = now - Date.parse(a.publishedAt); return age > 3_600_000 && age <= 7_200_000 }).length
+      duplicate.newsSignal.latestPublishedAt = merged.map(a => a.publishedAt).sort().at(-1) ?? null
+      duplicate.newsMetrics = calculateNewsMetrics(merged.map(a => ({ ...a, cleanedTitle: a.title, categoryHints: [duplicate.category] })), now)
+      continue
+    }
     deduped.push(entry.candidate)
   }
 

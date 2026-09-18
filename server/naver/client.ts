@@ -77,8 +77,10 @@ export class NaverClient {
         const retryable = response.status === 429 || response.status >= 500
         console.error('[naver-api]', { path, attempt, status: response.status, code: error.code })
         if (!retryable || attempt === retries) throw error
-        const retryAfter = Number(response.headers.get('retry-after'))
-        await delay(Number.isFinite(retryAfter) ? retryAfter * 1_000 : 500 * 2 ** attempt)
+        const header = response.headers.get('retry-after')
+        const retryAfter = header === null ? NaN : Number(header)
+        if (retryAfter > 30) throw error
+        await delay(Number.isFinite(retryAfter) ? Math.max(0, retryAfter) * 1_000 : 500 * 2 ** attempt)
       } catch (error) {
         const retryable = error instanceof DOMException && error.name === 'AbortError'
         if (!retryable || attempt === retries) throw error

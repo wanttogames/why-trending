@@ -1,9 +1,9 @@
+import { buildEvidence, qualifies } from './evidence'
 import { COLLECTION, NEWS_DISCOVERY } from '../../shared/score-config'
 import type { CandidateKeyword, NewsCandidateMetrics, NewsSignal, TrendSignal, WorkerEnv } from '../../shared/types'
 import { resolveDataMode } from '../data-mode'
 import { SubrequestCounter } from '../metrics/subrequest-counter'
 import { NaverClient } from '../naver/client'
-import { MockCandidateProvider } from '../providers/mock-candidate'
 import { NaverNewsCandidateProvider } from '../providers/naver-news-candidate'
 import { NaverSearchTrendProvider } from '../providers/naver-trend'
 import type { CandidateProvider, TrendProvider } from '../providers/interfaces'
@@ -50,6 +50,7 @@ interface ExistingKeywordRow {
   slug: string
   first_detected_at: string
   status: string
+  evidence?: ReturnType<typeof buildEvidence>
   keyword_snapshots?: PreviousSnapshot[]
 }
 
@@ -102,6 +103,7 @@ interface KeywordUpsertPayload {
   last_detected_at: string
   status: ReturnType<typeof determineStatus>
   reason: string
+  evidence: ReturnType<typeof buildEvidence>
   related_keywords: string[]
   updated_at: string
 }
@@ -149,6 +151,7 @@ const ensureUniqueSlugs = (
         existingOwner: owner ?? null,
       })
     }
+    if (slugOwners.has(slug) && slugOwners.get(slug) !== item.keyword) throw new Error('Unable to allocate unique keyword slug')
     slugOwners.set(slug, item.keyword)
     return { ...item, slug }
   })
@@ -202,7 +205,7 @@ const cleanupExpiredData = async (
 const realProviders = (env: WorkerEnv, counter: SubrequestCounter): Providers => {
   const client = new NaverClient(env, counter)
   return {
-    candidate: new NaverNewsCandidateProvider(client, new MockCandidateProvider()),
+    candidate: new NaverNewsCandidateProvider(client),
     trend: new NaverSearchTrendProvider(client),
   }
 }
@@ -264,13 +267,15 @@ const runCollectionWithCounter = async (
   counts.datalabCandidates = datalabCandidates.length
   logCount('datalabCandidates', counts.datalabCandidates)
 
+  if (!datalabCandidates.length) return { collected: 0, mode: 'real', counts }
   const trends = await providers.trend.getTrendSignals(datalabCandidates)
   const trendMap = new Map(trends.map((signal) => [signal.keyword, signal]))
 
   const supabase = createServerSupabase(env, counter)
   const { data: existing, error: existingError } = await supabase
     .from('keywords')
-    .select('id,keyword,slug,first_detected_at,status,keyword_snapshots(issue_score,rank,collected_at)')
+    .select('id,keyword,slug,first_detected_at,status,evidence,keyword_snapshots(issue_score,rank,collected_at)')
+    .in('keyword', datalabCandidates.map(candidate => candidate.keyword))
     .order('collected_at', { referencedTable: 'keyword_snapshots', ascending: false })
     .limit(1, { referencedTable: 'keyword_snapshots' })
   if (existingError) {
@@ -311,11 +316,7 @@ const runCollectionWithCounter = async (
       }
     })
     .filter((item) =>
-      trendMap.has(item.candidate.keyword)
-      && item.score >= COLLECTION.minIssueScore
-      && item.trend.growthScore >= COLLECTION.minTrendGrowthScore
-      && (discovery.stats.fallbackUsed
-        || item.newsMetrics.newsFrequencyScore >= COLLECTION.minNewsFrequencyScore),
+      qualifies(item.score, item.news, trendMap.get(item.candidate.keyword)),
     )
     .sort((a, b) => b.score - a.score)
 
@@ -323,6 +324,10 @@ const runCollectionWithCounter = async (
   counts.qualifiedCandidates = qualifiedCandidates.length
   logCount('qualifiedCandidates', counts.qualifiedCandidates)
 
+  if (!qualifiedCandidates.length) {
+    console.info("[collector] no qualified candidates; no database writes", counts)
+    return { collected: 0, mode: 'real', counts }
+  }
   const saveCandidates = qualifiedCandidates
   const collectedAt = new Date().toISOString()
   const rankedCandidates = saveCandidates.map((item, index) => {
@@ -348,15 +353,20 @@ const runCollectionWithCounter = async (
 
   const rawKeywordPayload: KeywordUpsertPayload[] = rankedCandidates.map((item) => ({
     keyword: item.candidate.keyword,
-    slug: slugify(item.candidate.keyword),
+    slug: item.old?.slug ?? slugify(item.candidate.keyword),
     category: item.candidate.category,
     last_detected_at: collectedAt,
     status: item.status,
-    reason: `${item.candidate.keyword} 관련 보도가 ${item.newsMetrics.articleCount}건 포착됐고 검색 관심도 상승 신호가 확인됐어요.`,
+    reason: buildEvidence(item.news, trendMap.get(item.candidate.keyword)).summary,
+    evidence: buildEvidence(item.news, trendMap.get(item.candidate.keyword)),
     related_keywords: item.candidate.relatedKeywords ?? [],
     updated_at: collectedAt,
   }))
-  const keywordPayload = ensureUniqueSlugs(rawKeywordPayload, existingRows)
+  const { data: owners, error: ownerError } = await supabase.from('keywords')
+    .select('id,keyword,slug,first_detected_at,status')
+    .in('slug', rawKeywordPayload.flatMap(item => [item.slug, `${item.slug}-${keywordHash(`slug:${item.keyword}`)}`, encodedKeywordSlug(item.keyword)]))
+  if (ownerError) throw ownerError
+  const keywordPayload = ensureUniqueSlugs(rawKeywordPayload, [...existingRows, ...(owners ?? []) as ExistingKeywordRow[]])
 
   console.info('[collector] keyword upsert payload =', keywordPayload)
   const { data: keywordRows, error: keywordError } = await supabase
@@ -437,6 +447,17 @@ const runCollectionWithCounter = async (
         urls: newsPayload.map((article) => article.url),
       })
     }
+  }
+
+  const events = rankedCandidates.flatMap((item) => {
+    const keyword_id = keywordIdMap.get(item.candidate.keyword)
+    if (!keyword_id) return []
+    const event_type = !item.old ? 'first_detected' : item.status === '급상승' && item.old.status !== '급상승' ? 'rank_surge' : item.old.evidence && item.news.publisherCount >= item.old.evidence.publisherCount + 2 ? 'source_expansion' : null
+    return event_type ? [{ keyword_id, event_type, title: event_type === 'first_detected' ? '서비스 최초 감지' : event_type === 'source_expansion' ? '보도 출처 확산' : '순위 급상승', description: `${item.rank}위 · 이슈지수 ${item.score} · 출처 도메인 ${item.news.publisherCount}곳`, event_at: collectedAt }] : []
+  })
+  if (events.length) {
+    const { error } = await supabase.from('issue_events').insert(events)
+    if (error) logSaveError('events insert', error, events)
   }
 
   const collectedDate = new Date(collectedAt)

@@ -9,6 +9,7 @@ defineProps<{ issue: Issue }>()
     <div class="rank-number" :class="{ top: issue.rank <= 3 }">{{ issue.rank }}</div>
     <div class="issue-main">
       <div class="issue-title-row"><h3>{{ issue.keyword }}</h3><span class="category-label">{{ issue.category }}</span></div>
+      <span v-if="issue.evidence" class="signal-label">{{ issue.evidence.signal === 'search' ? '↗ 검색 상승 확인 · 일간' : '↗ 뉴스 확산 감지' }}</span>
       <p>{{ issue.reason }}</p>
       <RankChange :status="issue.status" :change="issue.rankChange" />
     </div>

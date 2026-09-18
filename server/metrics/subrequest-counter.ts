@@ -17,6 +17,7 @@ export class SubrequestCounter {
   }
 
   increment(kind: SubrequestKind): void {
+    if (this.snapshot().total >= 45) throw new Error('Collector subrequest budget exhausted')
     this.counts[kind] += 1
   }
 

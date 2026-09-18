@@ -39,6 +39,12 @@ const seeds: Array<Omit<Issue, 'history' | 'news' | 'lastDetectedAt'>> = [
 export const mockIssues: Issue[] = seeds.map((item, index) => ({
   ...item,
   lastDetectedAt: isoAgo(index * 3),
+  evidence: {
+    signal: 'news', trendStatus: 'unavailable', recentCount: 2, previousCount: 1, publisherCount: 3,
+    summary: '개발용 예시 데이터입니다. 실제 수집 결과가 아닙니다.',
+    representative: { title: `${item.keyword} 개발용 예시 기사`, url: 'https://example.com', publishedAt: isoAgo(12) },
+  },
+  events: [{ title: '서비스 최초 감지 (예시)', description: '개발용 타임라인 예시', eventAt: item.firstDetectedAt }],
   history: history(item.rank, item.issueScore, index),
   news: [
     news(item.keyword, '연합뉴스', 12 + index, '관련 소식에 관심 집중'),

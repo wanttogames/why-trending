@@ -33,6 +33,8 @@ export interface Issue {
   lastDetectedAt: string
   reason: string
   relatedKeywords: string[]
+  evidence?: IssueEvidence
+  events?: IssueEvent[]
   history?: IssueSnapshot[]
   news?: NewsArticle[]
 }
@@ -100,3 +102,15 @@ export interface WorkerEnv {
   SUPABASE_SERVICE_ROLE_KEY?: string
   DATA_MODE?: string
 }
+
+export interface IssueEvidence {
+  signal: 'news' | 'search'
+  trendStatus: 'rising' | 'stable' | 'unavailable'
+  recentCount: number
+  previousCount: number
+  publisherCount: number
+  summary: string
+  representative: { title: string; url: string; publishedAt: string } | null
+}
+export interface IssueEvent { title: string; description: string; eventAt: string }
+export interface RelatedPost { title: string; url: string; source: string; kind: 'blog' | 'cafe' }

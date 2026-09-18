@@ -21,7 +21,7 @@ export class NaverSearchTrendProvider implements TrendProvider {
   constructor(private readonly client: NaverClient) {}
 
   async getTrendSignals(keywords: CandidateKeyword[]): Promise<TrendSignal[]> {
-    const end = new Date()
+    const end = new Date(Date.now() - 86_400_000) // completed KST day
     const start = new Date(end.getTime() - TREND_BATCH.lookbackDays * 86_400_000)
     const batches = chunk(keywords, TREND_BATCH.maxGroupsPerRequest)
     const signals: TrendSignal[] = []
@@ -50,7 +50,10 @@ export class NaverSearchTrendProvider implements TrendProvider {
         continue
       }
       for (const result of response.results) {
-        const values = result.data.map((point) => point.ratio)
+        const points = new Map(result.data.filter(p => Number.isFinite(p.ratio) && p.ratio >= 0).map(p => [p.period, p.ratio]))
+        const dates = Array.from({ length: TREND_BATCH.recentDays + TREND_BATCH.previousDays }, (_, i) => dateOnly(new Date(end.getTime() - (TREND_BATCH.recentDays + TREND_BATCH.previousDays - 1 - i) * 86_400_000)))
+        if (dates.some(day => !points.has(day))) continue // missing is not zero
+        const values = dates.map(day => points.get(day)!)
         const recentValues = values.slice(-TREND_BATCH.recentDays)
         const previousValues = values.slice(
           -(TREND_BATCH.recentDays + TREND_BATCH.previousDays),
@@ -69,7 +72,7 @@ export class NaverSearchTrendProvider implements TrendProvider {
         const growthScore = Math.max(0, Math.min(100,
           Math.max(0, growthRate) * 35 + spikeRate * 30,
         ))
-        const levelScore = Math.max(0, Math.min(100, recentAverage))
+        const levelScore = Math.max(0, Math.min(100, recentAverage / Math.max(1, ...values) * 100))
         signals.push({
           keyword: result.title,
           current: recentAverage,

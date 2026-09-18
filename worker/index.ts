@@ -1,3 +1,4 @@
+import { getRelatedPosts } from '../server/providers/related-posts'
 import { errorResponse, getIssue, getIssues, json } from '../functions/_shared/http'
 import type { Issue, WorkerEnv } from '../shared/types'
 
@@ -70,6 +71,21 @@ const handleApiRequest = async (request: Request, env: Env): Promise<Response> =
     }
 
     if (pathname === '/api/search') return await search(url, env)
+
+    const postsMatch = pathname.match(/^\/api\/issues\/([^/]+)\/posts$/)
+    if (postsMatch) {
+      const cache = caches.default
+      const cacheKey = new Request(`${url.origin}${pathname}`)
+      const cached = await cache.match(cacheKey)
+      if (cached) return cached
+      const result = await getIssue(env, decodeURIComponent(postsMatch[1]))
+      if (!result) return json({ error: '이슈를 찾을 수 없습니다.' }, { status: 404 })
+      if (result.meta.mode === 'mock') return json({ posts: [], partial: false })
+      const posts = await getRelatedPosts(result.data.keyword, env)
+      const response = json(posts, { headers: { 'Cache-Control': `public, max-age=${posts.partial ? 60 : 600}` } })
+      await cache.put(cacheKey, response.clone())
+      return response
+    }
 
     const issueMatch = pathname.match(/^\/api\/issues\/([^/]+)(?:\/(history|news))?$/)
     if (issueMatch) {

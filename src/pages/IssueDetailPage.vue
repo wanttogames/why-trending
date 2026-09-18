@@ -1,10 +1,11 @@
 <script setup lang="ts">
-import { computed, onMounted, ref } from 'vue'
+import { computed, ref, watch } from 'vue'
 import { useRoute, useRouter } from 'vue-router'
 import type { Issue } from '@shared/types'
 import { fetchIssue } from '@/api/issues'
 import IssueHistoryChart from '@/components/IssueHistoryChart.vue'
 import IssueScoreBadge from '@/components/IssueScoreBadge.vue'
+import RelatedPosts from '@/components/RelatedPosts.vue'
 import NewsList from '@/components/NewsList.vue'
 import RankChange from '@/components/RankChange.vue'
 import { useDocumentMeta } from '@/composables/useDocumentMeta'
@@ -22,11 +23,14 @@ const share = async () => {
   if (navigator.share) { await navigator.share(data); return }
   await navigator.clipboard.writeText(window.location.href); copied.value = true; setTimeout(() => copied.value = false, 1800)
 }
-onMounted(async () => {
-  try { issue.value = (await fetchIssue(String(route.params.slug))).data }
-  catch { error.value = '이슈 정보를 찾을 수 없어요.' }
-  finally { loading.value = false }
-})
+let requestId = 0
+watch(() => route.params.slug, async (slug) => {
+  const id = ++requestId
+  loading.value = true; error.value = ''; issue.value = null
+  try { const result = await fetchIssue(String(slug)); if (id === requestId) issue.value = result.data }
+  catch { if (id === requestId) error.value = '이슈 정보를 찾을 수 없어요.' }
+  finally { if (id === requestId) loading.value = false }
+}, { immediate: true })
 </script>
 
 <template>
@@ -51,6 +55,17 @@ onMounted(async () => {
         <span class="reason-icon">!</span><div><h2>이슈가 뜨는 이유</h2><p>{{ issue.reason }}</p></div>
       </section>
 
+      <section v-if="issue.evidence" class="detail-section evidence-details">
+        <h2>{{ issue.evidence.signal === 'search' ? '검색 상승 확인 · 일간 지표' : '뉴스 확산 감지' }}</h2>
+        <p>뉴스 수치는 수집 표본 기준입니다. 전체 보도량이나 실시간 검색량을 뜻하지 않습니다.</p>
+        <a v-if="issue.evidence.representative" :href="issue.evidence.representative.url" target="_blank" rel="noopener noreferrer">{{ issue.evidence.representative.title }} ↗</a>
+        <small v-if="issue.evidence.representative">{{ formatDate(issue.evidence.representative.publishedAt) }}</small>
+      </section>
+      <section v-if="issue.events?.length" class="detail-section">
+        <h2>이슈의 흐름</h2>
+        <p>이 서비스가 관측한 변화이며 최초 보도 시각을 의미하지 않습니다.</p>
+        <ol class="issue-timeline"><li v-for="(event, index) in issue.events" :key="index"><time>{{ formatDate(event.eventAt) }}</time><strong>{{ event.title }}</strong><p>{{ event.description }}</p></li></ol>
+      </section>
       <div class="detected-grid">
         <div><span>최초 감지</span><strong>{{ formatDate(issue.firstDetectedAt) }}</strong></div>
         <div><span>마지막 감지</span><strong>{{ formatDate(issue.lastDetectedAt) }}</strong></div>
@@ -71,6 +86,8 @@ onMounted(async () => {
         <div class="detail-section-heading"><div><span>RELATED NEWS</span><h2>관련 뉴스</h2></div><small>{{ issue.news?.length ?? 0 }}건</small></div>
         <NewsList :articles="issue.news ?? []" />
       </section>
+
+      <RelatedPosts :key="issue.slug" :slug="issue.slug" />
 
       <button class="share-button" @click="share"><span aria-hidden="true">↗</span>{{ copied ? '링크를 복사했어요' : '이 이슈 공유하기' }}</button>
     </template>
