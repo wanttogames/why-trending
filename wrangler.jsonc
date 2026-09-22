@@ -1,15 +1,8 @@
 {
-  "$schema": "./node_modules/wrangler/config-schema.json",
-  "name": "why-trending",
-  "compatibility_date": "2026-09-17",
-  "main": "./worker/index.ts",
-  "vars": {
-    "DATA_MODE": "real"
-  },
-  "assets": {
-    "directory": "./dist",
-    "binding": "ASSETS",
-    "not_found_handling": "single-page-application",
-    "run_worker_first": ["/api/*"]
-  }
+ "$schema":"./node_modules/wrangler/config-schema.json",
+ "name":"why-trending", "main":"./worker/index.ts", "compatibility_date":"2026-09-17",
+ "assets":{"directory":"./dist","binding":"ASSETS","not_found_handling":"single-page-application","run_worker_first":true},
+ "vars":{"DATA_MODE":"real","ADS_ENABLED":"false"},
+ "observability":{"enabled":true},
+ "env":{"preview":{"name":"why-trending-preview","vars":{"DATA_MODE":"mock","ADS_ENABLED":"false"}}}
 }

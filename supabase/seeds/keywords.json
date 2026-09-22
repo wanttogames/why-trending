@@ -1,0 +1,5004 @@
+[
+  {
+    "keyword": "chatgpt",
+    "slug": "k-63686174677074",
+    "category": "IT",
+    "aliases": [
+      "chatgpt",
+      "챗gpt",
+      "챗지피티"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "gemini",
+    "slug": "k-67656d696e69",
+    "category": "IT",
+    "aliases": [
+      "gemini"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "claude",
+    "slug": "k-636c61756465",
+    "category": "IT",
+    "aliases": [
+      "claude"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "perplexity",
+    "slug": "k-706572706c6578697479",
+    "category": "IT",
+    "aliases": [
+      "perplexity"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "copilot",
+    "slug": "k-636f70696c6f74",
+    "category": "IT",
+    "aliases": [
+      "copilot"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "grok",
+    "slug": "k-67726f6b",
+    "category": "IT",
+    "aliases": [
+      "grok"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "notion",
+    "slug": "k-6e6f74696f6e",
+    "category": "IT",
+    "aliases": [
+      "notion"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "slack",
+    "slug": "k-736c61636b",
+    "category": "IT",
+    "aliases": [
+      "slack"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "zoom",
+    "slug": "k-7a6f6f6d",
+    "category": "IT",
+    "aliases": [
+      "zoom"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "discord",
+    "slug": "k-646973636f7264",
+    "category": "IT",
+    "aliases": [
+      "discord"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "텔레그램",
+    "slug": "k-ed8594eba088eab7b8eb9ea8",
+    "category": "IT",
+    "aliases": [
+      "텔레그램"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "카카오톡",
+    "slug": "k-ecb9b4ecb9b4ec98a4ed86a1",
+    "category": "IT",
+    "aliases": [
+      "카카오톡"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "네이버웨일",
+    "slug": "k-eb84a4ec9db4ebb284ec9ba8ec9dbc",
+    "category": "IT",
+    "aliases": [
+      "네이버웨일"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "크롬",
+    "slug": "k-ed81aceba1ac",
+    "category": "IT",
+    "aliases": [
+      "크롬"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "파이어폭스",
+    "slug": "k-ed8c8cec9db4ec96b4ed8fadec8aa4",
+    "category": "IT",
+    "aliases": [
+      "파이어폭스"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "사파리",
+    "slug": "k-ec82aced8c8ceba6ac",
+    "category": "IT",
+    "aliases": [
+      "사파리"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "윈도우11",
+    "slug": "k-ec9c88eb8f84ec9ab03131",
+    "category": "IT",
+    "aliases": [
+      "윈도우11"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "리눅스",
+    "slug": "k-eba6aceb8885ec8aa4",
+    "category": "IT",
+    "aliases": [
+      "리눅스"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "우분투",
+    "slug": "k-ec9ab0ebb684ed88ac",
+    "category": "IT",
+    "aliases": [
+      "우분투"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "깃허브",
+    "slug": "k-eab983ed9788ebb88c",
+    "category": "IT",
+    "aliases": [
+      "깃허브"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "깃랩",
+    "slug": "k-eab983eb9ea9",
+    "category": "IT",
+    "aliases": [
+      "깃랩"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "도커",
+    "slug": "k-eb8f84ecbba4",
+    "category": "IT",
+    "aliases": [
+      "도커"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "쿠버네티스",
+    "slug": "k-ecbfa0ebb284eb84a4ed8bb0ec8aa4",
+    "category": "IT",
+    "aliases": [
+      "쿠버네티스"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "클라우드플레어",
+    "slug": "k-ed81b4eb9dbcec9ab0eb939ced948ceba088ec96b4",
+    "category": "IT",
+    "aliases": [
+      "클라우드플레어"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "aws",
+    "slug": "k-617773",
+    "category": "IT",
+    "aliases": [
+      "aws"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "애저",
+    "slug": "k-ec95a0eca080",
+    "category": "IT",
+    "aliases": [
+      "애저"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "구글클라우드",
+    "slug": "k-eab5aceab880ed81b4eb9dbcec9ab0eb939c",
+    "category": "IT",
+    "aliases": [
+      "구글클라우드"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "수파베이스",
+    "slug": "k-ec8898ed8c8cebb2a0ec9db4ec8aa4",
+    "category": "IT",
+    "aliases": [
+      "수파베이스"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "파이어베이스",
+    "slug": "k-ed8c8cec9db4ec96b4ebb2a0ec9db4ec8aa4",
+    "category": "IT",
+    "aliases": [
+      "파이어베이스"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "파이썬",
+    "slug": "k-ed8c8cec9db4ec8dac",
+    "category": "IT",
+    "aliases": [
+      "파이썬"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "타입스크립트",
+    "slug": "k-ed8380ec9e85ec8aa4ed81aceba6bded8ab8",
+    "category": "IT",
+    "aliases": [
+      "타입스크립트"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "자바스크립트",
+    "slug": "k-ec9e90ebb094ec8aa4ed81aceba6bded8ab8",
+    "category": "IT",
+    "aliases": [
+      "자바스크립트"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "러스트",
+    "slug": "k-eb9facec8aa4ed8ab8",
+    "category": "IT",
+    "aliases": [
+      "러스트"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "고랭",
+    "slug": "k-eab3a0eb9ead",
+    "category": "IT",
+    "aliases": [
+      "고랭"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "리액트",
+    "slug": "k-eba6acec95a1ed8ab8",
+    "category": "IT",
+    "aliases": [
+      "리액트"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "vue",
+    "slug": "k-767565",
+    "category": "IT",
+    "aliases": [
+      "vue"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "스벨트",
+    "slug": "k-ec8aa4ebb2a8ed8ab8",
+    "category": "IT",
+    "aliases": [
+      "스벨트"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "next.js",
+    "slug": "k-6e6578742e6a73",
+    "category": "IT",
+    "aliases": [
+      "next.js"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "스프링부트",
+    "slug": "k-ec8aa4ed9484eba781ebb680ed8ab8",
+    "category": "IT",
+    "aliases": [
+      "스프링부트"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "postgresql",
+    "slug": "k-706f737467726573716c",
+    "category": "IT",
+    "aliases": [
+      "postgresql"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "mysql",
+    "slug": "k-6d7973716c",
+    "category": "IT",
+    "aliases": [
+      "mysql"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "redis",
+    "slug": "k-7265646973",
+    "category": "IT",
+    "aliases": [
+      "redis"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "mongodb",
+    "slug": "k-6d6f6e676f6462",
+    "category": "IT",
+    "aliases": [
+      "mongodb"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "피그마",
+    "slug": "k-ed94bceab7b8eba788",
+    "category": "IT",
+    "aliases": [
+      "피그마"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "캔바",
+    "slug": "k-ecba94ebb094",
+    "category": "IT",
+    "aliases": [
+      "캔바"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "포토샵",
+    "slug": "k-ed8faced86a0ec83b5",
+    "category": "IT",
+    "aliases": [
+      "포토샵"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "프리미어프로",
+    "slug": "k-ed9484eba6acebafb8ec96b4ed9484eba19c",
+    "category": "IT",
+    "aliases": [
+      "프리미어프로"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "블렌더3d",
+    "slug": "k-ebb894eba08ceb8d943364",
+    "category": "IT",
+    "aliases": [
+      "블렌더3d"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "유니티",
+    "slug": "k-ec9ca0eb8b88ed8bb0",
+    "category": "IT",
+    "aliases": [
+      "유니티"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "언리얼엔진",
+    "slug": "k-ec96b8eba6acec96bcec9794eca784",
+    "category": "IT",
+    "aliases": [
+      "언리얼엔진"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "닌텐도 스위치2",
+    "slug": "k-eb8b8ced8590eb8f8420ec8aa4ec9c84ecb99832",
+    "category": "게임",
+    "aliases": [
+      "닌텐도 스위치2"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "플레이스테이션5",
+    "slug": "k-ed948ceba088ec9db4ec8aa4ed858cec9db4ec859835",
+    "category": "게임",
+    "aliases": [
+      "플레이스테이션5"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "엑스박스",
+    "slug": "k-ec9791ec8aa4ebb095ec8aa4",
+    "category": "게임",
+    "aliases": [
+      "엑스박스"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "스팀덱",
+    "slug": "k-ec8aa4ed8c80eb8db1",
+    "category": "게임",
+    "aliases": [
+      "스팀덱"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "리그오브레전드",
+    "slug": "k-eba6aceab7b8ec98a4ebb88ceba088eca084eb939c",
+    "category": "게임",
+    "aliases": [
+      "리그오브레전드"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "롤토체스",
+    "slug": "k-eba1a4ed86a0ecb2b4ec8aa4",
+    "category": "게임",
+    "aliases": [
+      "롤토체스"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "발로란트",
+    "slug": "k-ebb09ceba19ceb9e80ed8ab8",
+    "category": "게임",
+    "aliases": [
+      "발로란트"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "오버워치",
+    "slug": "k-ec98a4ebb284ec9b8cecb998",
+    "category": "게임",
+    "aliases": [
+      "오버워치"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "배틀그라운드",
+    "slug": "k-ebb0b0ed8b80eab7b8eb9dbcec9ab4eb939c",
+    "category": "게임",
+    "aliases": [
+      "배틀그라운드"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "메이플스토리",
+    "slug": "k-eba994ec9db4ed948cec8aa4ed86a0eba6ac",
+    "category": "게임",
+    "aliases": [
+      "메이플스토리"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "로스트아크",
+    "slug": "k-eba19cec8aa4ed8ab8ec9584ed81ac",
+    "category": "게임",
+    "aliases": [
+      "로스트아크"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "던전앤파이터",
+    "slug": "k-eb8d98eca084ec95a4ed8c8cec9db4ed84b0",
+    "category": "게임",
+    "aliases": [
+      "던전앤파이터"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "피파온라인",
+    "slug": "k-ed94bced8c8cec98a8eb9dbcec9db8",
+    "category": "게임",
+    "aliases": [
+      "피파온라인"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "fc온라인",
+    "slug": "k-6663ec98a8eb9dbcec9db8",
+    "category": "게임",
+    "aliases": [
+      "fc온라인"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "서든어택",
+    "slug": "k-ec849ceb93a0ec96b4ed839d",
+    "category": "게임",
+    "aliases": [
+      "서든어택"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "스타크래프트",
+    "slug": "k-ec8aa4ed8380ed81aceb9e98ed9484ed8ab8",
+    "category": "게임",
+    "aliases": [
+      "스타크래프트"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "디아블로4",
+    "slug": "k-eb9494ec9584ebb894eba19c34",
+    "category": "게임",
+    "aliases": [
+      "디아블로4"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "월드오브워크래프트",
+    "slug": "k-ec9b94eb939cec98a4ebb88cec9b8ced81aceb9e98ed9484ed8ab8",
+    "category": "게임",
+    "aliases": [
+      "월드오브워크래프트"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "하스스톤",
+    "slug": "k-ed9598ec8aa4ec8aa4ed86a4",
+    "category": "게임",
+    "aliases": [
+      "하스스톤"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "히어로즈오브더스톰",
+    "slug": "k-ed9e88ec96b4eba19ceca688ec98a4ebb88ceb8d94ec8aa4ed86b0",
+    "category": "게임",
+    "aliases": [
+      "히어로즈오브더스톰"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "마인크래프트",
+    "slug": "k-eba788ec9db8ed81aceb9e98ed9484ed8ab8",
+    "category": "게임",
+    "aliases": [
+      "마인크래프트"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "로블록스",
+    "slug": "k-eba19cebb894eba19dec8aa4",
+    "category": "게임",
+    "aliases": [
+      "로블록스"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "포트나이트",
+    "slug": "k-ed8faced8ab8eb8298ec9db4ed8ab8",
+    "category": "게임",
+    "aliases": [
+      "포트나이트"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "에이펙스레전드",
+    "slug": "k-ec9790ec9db4ed8e99ec8aa4eba088eca084eb939c",
+    "category": "게임",
+    "aliases": [
+      "에이펙스레전드"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "카운터스트라이크2",
+    "slug": "k-ecb9b4ec9ab4ed84b0ec8aa4ed8ab8eb9dbcec9db4ed81ac32",
+    "category": "게임",
+    "aliases": [
+      "카운터스트라이크2"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "도타2",
+    "slug": "k-eb8f84ed838032",
+    "category": "게임",
+    "aliases": [
+      "도타2"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "원신",
+    "slug": "k-ec9b90ec8ba0",
+    "category": "게임",
+    "aliases": [
+      "원신"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "붕괴 스타레일",
+    "slug": "k-ebb695eab4b420ec8aa4ed8380eba088ec9dbc",
+    "category": "게임",
+    "aliases": [
+      "붕괴 스타레일"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "젠레스 존 제로",
+    "slug": "k-eca0a0eba088ec8aa420eca1b420eca09ceba19c",
+    "category": "게임",
+    "aliases": [
+      "젠레스 존 제로"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "명조",
+    "slug": "k-ebaa85eca1b0",
+    "category": "게임",
+    "aliases": [
+      "명조"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "블루아카이브",
+    "slug": "k-ebb894eba3a8ec9584ecb9b4ec9db4ebb88c",
+    "category": "게임",
+    "aliases": [
+      "블루아카이브"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "승리의 여신 니케",
+    "slug": "k-ec8ab9eba6acec9d9820ec97acec8ba020eb8b88ecbc80",
+    "category": "게임",
+    "aliases": [
+      "승리의 여신 니케"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "쿠키런 킹덤",
+    "slug": "k-ecbfa0ed82a4eb9fb020ed82b9eb8da4",
+    "category": "게임",
+    "aliases": [
+      "쿠키런 킹덤"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "브롤스타즈",
+    "slug": "k-ebb88ceba1a4ec8aa4ed8380eca688",
+    "category": "게임",
+    "aliases": [
+      "브롤스타즈"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "클래시로얄",
+    "slug": "k-ed81b4eb9e98ec8b9ceba19cec9684",
+    "category": "게임",
+    "aliases": [
+      "클래시로얄"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "클래시오브클랜",
+    "slug": "k-ed81b4eb9e98ec8b9cec98a4ebb88ced81b4eb9e9c",
+    "category": "게임",
+    "aliases": [
+      "클래시오브클랜"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "포켓몬고",
+    "slug": "k-ed8facecbc93ebaaaceab3a0",
+    "category": "게임",
+    "aliases": [
+      "포켓몬고"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "몬스터헌터",
+    "slug": "k-ebaaacec8aa4ed84b0ed978ced84b0",
+    "category": "게임",
+    "aliases": [
+      "몬스터헌터"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "엘든링",
+    "slug": "k-ec9798eb93a0eba781",
+    "category": "게임",
+    "aliases": [
+      "엘든링"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "발더스게이트3",
+    "slug": "k-ebb09ceb8d94ec8aa4eab28cec9db4ed8ab833",
+    "category": "게임",
+    "aliases": [
+      "발더스게이트3"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "사이버펑크2077",
+    "slug": "k-ec82acec9db4ebb284ed8e91ed81ac32303737",
+    "category": "게임",
+    "aliases": [
+      "사이버펑크2077"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "스타듀밸리",
+    "slug": "k-ec8aa4ed8380eb9380ebb0b8eba6ac",
+    "category": "게임",
+    "aliases": [
+      "스타듀밸리"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "동물의숲",
+    "slug": "k-eb8f99ebacbcec9d98ec88b2",
+    "category": "게임",
+    "aliases": [
+      "동물의숲"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "젤다의전설",
+    "slug": "k-eca0a4eb8ba4ec9d98eca084ec84a4",
+    "category": "게임",
+    "aliases": [
+      "젤다의전설"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "슈퍼마리오",
+    "slug": "k-ec8a88ed8dbceba788eba6acec98a4",
+    "category": "게임",
+    "aliases": [
+      "슈퍼마리오"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "포켓몬스터",
+    "slug": "k-ed8facecbc93ebaaacec8aa4ed84b0",
+    "category": "게임",
+    "aliases": [
+      "포켓몬스터"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "철권8",
+    "slug": "k-ecb2a0eab68c38",
+    "category": "게임",
+    "aliases": [
+      "철권8"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "스트리트파이터6",
+    "slug": "k-ec8aa4ed8ab8eba6aced8ab8ed8c8cec9db4ed84b036",
+    "category": "게임",
+    "aliases": [
+      "스트리트파이터6"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "팰월드",
+    "slug": "k-ed8cb0ec9b94eb939c",
+    "category": "게임",
+    "aliases": [
+      "팰월드"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "헬다이버즈2",
+    "slug": "k-ed97aceb8ba4ec9db4ebb284eca68832",
+    "category": "게임",
+    "aliases": [
+      "헬다이버즈2"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "아반떼",
+    "slug": "k-ec9584ebb098eb96bc",
+    "category": "자동차",
+    "aliases": [
+      "아반떼"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "쏘나타",
+    "slug": "k-ec8f98eb8298ed8380",
+    "category": "자동차",
+    "aliases": [
+      "쏘나타"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "그랜저",
+    "slug": "k-eab7b8eb9e9ceca080",
+    "category": "자동차",
+    "aliases": [
+      "그랜저"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "아이오닉5",
+    "slug": "k-ec9584ec9db4ec98a4eb8b8935",
+    "category": "자동차",
+    "aliases": [
+      "아이오닉5"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "아이오닉6",
+    "slug": "k-ec9584ec9db4ec98a4eb8b8936",
+    "category": "자동차",
+    "aliases": [
+      "아이오닉6"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "아이오닉9",
+    "slug": "k-ec9584ec9db4ec98a4eb8b8939",
+    "category": "자동차",
+    "aliases": [
+      "아이오닉9"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "코나",
+    "slug": "k-ecbd94eb8298",
+    "category": "자동차",
+    "aliases": [
+      "코나"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "투싼",
+    "slug": "k-ed88acec8bbc",
+    "category": "자동차",
+    "aliases": [
+      "투싼"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "싼타페",
+    "slug": "k-ec8bbced8380ed8e98",
+    "category": "자동차",
+    "aliases": [
+      "싼타페"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "팰리세이드",
+    "slug": "k-ed8cb0eba6acec84b8ec9db4eb939c",
+    "category": "자동차",
+    "aliases": [
+      "팰리세이드"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "캐스퍼",
+    "slug": "k-ecba90ec8aa4ed8dbc",
+    "category": "자동차",
+    "aliases": [
+      "캐스퍼"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "스타리아",
+    "slug": "k-ec8aa4ed8380eba6acec9584",
+    "category": "자동차",
+    "aliases": [
+      "스타리아"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "포터",
+    "slug": "k-ed8faced84b0",
+    "category": "자동차",
+    "aliases": [
+      "포터"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "k3",
+    "slug": "k-6b33",
+    "category": "자동차",
+    "aliases": [
+      "k3"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "k5",
+    "slug": "k-6b35",
+    "category": "자동차",
+    "aliases": [
+      "k5"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "k8",
+    "slug": "k-6b38",
+    "category": "자동차",
+    "aliases": [
+      "k8"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "k9",
+    "slug": "k-6b39",
+    "category": "자동차",
+    "aliases": [
+      "k9"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "셀토스",
+    "slug": "k-ec8580ed86a0ec8aa4",
+    "category": "자동차",
+    "aliases": [
+      "셀토스"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "스포티지",
+    "slug": "k-ec8aa4ed8faced8bb0eca780",
+    "category": "자동차",
+    "aliases": [
+      "스포티지"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "쏘렌토",
+    "slug": "k-ec8f98eba08ced86a0",
+    "category": "자동차",
+    "aliases": [
+      "쏘렌토"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "카니발",
+    "slug": "k-ecb9b4eb8b88ebb09c",
+    "category": "자동차",
+    "aliases": [
+      "카니발"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "니로",
+    "slug": "k-eb8b88eba19c",
+    "category": "자동차",
+    "aliases": [
+      "니로"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "ev3",
+    "slug": "k-657633",
+    "category": "자동차",
+    "aliases": [
+      "ev3"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "ev4",
+    "slug": "k-657634",
+    "category": "자동차",
+    "aliases": [
+      "ev4"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "ev5",
+    "slug": "k-657635",
+    "category": "자동차",
+    "aliases": [
+      "ev5"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "ev6",
+    "slug": "k-657636",
+    "category": "자동차",
+    "aliases": [
+      "ev6"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "ev9",
+    "slug": "k-657639",
+    "category": "자동차",
+    "aliases": [
+      "ev9"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "레이",
+    "slug": "k-eba088ec9db4",
+    "category": "자동차",
+    "aliases": [
+      "레이"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "모닝",
+    "slug": "k-ebaaa8eb8b9d",
+    "category": "자동차",
+    "aliases": [
+      "모닝"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "타스만",
+    "slug": "k-ed8380ec8aa4eba78c",
+    "category": "자동차",
+    "aliases": [
+      "타스만"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "제네시스 g70",
+    "slug": "k-eca09ceb84a4ec8b9cec8aa420673730",
+    "category": "자동차",
+    "aliases": [
+      "제네시스 g70"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "제네시스 g80",
+    "slug": "k-eca09ceb84a4ec8b9cec8aa420673830",
+    "category": "자동차",
+    "aliases": [
+      "제네시스 g80"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "제네시스 g90",
+    "slug": "k-eca09ceb84a4ec8b9cec8aa420673930",
+    "category": "자동차",
+    "aliases": [
+      "제네시스 g90"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "제네시스 gv60",
+    "slug": "k-eca09ceb84a4ec8b9cec8aa42067763630",
+    "category": "자동차",
+    "aliases": [
+      "제네시스 gv60"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "제네시스 gv70",
+    "slug": "k-eca09ceb84a4ec8b9cec8aa42067763730",
+    "category": "자동차",
+    "aliases": [
+      "제네시스 gv70"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "제네시스 gv80",
+    "slug": "k-eca09ceb84a4ec8b9cec8aa42067763830",
+    "category": "자동차",
+    "aliases": [
+      "제네시스 gv80"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "테슬라 모델3",
+    "slug": "k-ed858cec8aaceb9dbc20ebaaa8eb8db833",
+    "category": "자동차",
+    "aliases": [
+      "테슬라 모델3"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "테슬라 모델y",
+    "slug": "k-ed858cec8aaceb9dbc20ebaaa8eb8db879",
+    "category": "자동차",
+    "aliases": [
+      "테슬라 모델y"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "테슬라 모델s",
+    "slug": "k-ed858cec8aaceb9dbc20ebaaa8eb8db873",
+    "category": "자동차",
+    "aliases": [
+      "테슬라 모델s"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "테슬라 모델x",
+    "slug": "k-ed858cec8aaceb9dbc20ebaaa8eb8db878",
+    "category": "자동차",
+    "aliases": [
+      "테슬라 모델x"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "bmw 3시리즈",
+    "slug": "k-626d772033ec8b9ceba6aceca688",
+    "category": "자동차",
+    "aliases": [
+      "bmw 3시리즈"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "bmw 5시리즈",
+    "slug": "k-626d772035ec8b9ceba6aceca688",
+    "category": "자동차",
+    "aliases": [
+      "bmw 5시리즈"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "bmw x3",
+    "slug": "k-626d77207833",
+    "category": "자동차",
+    "aliases": [
+      "bmw x3"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "bmw x5",
+    "slug": "k-626d77207835",
+    "category": "자동차",
+    "aliases": [
+      "bmw x5"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "벤츠 c클래스",
+    "slug": "k-ebb2a4ecb8a02063ed81b4eb9e98ec8aa4",
+    "category": "자동차",
+    "aliases": [
+      "벤츠 c클래스"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "벤츠 e클래스",
+    "slug": "k-ebb2a4ecb8a02065ed81b4eb9e98ec8aa4",
+    "category": "자동차",
+    "aliases": [
+      "벤츠 e클래스"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "벤츠 glc",
+    "slug": "k-ebb2a4ecb8a020676c63",
+    "category": "자동차",
+    "aliases": [
+      "벤츠 glc"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "아우디 a6",
+    "slug": "k-ec9584ec9ab0eb9494206136",
+    "category": "자동차",
+    "aliases": [
+      "아우디 a6"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "볼보 xc60",
+    "slug": "k-ebb3bcebb3b42078633630",
+    "category": "자동차",
+    "aliases": [
+      "볼보 xc60"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "폴스타2",
+    "slug": "k-ed8fb4ec8aa4ed838032",
+    "category": "자동차",
+    "aliases": [
+      "폴스타2"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "커피원두",
+    "slug": "k-ecbba4ed94bcec9b90eb9190",
+    "category": "쇼핑",
+    "aliases": [
+      "커피원두"
+    ],
+    "shopping_category": "food",
+    "enabled": true
+  },
+  {
+    "keyword": "쌀",
+    "slug": "k-ec8c80",
+    "category": "쇼핑",
+    "aliases": [
+      "쌀"
+    ],
+    "shopping_category": "food",
+    "enabled": true
+  },
+  {
+    "keyword": "현미",
+    "slug": "k-ed9884ebafb8",
+    "category": "쇼핑",
+    "aliases": [
+      "현미"
+    ],
+    "shopping_category": "food",
+    "enabled": true
+  },
+  {
+    "keyword": "오트밀",
+    "slug": "k-ec98a4ed8ab8ebb080",
+    "category": "쇼핑",
+    "aliases": [
+      "오트밀"
+    ],
+    "shopping_category": "food",
+    "enabled": true
+  },
+  {
+    "keyword": "올리브오일",
+    "slug": "k-ec98aceba6acebb88cec98a4ec9dbc",
+    "category": "쇼핑",
+    "aliases": [
+      "올리브오일"
+    ],
+    "shopping_category": "food",
+    "enabled": true
+  },
+  {
+    "keyword": "아보카도오일",
+    "slug": "k-ec9584ebb3b4ecb9b4eb8f84ec98a4ec9dbc",
+    "category": "쇼핑",
+    "aliases": [
+      "아보카도오일"
+    ],
+    "shopping_category": "food",
+    "enabled": true
+  },
+  {
+    "keyword": "그릭요거트",
+    "slug": "k-eab7b8eba6adec9a94eab1b0ed8ab8",
+    "category": "쇼핑",
+    "aliases": [
+      "그릭요거트"
+    ],
+    "shopping_category": "food",
+    "enabled": true
+  },
+  {
+    "keyword": "단백질바",
+    "slug": "k-eb8ba8ebb0b1eca788ebb094",
+    "category": "쇼핑",
+    "aliases": [
+      "단백질바"
+    ],
+    "shopping_category": "food",
+    "enabled": true
+  },
+  {
+    "keyword": "견과류",
+    "slug": "k-eab2aceab3bceba598",
+    "category": "쇼핑",
+    "aliases": [
+      "견과류"
+    ],
+    "shopping_category": "food",
+    "enabled": true
+  },
+  {
+    "keyword": "꿀",
+    "slug": "k-eabf80",
+    "category": "쇼핑",
+    "aliases": [
+      "꿀"
+    ],
+    "shopping_category": "food",
+    "enabled": true
+  },
+  {
+    "keyword": "김치",
+    "slug": "k-eab980ecb998",
+    "category": "쇼핑",
+    "aliases": [
+      "김치"
+    ],
+    "shopping_category": "food",
+    "enabled": true
+  },
+  {
+    "keyword": "김",
+    "slug": "k-eab980",
+    "category": "쇼핑",
+    "aliases": [
+      "김"
+    ],
+    "shopping_category": "food",
+    "enabled": true
+  },
+  {
+    "keyword": "참치캔",
+    "slug": "k-ecb0b8ecb998ecba94",
+    "category": "쇼핑",
+    "aliases": [
+      "참치캔"
+    ],
+    "shopping_category": "food",
+    "enabled": true
+  },
+  {
+    "keyword": "파스타면",
+    "slug": "k-ed8c8cec8aa4ed8380eba9b4",
+    "category": "쇼핑",
+    "aliases": [
+      "파스타면"
+    ],
+    "shopping_category": "food",
+    "enabled": true
+  },
+  {
+    "keyword": "토마토소스",
+    "slug": "k-ed86a0eba788ed86a0ec868cec8aa4",
+    "category": "쇼핑",
+    "aliases": [
+      "토마토소스"
+    ],
+    "shopping_category": "food",
+    "enabled": true
+  },
+  {
+    "keyword": "유모차",
+    "slug": "k-ec9ca0ebaaa8ecb0a8",
+    "category": "쇼핑",
+    "aliases": [
+      "유모차"
+    ],
+    "shopping_category": "baby",
+    "enabled": true
+  },
+  {
+    "keyword": "카시트",
+    "slug": "k-ecb9b4ec8b9ced8ab8",
+    "category": "쇼핑",
+    "aliases": [
+      "카시트"
+    ],
+    "shopping_category": "baby",
+    "enabled": true
+  },
+  {
+    "keyword": "아기띠",
+    "slug": "k-ec9584eab8b0eb9da0",
+    "category": "쇼핑",
+    "aliases": [
+      "아기띠"
+    ],
+    "shopping_category": "baby",
+    "enabled": true
+  },
+  {
+    "keyword": "기저귀",
+    "slug": "k-eab8b0eca080eab780",
+    "category": "쇼핑",
+    "aliases": [
+      "기저귀"
+    ],
+    "shopping_category": "baby",
+    "enabled": true
+  },
+  {
+    "keyword": "젖병",
+    "slug": "k-eca096ebb391",
+    "category": "쇼핑",
+    "aliases": [
+      "젖병"
+    ],
+    "shopping_category": "baby",
+    "enabled": true
+  },
+  {
+    "keyword": "분유",
+    "slug": "k-ebb684ec9ca0",
+    "category": "쇼핑",
+    "aliases": [
+      "분유"
+    ],
+    "shopping_category": "baby",
+    "enabled": true
+  },
+  {
+    "keyword": "이유식",
+    "slug": "k-ec9db4ec9ca0ec8b9d",
+    "category": "쇼핑",
+    "aliases": [
+      "이유식"
+    ],
+    "shopping_category": "baby",
+    "enabled": true
+  },
+  {
+    "keyword": "아기침대",
+    "slug": "k-ec9584eab8b0ecb9a8eb8c80",
+    "category": "쇼핑",
+    "aliases": [
+      "아기침대"
+    ],
+    "shopping_category": "baby",
+    "enabled": true
+  },
+  {
+    "keyword": "수유쿠션",
+    "slug": "k-ec8898ec9ca0ecbfa0ec8598",
+    "category": "쇼핑",
+    "aliases": [
+      "수유쿠션"
+    ],
+    "shopping_category": "baby",
+    "enabled": true
+  },
+  {
+    "keyword": "아기욕조",
+    "slug": "k-ec9584eab8b0ec9a95eca1b0",
+    "category": "쇼핑",
+    "aliases": [
+      "아기욕조"
+    ],
+    "shopping_category": "baby",
+    "enabled": true
+  },
+  {
+    "keyword": "고양이사료",
+    "slug": "k-eab3a0ec9691ec9db4ec82aceba38c",
+    "category": "쇼핑",
+    "aliases": [
+      "고양이사료"
+    ],
+    "shopping_category": "pets",
+    "enabled": true
+  },
+  {
+    "keyword": "강아지사료",
+    "slug": "k-eab095ec9584eca780ec82aceba38c",
+    "category": "쇼핑",
+    "aliases": [
+      "강아지사료"
+    ],
+    "shopping_category": "pets",
+    "enabled": true
+  },
+  {
+    "keyword": "고양이모래",
+    "slug": "k-eab3a0ec9691ec9db4ebaaa8eb9e98",
+    "category": "쇼핑",
+    "aliases": [
+      "고양이모래"
+    ],
+    "shopping_category": "pets",
+    "enabled": true
+  },
+  {
+    "keyword": "강아지하네스",
+    "slug": "k-eab095ec9584eca780ed9598eb84a4ec8aa4",
+    "category": "쇼핑",
+    "aliases": [
+      "강아지하네스"
+    ],
+    "shopping_category": "pets",
+    "enabled": true
+  },
+  {
+    "keyword": "고양이화장실",
+    "slug": "k-eab3a0ec9691ec9db4ed9994ec9ea5ec8ba4",
+    "category": "쇼핑",
+    "aliases": [
+      "고양이화장실"
+    ],
+    "shopping_category": "pets",
+    "enabled": true
+  },
+  {
+    "keyword": "강아지유모차",
+    "slug": "k-eab095ec9584eca780ec9ca0ebaaa8ecb0a8",
+    "category": "쇼핑",
+    "aliases": [
+      "강아지유모차"
+    ],
+    "shopping_category": "pets",
+    "enabled": true
+  },
+  {
+    "keyword": "반려동물급수기",
+    "slug": "k-ebb098eba0a4eb8f99ebacbceab889ec8898eab8b0",
+    "category": "쇼핑",
+    "aliases": [
+      "반려동물급수기"
+    ],
+    "shopping_category": "pets",
+    "enabled": true
+  },
+  {
+    "keyword": "강아지간식",
+    "slug": "k-eab095ec9584eca780eab084ec8b9d",
+    "category": "쇼핑",
+    "aliases": [
+      "강아지간식"
+    ],
+    "shopping_category": "pets",
+    "enabled": true
+  },
+  {
+    "keyword": "고양이간식",
+    "slug": "k-eab3a0ec9691ec9db4eab084ec8b9d",
+    "category": "쇼핑",
+    "aliases": [
+      "고양이간식"
+    ],
+    "shopping_category": "pets",
+    "enabled": true
+  },
+  {
+    "keyword": "반려동물이동장",
+    "slug": "k-ebb098eba0a4eb8f99ebacbcec9db4eb8f99ec9ea5",
+    "category": "쇼핑",
+    "aliases": [
+      "반려동물이동장"
+    ],
+    "shopping_category": "pets",
+    "enabled": true
+  },
+  {
+    "keyword": "소파",
+    "slug": "k-ec868ced8c8c",
+    "category": "쇼핑",
+    "aliases": [
+      "소파"
+    ],
+    "shopping_category": "furniture",
+    "enabled": true
+  },
+  {
+    "keyword": "매트리스",
+    "slug": "k-eba7a4ed8ab8eba6acec8aa4",
+    "category": "쇼핑",
+    "aliases": [
+      "매트리스"
+    ],
+    "shopping_category": "furniture",
+    "enabled": true
+  },
+  {
+    "keyword": "침대프레임",
+    "slug": "k-ecb9a8eb8c80ed9484eba088ec9e84",
+    "category": "쇼핑",
+    "aliases": [
+      "침대프레임"
+    ],
+    "shopping_category": "furniture",
+    "enabled": true
+  },
+  {
+    "keyword": "식탁",
+    "slug": "k-ec8b9ded8381",
+    "category": "쇼핑",
+    "aliases": [
+      "식탁"
+    ],
+    "shopping_category": "furniture",
+    "enabled": true
+  },
+  {
+    "keyword": "책상",
+    "slug": "k-ecb185ec8381",
+    "category": "쇼핑",
+    "aliases": [
+      "책상"
+    ],
+    "shopping_category": "furniture",
+    "enabled": true
+  },
+  {
+    "keyword": "책장",
+    "slug": "k-ecb185ec9ea5",
+    "category": "쇼핑",
+    "aliases": [
+      "책장"
+    ],
+    "shopping_category": "furniture",
+    "enabled": true
+  },
+  {
+    "keyword": "옷장",
+    "slug": "k-ec98b7ec9ea5",
+    "category": "쇼핑",
+    "aliases": [
+      "옷장"
+    ],
+    "shopping_category": "furniture",
+    "enabled": true
+  },
+  {
+    "keyword": "수납장",
+    "slug": "k-ec8898eb82a9ec9ea5",
+    "category": "쇼핑",
+    "aliases": [
+      "수납장"
+    ],
+    "shopping_category": "furniture",
+    "enabled": true
+  },
+  {
+    "keyword": "커튼",
+    "slug": "k-ecbba4ed8abc",
+    "category": "쇼핑",
+    "aliases": [
+      "커튼"
+    ],
+    "shopping_category": "furniture",
+    "enabled": true
+  },
+  {
+    "keyword": "블라인드",
+    "slug": "k-ebb894eb9dbcec9db8eb939c",
+    "category": "쇼핑",
+    "aliases": [
+      "블라인드"
+    ],
+    "shopping_category": "furniture",
+    "enabled": true
+  },
+  {
+    "keyword": "러그",
+    "slug": "k-eb9faceab7b8",
+    "category": "쇼핑",
+    "aliases": [
+      "러그"
+    ],
+    "shopping_category": "furniture",
+    "enabled": true
+  },
+  {
+    "keyword": "전신거울",
+    "slug": "k-eca084ec8ba0eab1b0ec9ab8",
+    "category": "쇼핑",
+    "aliases": [
+      "전신거울"
+    ],
+    "shopping_category": "furniture",
+    "enabled": true
+  },
+  {
+    "keyword": "행거",
+    "slug": "k-ed9689eab1b0",
+    "category": "쇼핑",
+    "aliases": [
+      "행거"
+    ],
+    "shopping_category": "furniture",
+    "enabled": true
+  },
+  {
+    "keyword": "협탁",
+    "slug": "k-ed9891ed8381",
+    "category": "쇼핑",
+    "aliases": [
+      "협탁"
+    ],
+    "shopping_category": "furniture",
+    "enabled": true
+  },
+  {
+    "keyword": "사무용의자",
+    "slug": "k-ec82acebacb4ec9aa9ec9d98ec9e90",
+    "category": "쇼핑",
+    "aliases": [
+      "사무용의자"
+    ],
+    "shopping_category": "furniture",
+    "enabled": true
+  },
+  {
+    "keyword": "로봇청소기",
+    "slug": "k-eba19cebb487ecb2adec868ceab8b0",
+    "category": "가전",
+    "aliases": [
+      "로봇청소기"
+    ],
+    "shopping_category": "appliances",
+    "enabled": true
+  },
+  {
+    "keyword": "무선청소기",
+    "slug": "k-ebacb4ec84a0ecb2adec868ceab8b0",
+    "category": "가전",
+    "aliases": [
+      "무선청소기"
+    ],
+    "shopping_category": "appliances",
+    "enabled": true
+  },
+  {
+    "keyword": "제습기",
+    "slug": "k-eca09cec8ab5eab8b0",
+    "category": "가전",
+    "aliases": [
+      "제습기"
+    ],
+    "shopping_category": "appliances",
+    "enabled": true
+  },
+  {
+    "keyword": "공기청정기",
+    "slug": "k-eab3b5eab8b0ecb2adeca095eab8b0",
+    "category": "가전",
+    "aliases": [
+      "공기청정기"
+    ],
+    "shopping_category": "appliances",
+    "enabled": true
+  },
+  {
+    "keyword": "가습기",
+    "slug": "k-eab080ec8ab5eab8b0",
+    "category": "가전",
+    "aliases": [
+      "가습기"
+    ],
+    "shopping_category": "appliances",
+    "enabled": true
+  },
+  {
+    "keyword": "에어컨",
+    "slug": "k-ec9790ec96b4ecbba8",
+    "category": "가전",
+    "aliases": [
+      "에어컨"
+    ],
+    "shopping_category": "appliances",
+    "enabled": true
+  },
+  {
+    "keyword": "선풍기",
+    "slug": "k-ec84a0ed928deab8b0",
+    "category": "가전",
+    "aliases": [
+      "선풍기"
+    ],
+    "shopping_category": "appliances",
+    "enabled": true
+  },
+  {
+    "keyword": "서큘레이터",
+    "slug": "k-ec849ced8198eba088ec9db4ed84b0",
+    "category": "가전",
+    "aliases": [
+      "서큘레이터"
+    ],
+    "shopping_category": "appliances",
+    "enabled": true
+  },
+  {
+    "keyword": "냉장고",
+    "slug": "k-eb8389ec9ea5eab3a0",
+    "category": "가전",
+    "aliases": [
+      "냉장고"
+    ],
+    "shopping_category": "appliances",
+    "enabled": true
+  },
+  {
+    "keyword": "김치냉장고",
+    "slug": "k-eab980ecb998eb8389ec9ea5eab3a0",
+    "category": "가전",
+    "aliases": [
+      "김치냉장고"
+    ],
+    "shopping_category": "appliances",
+    "enabled": true
+  },
+  {
+    "keyword": "세탁기",
+    "slug": "k-ec84b8ed8381eab8b0",
+    "category": "가전",
+    "aliases": [
+      "세탁기"
+    ],
+    "shopping_category": "appliances",
+    "enabled": true
+  },
+  {
+    "keyword": "건조기",
+    "slug": "k-eab1b4eca1b0eab8b0",
+    "category": "가전",
+    "aliases": [
+      "건조기"
+    ],
+    "shopping_category": "appliances",
+    "enabled": true
+  },
+  {
+    "keyword": "식기세척기",
+    "slug": "k-ec8b9deab8b0ec84b8ecb299eab8b0",
+    "category": "가전",
+    "aliases": [
+      "식기세척기"
+    ],
+    "shopping_category": "appliances",
+    "enabled": true
+  },
+  {
+    "keyword": "음식물처리기",
+    "slug": "k-ec9d8cec8b9debacbcecb298eba6aceab8b0",
+    "category": "가전",
+    "aliases": [
+      "음식물처리기"
+    ],
+    "shopping_category": "appliances",
+    "enabled": true
+  },
+  {
+    "keyword": "정수기",
+    "slug": "k-eca095ec8898eab8b0",
+    "category": "가전",
+    "aliases": [
+      "정수기"
+    ],
+    "shopping_category": "appliances",
+    "enabled": true
+  },
+  {
+    "keyword": "전기밥솥",
+    "slug": "k-eca084eab8b0ebb0a5ec86a5",
+    "category": "가전",
+    "aliases": [
+      "전기밥솥"
+    ],
+    "shopping_category": "appliances",
+    "enabled": true
+  },
+  {
+    "keyword": "에어프라이어",
+    "slug": "k-ec9790ec96b4ed9484eb9dbcec9db4ec96b4",
+    "category": "가전",
+    "aliases": [
+      "에어프라이어"
+    ],
+    "shopping_category": "appliances",
+    "enabled": true
+  },
+  {
+    "keyword": "전자레인지",
+    "slug": "k-eca084ec9e90eba088ec9db8eca780",
+    "category": "가전",
+    "aliases": [
+      "전자레인지"
+    ],
+    "shopping_category": "appliances",
+    "enabled": true
+  },
+  {
+    "keyword": "오븐",
+    "slug": "k-ec98a4ebb890",
+    "category": "가전",
+    "aliases": [
+      "오븐"
+    ],
+    "shopping_category": "appliances",
+    "enabled": true
+  },
+  {
+    "keyword": "인덕션",
+    "slug": "k-ec9db8eb8d95ec8598",
+    "category": "가전",
+    "aliases": [
+      "인덕션"
+    ],
+    "shopping_category": "appliances",
+    "enabled": true
+  },
+  {
+    "keyword": "커피머신",
+    "slug": "k-ecbba4ed94bceba8b8ec8ba0",
+    "category": "가전",
+    "aliases": [
+      "커피머신"
+    ],
+    "shopping_category": "appliances",
+    "enabled": true
+  },
+  {
+    "keyword": "전기포트",
+    "slug": "k-eca084eab8b0ed8faced8ab8",
+    "category": "가전",
+    "aliases": [
+      "전기포트"
+    ],
+    "shopping_category": "appliances",
+    "enabled": true
+  },
+  {
+    "keyword": "블렌더",
+    "slug": "k-ebb894eba08ceb8d94",
+    "category": "가전",
+    "aliases": [
+      "블렌더"
+    ],
+    "shopping_category": "appliances",
+    "enabled": true
+  },
+  {
+    "keyword": "토스터",
+    "slug": "k-ed86a0ec8aa4ed84b0",
+    "category": "가전",
+    "aliases": [
+      "토스터"
+    ],
+    "shopping_category": "appliances",
+    "enabled": true
+  },
+  {
+    "keyword": "와플메이커",
+    "slug": "k-ec9980ed948ceba994ec9db4ecbba4",
+    "category": "가전",
+    "aliases": [
+      "와플메이커"
+    ],
+    "shopping_category": "appliances",
+    "enabled": true
+  },
+  {
+    "keyword": "전기그릴",
+    "slug": "k-eca084eab8b0eab7b8eba6b4",
+    "category": "가전",
+    "aliases": [
+      "전기그릴"
+    ],
+    "shopping_category": "appliances",
+    "enabled": true
+  },
+  {
+    "keyword": "전기압력솥",
+    "slug": "k-eca084eab8b0ec9595eba0a5ec86a5",
+    "category": "가전",
+    "aliases": [
+      "전기압력솥"
+    ],
+    "shopping_category": "appliances",
+    "enabled": true
+  },
+  {
+    "keyword": "진공포장기",
+    "slug": "k-eca784eab3b5ed8facec9ea5eab8b0",
+    "category": "가전",
+    "aliases": [
+      "진공포장기"
+    ],
+    "shopping_category": "appliances",
+    "enabled": true
+  },
+  {
+    "keyword": "식품건조기",
+    "slug": "k-ec8b9ded9288eab1b4eca1b0eab8b0",
+    "category": "가전",
+    "aliases": [
+      "식품건조기"
+    ],
+    "shopping_category": "appliances",
+    "enabled": true
+  },
+  {
+    "keyword": "빙수기",
+    "slug": "k-ebb999ec8898eab8b0",
+    "category": "가전",
+    "aliases": [
+      "빙수기"
+    ],
+    "shopping_category": "appliances",
+    "enabled": true
+  },
+  {
+    "keyword": "헤어드라이어",
+    "slug": "k-ed97a4ec96b4eb939ceb9dbcec9db4ec96b4",
+    "category": "가전",
+    "aliases": [
+      "헤어드라이어"
+    ],
+    "shopping_category": "appliances",
+    "enabled": true
+  },
+  {
+    "keyword": "고데기",
+    "slug": "k-eab3a0eb8db0eab8b0",
+    "category": "가전",
+    "aliases": [
+      "고데기"
+    ],
+    "shopping_category": "appliances",
+    "enabled": true
+  },
+  {
+    "keyword": "전기면도기",
+    "slug": "k-eca084eab8b0eba9b4eb8f84eab8b0",
+    "category": "가전",
+    "aliases": [
+      "전기면도기"
+    ],
+    "shopping_category": "appliances",
+    "enabled": true
+  },
+  {
+    "keyword": "전동칫솔",
+    "slug": "k-eca084eb8f99ecb9abec8694",
+    "category": "가전",
+    "aliases": [
+      "전동칫솔"
+    ],
+    "shopping_category": "appliances",
+    "enabled": true
+  },
+  {
+    "keyword": "구강세정기",
+    "slug": "k-eab5aceab095ec84b8eca095eab8b0",
+    "category": "가전",
+    "aliases": [
+      "구강세정기"
+    ],
+    "shopping_category": "appliances",
+    "enabled": true
+  },
+  {
+    "keyword": "안마의자",
+    "slug": "k-ec9588eba788ec9d98ec9e90",
+    "category": "가전",
+    "aliases": [
+      "안마의자"
+    ],
+    "shopping_category": "appliances",
+    "enabled": true
+  },
+  {
+    "keyword": "마사지건",
+    "slug": "k-eba788ec82aceca780eab1b4",
+    "category": "가전",
+    "aliases": [
+      "마사지건"
+    ],
+    "shopping_category": "appliances",
+    "enabled": true
+  },
+  {
+    "keyword": "족욕기",
+    "slug": "k-eca1b1ec9a95eab8b0",
+    "category": "가전",
+    "aliases": [
+      "족욕기"
+    ],
+    "shopping_category": "appliances",
+    "enabled": true
+  },
+  {
+    "keyword": "전기장판",
+    "slug": "k-eca084eab8b0ec9ea5ed8c90",
+    "category": "가전",
+    "aliases": [
+      "전기장판"
+    ],
+    "shopping_category": "appliances",
+    "enabled": true
+  },
+  {
+    "keyword": "온수매트",
+    "slug": "k-ec98a8ec8898eba7a4ed8ab8",
+    "category": "가전",
+    "aliases": [
+      "온수매트"
+    ],
+    "shopping_category": "appliances",
+    "enabled": true
+  },
+  {
+    "keyword": "스팀다리미",
+    "slug": "k-ec8aa4ed8c80eb8ba4eba6acebafb8",
+    "category": "가전",
+    "aliases": [
+      "스팀다리미"
+    ],
+    "shopping_category": "digital",
+    "enabled": true
+  },
+  {
+    "keyword": "의류관리기",
+    "slug": "k-ec9d98eba598eab480eba6aceab8b0",
+    "category": "가전",
+    "aliases": [
+      "의류관리기"
+    ],
+    "shopping_category": "digital",
+    "enabled": true
+  },
+  {
+    "keyword": "빔프로젝터",
+    "slug": "k-ebb994ed9484eba19ceca09ded84b0",
+    "category": "가전",
+    "aliases": [
+      "빔프로젝터"
+    ],
+    "shopping_category": "digital",
+    "enabled": true
+  },
+  {
+    "keyword": "사운드바",
+    "slug": "k-ec82acec9ab4eb939cebb094",
+    "category": "가전",
+    "aliases": [
+      "사운드바"
+    ],
+    "shopping_category": "digital",
+    "enabled": true
+  },
+  {
+    "keyword": "블루투스스피커",
+    "slug": "k-ebb894eba3a8ed88acec8aa4ec8aa4ed94bcecbba4",
+    "category": "가전",
+    "aliases": [
+      "블루투스스피커"
+    ],
+    "shopping_category": "digital",
+    "enabled": true
+  },
+  {
+    "keyword": "스마트tv",
+    "slug": "k-ec8aa4eba788ed8ab87476",
+    "category": "가전",
+    "aliases": [
+      "스마트tv"
+    ],
+    "shopping_category": "digital",
+    "enabled": true
+  },
+  {
+    "keyword": "모니터",
+    "slug": "k-ebaaa8eb8b88ed84b0",
+    "category": "가전",
+    "aliases": [
+      "모니터"
+    ],
+    "shopping_category": "digital",
+    "enabled": true
+  },
+  {
+    "keyword": "웹캠",
+    "slug": "k-ec9bb9ecbaa0",
+    "category": "가전",
+    "aliases": [
+      "웹캠"
+    ],
+    "shopping_category": "digital",
+    "enabled": true
+  },
+  {
+    "keyword": "보조배터리",
+    "slug": "k-ebb3b4eca1b0ebb0b0ed84b0eba6ac",
+    "category": "가전",
+    "aliases": [
+      "보조배터리"
+    ],
+    "shopping_category": "digital",
+    "enabled": true
+  },
+  {
+    "keyword": "무선충전기",
+    "slug": "k-ebacb4ec84a0ecb6a9eca084eab8b0",
+    "category": "가전",
+    "aliases": [
+      "무선충전기"
+    ],
+    "shopping_category": "digital",
+    "enabled": true
+  },
+  {
+    "keyword": "트렌치코트",
+    "slug": "k-ed8ab8eba08cecb998ecbd94ed8ab8",
+    "category": "패션",
+    "aliases": [
+      "트렌치코트"
+    ],
+    "shopping_category": "fashion",
+    "enabled": true
+  },
+  {
+    "keyword": "패딩",
+    "slug": "k-ed8ca8eb94a9",
+    "category": "패션",
+    "aliases": [
+      "패딩"
+    ],
+    "shopping_category": "fashion",
+    "enabled": true
+  },
+  {
+    "keyword": "숏패딩",
+    "slug": "k-ec888fed8ca8eb94a9",
+    "category": "패션",
+    "aliases": [
+      "숏패딩"
+    ],
+    "shopping_category": "fashion",
+    "enabled": true
+  },
+  {
+    "keyword": "롱패딩",
+    "slug": "k-eba1b1ed8ca8eb94a9",
+    "category": "패션",
+    "aliases": [
+      "롱패딩"
+    ],
+    "shopping_category": "fashion",
+    "enabled": true
+  },
+  {
+    "keyword": "울코트",
+    "slug": "k-ec9ab8ecbd94ed8ab8",
+    "category": "패션",
+    "aliases": [
+      "울코트"
+    ],
+    "shopping_category": "fashion",
+    "enabled": true
+  },
+  {
+    "keyword": "가죽자켓",
+    "slug": "k-eab080eca3bdec9e90ecbc93",
+    "category": "패션",
+    "aliases": [
+      "가죽자켓"
+    ],
+    "shopping_category": "fashion",
+    "enabled": true
+  },
+  {
+    "keyword": "데님자켓",
+    "slug": "k-eb8db0eb8b98ec9e90ecbc93",
+    "category": "패션",
+    "aliases": [
+      "데님자켓"
+    ],
+    "shopping_category": "fashion",
+    "enabled": true
+  },
+  {
+    "keyword": "블레이저",
+    "slug": "k-ebb894eba088ec9db4eca080",
+    "category": "패션",
+    "aliases": [
+      "블레이저"
+    ],
+    "shopping_category": "fashion",
+    "enabled": true
+  },
+  {
+    "keyword": "바람막이",
+    "slug": "k-ebb094eb9e8ceba789ec9db4",
+    "category": "패션",
+    "aliases": [
+      "바람막이"
+    ],
+    "shopping_category": "fashion",
+    "enabled": true
+  },
+  {
+    "keyword": "플리스",
+    "slug": "k-ed948ceba6acec8aa4",
+    "category": "패션",
+    "aliases": [
+      "플리스"
+    ],
+    "shopping_category": "fashion",
+    "enabled": true
+  },
+  {
+    "keyword": "가디건",
+    "slug": "k-eab080eb9494eab1b4",
+    "category": "패션",
+    "aliases": [
+      "가디건"
+    ],
+    "shopping_category": "fashion",
+    "enabled": true
+  },
+  {
+    "keyword": "니트",
+    "slug": "k-eb8b88ed8ab8",
+    "category": "패션",
+    "aliases": [
+      "니트"
+    ],
+    "shopping_category": "fashion",
+    "enabled": true
+  },
+  {
+    "keyword": "맨투맨",
+    "slug": "k-eba7a8ed88aceba7a8",
+    "category": "패션",
+    "aliases": [
+      "맨투맨"
+    ],
+    "shopping_category": "fashion",
+    "enabled": true
+  },
+  {
+    "keyword": "후드티",
+    "slug": "k-ed9b84eb939ced8bb0",
+    "category": "패션",
+    "aliases": [
+      "후드티"
+    ],
+    "shopping_category": "fashion",
+    "enabled": true
+  },
+  {
+    "keyword": "반팔티",
+    "slug": "k-ebb098ed8c94ed8bb0",
+    "category": "패션",
+    "aliases": [
+      "반팔티"
+    ],
+    "shopping_category": "fashion",
+    "enabled": true
+  },
+  {
+    "keyword": "긴팔티",
+    "slug": "k-eab8b4ed8c94ed8bb0",
+    "category": "패션",
+    "aliases": [
+      "긴팔티"
+    ],
+    "shopping_category": "fashion",
+    "enabled": true
+  },
+  {
+    "keyword": "폴로셔츠",
+    "slug": "k-ed8fb4eba19cec8594ecb8a0",
+    "category": "패션",
+    "aliases": [
+      "폴로셔츠"
+    ],
+    "shopping_category": "fashion",
+    "enabled": true
+  },
+  {
+    "keyword": "린넨셔츠",
+    "slug": "k-eba6b0eb84a8ec8594ecb8a0",
+    "category": "패션",
+    "aliases": [
+      "린넨셔츠"
+    ],
+    "shopping_category": "fashion",
+    "enabled": true
+  },
+  {
+    "keyword": "옥스포드셔츠",
+    "slug": "k-ec98a5ec8aa4ed8faceb939cec8594ecb8a0",
+    "category": "패션",
+    "aliases": [
+      "옥스포드셔츠"
+    ],
+    "shopping_category": "fashion",
+    "enabled": true
+  },
+  {
+    "keyword": "체크셔츠",
+    "slug": "k-ecb2b4ed81acec8594ecb8a0",
+    "category": "패션",
+    "aliases": [
+      "체크셔츠"
+    ],
+    "shopping_category": "fashion",
+    "enabled": true
+  },
+  {
+    "keyword": "청바지",
+    "slug": "k-ecb2adebb094eca780",
+    "category": "패션",
+    "aliases": [
+      "청바지"
+    ],
+    "shopping_category": "fashion",
+    "enabled": true
+  },
+  {
+    "keyword": "슬랙스",
+    "slug": "k-ec8aaceb9e99ec8aa4",
+    "category": "패션",
+    "aliases": [
+      "슬랙스"
+    ],
+    "shopping_category": "fashion",
+    "enabled": true
+  },
+  {
+    "keyword": "조거팬츠",
+    "slug": "k-eca1b0eab1b0ed8cacecb8a0",
+    "category": "패션",
+    "aliases": [
+      "조거팬츠"
+    ],
+    "shopping_category": "fashion",
+    "enabled": true
+  },
+  {
+    "keyword": "와이드팬츠",
+    "slug": "k-ec9980ec9db4eb939ced8cacecb8a0",
+    "category": "패션",
+    "aliases": [
+      "와이드팬츠"
+    ],
+    "shopping_category": "fashion",
+    "enabled": true
+  },
+  {
+    "keyword": "카고팬츠",
+    "slug": "k-ecb9b4eab3a0ed8cacecb8a0",
+    "category": "패션",
+    "aliases": [
+      "카고팬츠"
+    ],
+    "shopping_category": "fashion",
+    "enabled": true
+  },
+  {
+    "keyword": "치노팬츠",
+    "slug": "k-ecb998eb85b8ed8cacecb8a0",
+    "category": "패션",
+    "aliases": [
+      "치노팬츠"
+    ],
+    "shopping_category": "fashion",
+    "enabled": true
+  },
+  {
+    "keyword": "반바지",
+    "slug": "k-ebb098ebb094eca780",
+    "category": "패션",
+    "aliases": [
+      "반바지"
+    ],
+    "shopping_category": "fashion",
+    "enabled": true
+  },
+  {
+    "keyword": "레깅스",
+    "slug": "k-eba088eab985ec8aa4",
+    "category": "패션",
+    "aliases": [
+      "레깅스"
+    ],
+    "shopping_category": "fashion",
+    "enabled": true
+  },
+  {
+    "keyword": "트레이닝복",
+    "slug": "k-ed8ab8eba088ec9db4eb8b9debb3b5",
+    "category": "패션",
+    "aliases": [
+      "트레이닝복"
+    ],
+    "shopping_category": "fashion",
+    "enabled": true
+  },
+  {
+    "keyword": "요가복",
+    "slug": "k-ec9a94eab080ebb3b5",
+    "category": "패션",
+    "aliases": [
+      "요가복"
+    ],
+    "shopping_category": "fashion",
+    "enabled": true
+  },
+  {
+    "keyword": "원피스",
+    "slug": "k-ec9b90ed94bcec8aa4",
+    "category": "패션",
+    "aliases": [
+      "원피스"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "롱스커트",
+    "slug": "k-eba1b1ec8aa4ecbba4ed8ab8",
+    "category": "패션",
+    "aliases": [
+      "롱스커트"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "미니스커트",
+    "slug": "k-ebafb8eb8b88ec8aa4ecbba4ed8ab8",
+    "category": "패션",
+    "aliases": [
+      "미니스커트"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "플리츠스커트",
+    "slug": "k-ed948ceba6acecb8a0ec8aa4ecbba4ed8ab8",
+    "category": "패션",
+    "aliases": [
+      "플리츠스커트"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "블라우스",
+    "slug": "k-ebb894eb9dbcec9ab0ec8aa4",
+    "category": "패션",
+    "aliases": [
+      "블라우스"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "수트",
+    "slug": "k-ec8898ed8ab8",
+    "category": "패션",
+    "aliases": [
+      "수트"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "정장바지",
+    "slug": "k-eca095ec9ea5ebb094eca780",
+    "category": "패션",
+    "aliases": [
+      "정장바지"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "니트조끼",
+    "slug": "k-eb8b88ed8ab8eca1b0eb81bc",
+    "category": "패션",
+    "aliases": [
+      "니트조끼"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "패딩조끼",
+    "slug": "k-ed8ca8eb94a9eca1b0eb81bc",
+    "category": "패션",
+    "aliases": [
+      "패딩조끼"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "수영복",
+    "slug": "k-ec8898ec9881ebb3b5",
+    "category": "패션",
+    "aliases": [
+      "수영복"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "래쉬가드",
+    "slug": "k-eb9e98ec89aceab080eb939c",
+    "category": "패션",
+    "aliases": [
+      "래쉬가드"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "잠옷",
+    "slug": "k-ec9ea0ec98b7",
+    "category": "패션",
+    "aliases": [
+      "잠옷"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "내복",
+    "slug": "k-eb82b4ebb3b5",
+    "category": "패션",
+    "aliases": [
+      "내복"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "발열내의",
+    "slug": "k-ebb09cec97b4eb82b4ec9d98",
+    "category": "패션",
+    "aliases": [
+      "발열내의"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "스포츠브라",
+    "slug": "k-ec8aa4ed8facecb8a0ebb88ceb9dbc",
+    "category": "패션",
+    "aliases": [
+      "스포츠브라"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "브라탑",
+    "slug": "k-ebb88ceb9dbced8391",
+    "category": "패션",
+    "aliases": [
+      "브라탑"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "탱크탑",
+    "slug": "k-ed83b1ed81aced8391",
+    "category": "패션",
+    "aliases": [
+      "탱크탑"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "점프수트",
+    "slug": "k-eca090ed9484ec8898ed8ab8",
+    "category": "패션",
+    "aliases": [
+      "점프수트"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "멜빵바지",
+    "slug": "k-eba99cebb9b5ebb094eca780",
+    "category": "패션",
+    "aliases": [
+      "멜빵바지"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "한복",
+    "slug": "k-ed959cebb3b5",
+    "category": "패션",
+    "aliases": [
+      "한복"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "선크림",
+    "slug": "k-ec84a0ed81aceba6bc",
+    "category": "뷰티",
+    "aliases": [
+      "선크림"
+    ],
+    "shopping_category": "beauty",
+    "enabled": true
+  },
+  {
+    "keyword": "토너",
+    "slug": "k-ed86a0eb8488",
+    "category": "뷰티",
+    "aliases": [
+      "토너"
+    ],
+    "shopping_category": "beauty",
+    "enabled": true
+  },
+  {
+    "keyword": "세럼",
+    "slug": "k-ec84b8eb9fbc",
+    "category": "뷰티",
+    "aliases": [
+      "세럼"
+    ],
+    "shopping_category": "beauty",
+    "enabled": true
+  },
+  {
+    "keyword": "앰플",
+    "slug": "k-ec95b0ed948c",
+    "category": "뷰티",
+    "aliases": [
+      "앰플"
+    ],
+    "shopping_category": "beauty",
+    "enabled": true
+  },
+  {
+    "keyword": "수분크림",
+    "slug": "k-ec8898ebb684ed81aceba6bc",
+    "category": "뷰티",
+    "aliases": [
+      "수분크림"
+    ],
+    "shopping_category": "beauty",
+    "enabled": true
+  },
+  {
+    "keyword": "아이크림",
+    "slug": "k-ec9584ec9db4ed81aceba6bc",
+    "category": "뷰티",
+    "aliases": [
+      "아이크림"
+    ],
+    "shopping_category": "beauty",
+    "enabled": true
+  },
+  {
+    "keyword": "클렌징오일",
+    "slug": "k-ed81b4eba08ceca795ec98a4ec9dbc",
+    "category": "뷰티",
+    "aliases": [
+      "클렌징오일"
+    ],
+    "shopping_category": "beauty",
+    "enabled": true
+  },
+  {
+    "keyword": "클렌징폼",
+    "slug": "k-ed81b4eba08ceca795ed8fbc",
+    "category": "뷰티",
+    "aliases": [
+      "클렌징폼"
+    ],
+    "shopping_category": "beauty",
+    "enabled": true
+  },
+  {
+    "keyword": "클렌징밤",
+    "slug": "k-ed81b4eba08ceca795ebb0a4",
+    "category": "뷰티",
+    "aliases": [
+      "클렌징밤"
+    ],
+    "shopping_category": "beauty",
+    "enabled": true
+  },
+  {
+    "keyword": "미스트",
+    "slug": "k-ebafb8ec8aa4ed8ab8",
+    "category": "뷰티",
+    "aliases": [
+      "미스트"
+    ],
+    "shopping_category": "beauty",
+    "enabled": true
+  },
+  {
+    "keyword": "마스크팩",
+    "slug": "k-eba788ec8aa4ed81aced8ca9",
+    "category": "뷰티",
+    "aliases": [
+      "마스크팩"
+    ],
+    "shopping_category": "beauty",
+    "enabled": true
+  },
+  {
+    "keyword": "쿠션파운데이션",
+    "slug": "k-ecbfa0ec8598ed8c8cec9ab4eb8db0ec9db4ec8598",
+    "category": "뷰티",
+    "aliases": [
+      "쿠션파운데이션"
+    ],
+    "shopping_category": "beauty",
+    "enabled": true
+  },
+  {
+    "keyword": "리퀴드파운데이션",
+    "slug": "k-eba6aced80b4eb939ced8c8cec9ab4eb8db0ec9db4ec8598",
+    "category": "뷰티",
+    "aliases": [
+      "리퀴드파운데이션"
+    ],
+    "shopping_category": "beauty",
+    "enabled": true
+  },
+  {
+    "keyword": "컨실러",
+    "slug": "k-ecbba8ec8ba4eb9fac",
+    "category": "뷰티",
+    "aliases": [
+      "컨실러"
+    ],
+    "shopping_category": "beauty",
+    "enabled": true
+  },
+  {
+    "keyword": "프라이머",
+    "slug": "k-ed9484eb9dbcec9db4eba8b8",
+    "category": "뷰티",
+    "aliases": [
+      "프라이머"
+    ],
+    "shopping_category": "beauty",
+    "enabled": true
+  },
+  {
+    "keyword": "메이크업픽서",
+    "slug": "k-eba994ec9db4ed81acec9785ed94bdec849c",
+    "category": "뷰티",
+    "aliases": [
+      "메이크업픽서"
+    ],
+    "shopping_category": "beauty",
+    "enabled": true
+  },
+  {
+    "keyword": "파우더",
+    "slug": "k-ed8c8cec9ab0eb8d94",
+    "category": "뷰티",
+    "aliases": [
+      "파우더"
+    ],
+    "shopping_category": "beauty",
+    "enabled": true
+  },
+  {
+    "keyword": "블러셔",
+    "slug": "k-ebb894eb9facec8594",
+    "category": "뷰티",
+    "aliases": [
+      "블러셔"
+    ],
+    "shopping_category": "beauty",
+    "enabled": true
+  },
+  {
+    "keyword": "하이라이터",
+    "slug": "k-ed9598ec9db4eb9dbcec9db4ed84b0",
+    "category": "뷰티",
+    "aliases": [
+      "하이라이터"
+    ],
+    "shopping_category": "beauty",
+    "enabled": true
+  },
+  {
+    "keyword": "쉐딩",
+    "slug": "k-ec8990eb94a9",
+    "category": "뷰티",
+    "aliases": [
+      "쉐딩"
+    ],
+    "shopping_category": "beauty",
+    "enabled": true
+  },
+  {
+    "keyword": "아이섀도",
+    "slug": "k-ec9584ec9db4ec8480eb8f84",
+    "category": "뷰티",
+    "aliases": [
+      "아이섀도"
+    ],
+    "shopping_category": "beauty",
+    "enabled": true
+  },
+  {
+    "keyword": "아이라이너",
+    "slug": "k-ec9584ec9db4eb9dbcec9db4eb8488",
+    "category": "뷰티",
+    "aliases": [
+      "아이라이너"
+    ],
+    "shopping_category": "beauty",
+    "enabled": true
+  },
+  {
+    "keyword": "마스카라",
+    "slug": "k-eba788ec8aa4ecb9b4eb9dbc",
+    "category": "뷰티",
+    "aliases": [
+      "마스카라"
+    ],
+    "shopping_category": "beauty",
+    "enabled": true
+  },
+  {
+    "keyword": "아이브로우",
+    "slug": "k-ec9584ec9db4ebb88ceba19cec9ab0",
+    "category": "뷰티",
+    "aliases": [
+      "아이브로우"
+    ],
+    "shopping_category": "beauty",
+    "enabled": true
+  },
+  {
+    "keyword": "립스틱",
+    "slug": "k-eba6bdec8aa4ed8bb1",
+    "category": "뷰티",
+    "aliases": [
+      "립스틱"
+    ],
+    "shopping_category": "beauty",
+    "enabled": true
+  },
+  {
+    "keyword": "립틴트",
+    "slug": "k-eba6bded8bb4ed8ab8",
+    "category": "뷰티",
+    "aliases": [
+      "립틴트"
+    ],
+    "shopping_category": "beauty",
+    "enabled": true
+  },
+  {
+    "keyword": "립밤",
+    "slug": "k-eba6bdebb0a4",
+    "category": "뷰티",
+    "aliases": [
+      "립밤"
+    ],
+    "shopping_category": "beauty",
+    "enabled": true
+  },
+  {
+    "keyword": "립글로스",
+    "slug": "k-eba6bdeab880eba19cec8aa4",
+    "category": "뷰티",
+    "aliases": [
+      "립글로스"
+    ],
+    "shopping_category": "beauty",
+    "enabled": true
+  },
+  {
+    "keyword": "립라이너",
+    "slug": "k-eba6bdeb9dbcec9db4eb8488",
+    "category": "뷰티",
+    "aliases": [
+      "립라이너"
+    ],
+    "shopping_category": "beauty",
+    "enabled": true
+  },
+  {
+    "keyword": "네일폴리시",
+    "slug": "k-eb84a4ec9dbced8fb4eba6acec8b9c",
+    "category": "뷰티",
+    "aliases": [
+      "네일폴리시"
+    ],
+    "shopping_category": "beauty",
+    "enabled": true
+  },
+  {
+    "keyword": "샴푸",
+    "slug": "k-ec83b4ed91b8",
+    "category": "뷰티",
+    "aliases": [
+      "샴푸"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "트리트먼트",
+    "slug": "k-ed8ab8eba6aced8ab8eba8bced8ab8",
+    "category": "뷰티",
+    "aliases": [
+      "트리트먼트"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "헤어오일",
+    "slug": "k-ed97a4ec96b4ec98a4ec9dbc",
+    "category": "뷰티",
+    "aliases": [
+      "헤어오일"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "헤어에센스",
+    "slug": "k-ed97a4ec96b4ec9790ec84bcec8aa4",
+    "category": "뷰티",
+    "aliases": [
+      "헤어에센스"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "헤어왁스",
+    "slug": "k-ed97a4ec96b4ec9981ec8aa4",
+    "category": "뷰티",
+    "aliases": [
+      "헤어왁스"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "헤어스프레이",
+    "slug": "k-ed97a4ec96b4ec8aa4ed9484eba088ec9db4",
+    "category": "뷰티",
+    "aliases": [
+      "헤어스프레이"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "드라이샴푸",
+    "slug": "k-eb939ceb9dbcec9db4ec83b4ed91b8",
+    "category": "뷰티",
+    "aliases": [
+      "드라이샴푸"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "두피토닉",
+    "slug": "k-eb9190ed94bced86a0eb8b89",
+    "category": "뷰티",
+    "aliases": [
+      "두피토닉"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "염색약",
+    "slug": "k-ec97bcec8389ec95bd",
+    "category": "뷰티",
+    "aliases": [
+      "염색약"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "헤어팩",
+    "slug": "k-ed97a4ec96b4ed8ca9",
+    "category": "뷰티",
+    "aliases": [
+      "헤어팩"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "바디워시",
+    "slug": "k-ebb094eb9494ec9b8cec8b9c",
+    "category": "뷰티",
+    "aliases": [
+      "바디워시"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "바디로션",
+    "slug": "k-ebb094eb9494eba19cec8598",
+    "category": "뷰티",
+    "aliases": [
+      "바디로션"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "핸드크림",
+    "slug": "k-ed95b8eb939ced81aceba6bc",
+    "category": "뷰티",
+    "aliases": [
+      "핸드크림"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "풋크림",
+    "slug": "k-ed928bed81aceba6bc",
+    "category": "뷰티",
+    "aliases": [
+      "풋크림"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "바디스크럽",
+    "slug": "k-ebb094eb9494ec8aa4ed81aceb9fbd",
+    "category": "뷰티",
+    "aliases": [
+      "바디스크럽"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "향수",
+    "slug": "k-ed96a5ec8898",
+    "category": "뷰티",
+    "aliases": [
+      "향수"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "섬유향수",
+    "slug": "k-ec84acec9ca0ed96a5ec8898",
+    "category": "뷰티",
+    "aliases": [
+      "섬유향수"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "디퓨저",
+    "slug": "k-eb9494ed93a8eca080",
+    "category": "뷰티",
+    "aliases": [
+      "디퓨저"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "큐티클오일",
+    "slug": "k-ed8190ed8bb0ed81b4ec98a4ec9dbc",
+    "category": "뷰티",
+    "aliases": [
+      "큐티클오일"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "속눈썹영양제",
+    "slug": "k-ec868deb8888ec8db9ec9881ec9691eca09c",
+    "category": "뷰티",
+    "aliases": [
+      "속눈썹영양제"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "제주도여행",
+    "slug": "k-eca09ceca3bceb8f84ec97aced9689",
+    "category": "여행",
+    "aliases": [
+      "제주도여행"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "부산여행",
+    "slug": "k-ebb680ec82b0ec97aced9689",
+    "category": "여행",
+    "aliases": [
+      "부산여행"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "강릉여행",
+    "slug": "k-eab095eba689ec97aced9689",
+    "category": "여행",
+    "aliases": [
+      "강릉여행"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "속초여행",
+    "slug": "k-ec868decb488ec97aced9689",
+    "category": "여행",
+    "aliases": [
+      "속초여행"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "여수여행",
+    "slug": "k-ec97acec8898ec97aced9689",
+    "category": "여행",
+    "aliases": [
+      "여수여행"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "경주여행",
+    "slug": "k-eab2bdeca3bcec97aced9689",
+    "category": "여행",
+    "aliases": [
+      "경주여행"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "전주여행",
+    "slug": "k-eca084eca3bcec97aced9689",
+    "category": "여행",
+    "aliases": [
+      "전주여행"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "통영여행",
+    "slug": "k-ed86b5ec9881ec97aced9689",
+    "category": "여행",
+    "aliases": [
+      "통영여행"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "거제여행",
+    "slug": "k-eab1b0eca09cec97aced9689",
+    "category": "여행",
+    "aliases": [
+      "거제여행"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "남해여행",
+    "slug": "k-eb82a8ed95b4ec97aced9689",
+    "category": "여행",
+    "aliases": [
+      "남해여행"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "춘천여행",
+    "slug": "k-ecb698ecb29cec97aced9689",
+    "category": "여행",
+    "aliases": [
+      "춘천여행"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "가평여행",
+    "slug": "k-eab080ed8f89ec97aced9689",
+    "category": "여행",
+    "aliases": [
+      "가평여행"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "양양여행",
+    "slug": "k-ec9691ec9691ec97aced9689",
+    "category": "여행",
+    "aliases": [
+      "양양여행"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "포항여행",
+    "slug": "k-ed8faced95adec97aced9689",
+    "category": "여행",
+    "aliases": [
+      "포항여행"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "울릉도여행",
+    "slug": "k-ec9ab8eba689eb8f84ec97aced9689",
+    "category": "여행",
+    "aliases": [
+      "울릉도여행"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "서울여행",
+    "slug": "k-ec849cec9ab8ec97aced9689",
+    "category": "여행",
+    "aliases": [
+      "서울여행"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "인천여행",
+    "slug": "k-ec9db8ecb29cec97aced9689",
+    "category": "여행",
+    "aliases": [
+      "인천여행"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "대구여행",
+    "slug": "k-eb8c80eab5acec97aced9689",
+    "category": "여행",
+    "aliases": [
+      "대구여행"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "대전여행",
+    "slug": "k-eb8c80eca084ec97aced9689",
+    "category": "여행",
+    "aliases": [
+      "대전여행"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "광주여행",
+    "slug": "k-eab491eca3bcec97aced9689",
+    "category": "여행",
+    "aliases": [
+      "광주여행"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "일본여행",
+    "slug": "k-ec9dbcebb3b8ec97aced9689",
+    "category": "여행",
+    "aliases": [
+      "일본여행"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "도쿄여행",
+    "slug": "k-eb8f84ecbf84ec97aced9689",
+    "category": "여행",
+    "aliases": [
+      "도쿄여행"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "오사카여행",
+    "slug": "k-ec98a4ec82acecb9b4ec97aced9689",
+    "category": "여행",
+    "aliases": [
+      "오사카여행"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "후쿠오카여행",
+    "slug": "k-ed9b84ecbfa0ec98a4ecb9b4ec97aced9689",
+    "category": "여행",
+    "aliases": [
+      "후쿠오카여행"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "삿포로여행",
+    "slug": "k-ec82bfed8faceba19cec97aced9689",
+    "category": "여행",
+    "aliases": [
+      "삿포로여행"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "오키나와여행",
+    "slug": "k-ec98a4ed82a4eb8298ec9980ec97aced9689",
+    "category": "여행",
+    "aliases": [
+      "오키나와여행"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "교토여행",
+    "slug": "k-eab590ed86a0ec97aced9689",
+    "category": "여행",
+    "aliases": [
+      "교토여행"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "나고야여행",
+    "slug": "k-eb8298eab3a0ec95bcec97aced9689",
+    "category": "여행",
+    "aliases": [
+      "나고야여행"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "대만여행",
+    "slug": "k-eb8c80eba78cec97aced9689",
+    "category": "여행",
+    "aliases": [
+      "대만여행"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "타이베이여행",
+    "slug": "k-ed8380ec9db4ebb2a0ec9db4ec97aced9689",
+    "category": "여행",
+    "aliases": [
+      "타이베이여행"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "홍콩여행",
+    "slug": "k-ed998decbda9ec97aced9689",
+    "category": "여행",
+    "aliases": [
+      "홍콩여행"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "마카오여행",
+    "slug": "k-eba788ecb9b4ec98a4ec97aced9689",
+    "category": "여행",
+    "aliases": [
+      "마카오여행"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "방콕여행",
+    "slug": "k-ebb0a9ecbd95ec97aced9689",
+    "category": "여행",
+    "aliases": [
+      "방콕여행"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "치앙마이여행",
+    "slug": "k-ecb998ec9599eba788ec9db4ec97aced9689",
+    "category": "여행",
+    "aliases": [
+      "치앙마이여행"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "푸켓여행",
+    "slug": "k-ed91b8ecbc93ec97aced9689",
+    "category": "여행",
+    "aliases": [
+      "푸켓여행"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "다낭여행",
+    "slug": "k-eb8ba4eb82adec97aced9689",
+    "category": "여행",
+    "aliases": [
+      "다낭여행"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "나트랑여행",
+    "slug": "k-eb8298ed8ab8eb9e91ec97aced9689",
+    "category": "여행",
+    "aliases": [
+      "나트랑여행"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "하노이여행",
+    "slug": "k-ed9598eb85b8ec9db4ec97aced9689",
+    "category": "여행",
+    "aliases": [
+      "하노이여행"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "호치민여행",
+    "slug": "k-ed98b8ecb998ebafbcec97aced9689",
+    "category": "여행",
+    "aliases": [
+      "호치민여행"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "싱가포르여행",
+    "slug": "k-ec8bb1eab080ed8faceba5b4ec97aced9689",
+    "category": "여행",
+    "aliases": [
+      "싱가포르여행"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "발리여행",
+    "slug": "k-ebb09ceba6acec97aced9689",
+    "category": "여행",
+    "aliases": [
+      "발리여행"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "세부여행",
+    "slug": "k-ec84b8ebb680ec97aced9689",
+    "category": "여행",
+    "aliases": [
+      "세부여행"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "보라카이여행",
+    "slug": "k-ebb3b4eb9dbcecb9b4ec9db4ec97aced9689",
+    "category": "여행",
+    "aliases": [
+      "보라카이여행"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "코타키나발루여행",
+    "slug": "k-ecbd94ed8380ed82a4eb8298ebb09ceba3a8ec97aced9689",
+    "category": "여행",
+    "aliases": [
+      "코타키나발루여행"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "괌여행",
+    "slug": "k-eab48cec97aced9689",
+    "category": "여행",
+    "aliases": [
+      "괌여행"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "사이판여행",
+    "slug": "k-ec82acec9db4ed8c90ec97aced9689",
+    "category": "여행",
+    "aliases": [
+      "사이판여행"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "하와이여행",
+    "slug": "k-ed9598ec9980ec9db4ec97aced9689",
+    "category": "여행",
+    "aliases": [
+      "하와이여행"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "파리여행",
+    "slug": "k-ed8c8ceba6acec97aced9689",
+    "category": "여행",
+    "aliases": [
+      "파리여행"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "런던여행",
+    "slug": "k-eb9fb0eb8d98ec97aced9689",
+    "category": "여행",
+    "aliases": [
+      "런던여행"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "로마여행",
+    "slug": "k-eba19ceba788ec97aced9689",
+    "category": "여행",
+    "aliases": [
+      "로마여행"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "러닝화",
+    "slug": "k-eb9faceb8b9ded9994",
+    "category": "스포츠",
+    "aliases": [
+      "러닝화"
+    ],
+    "shopping_category": "sports",
+    "enabled": true
+  },
+  {
+    "keyword": "축구화",
+    "slug": "k-ecb695eab5aced9994",
+    "category": "스포츠",
+    "aliases": [
+      "축구화"
+    ],
+    "shopping_category": "sports",
+    "enabled": true
+  },
+  {
+    "keyword": "풋살화",
+    "slug": "k-ed928bec82b4ed9994",
+    "category": "스포츠",
+    "aliases": [
+      "풋살화"
+    ],
+    "shopping_category": "sports",
+    "enabled": true
+  },
+  {
+    "keyword": "농구화",
+    "slug": "k-eb868deab5aced9994",
+    "category": "스포츠",
+    "aliases": [
+      "농구화"
+    ],
+    "shopping_category": "sports",
+    "enabled": true
+  },
+  {
+    "keyword": "등산화",
+    "slug": "k-eb93b1ec82b0ed9994",
+    "category": "스포츠",
+    "aliases": [
+      "등산화"
+    ],
+    "shopping_category": "sports",
+    "enabled": true
+  },
+  {
+    "keyword": "트레킹화",
+    "slug": "k-ed8ab8eba088ed82b9ed9994",
+    "category": "스포츠",
+    "aliases": [
+      "트레킹화"
+    ],
+    "shopping_category": "sports",
+    "enabled": true
+  },
+  {
+    "keyword": "골프화",
+    "slug": "k-eab3a8ed9484ed9994",
+    "category": "스포츠",
+    "aliases": [
+      "골프화"
+    ],
+    "shopping_category": "sports",
+    "enabled": true
+  },
+  {
+    "keyword": "테니스화",
+    "slug": "k-ed858ceb8b88ec8aa4ed9994",
+    "category": "스포츠",
+    "aliases": [
+      "테니스화"
+    ],
+    "shopping_category": "sports",
+    "enabled": true
+  },
+  {
+    "keyword": "배드민턴화",
+    "slug": "k-ebb0b0eb939cebafbced84b4ed9994",
+    "category": "스포츠",
+    "aliases": [
+      "배드민턴화"
+    ],
+    "shopping_category": "sports",
+    "enabled": true
+  },
+  {
+    "keyword": "탁구화",
+    "slug": "k-ed8381eab5aced9994",
+    "category": "스포츠",
+    "aliases": [
+      "탁구화"
+    ],
+    "shopping_category": "sports",
+    "enabled": true
+  },
+  {
+    "keyword": "러닝벨트",
+    "slug": "k-eb9faceb8b9debb2a8ed8ab8",
+    "category": "스포츠",
+    "aliases": [
+      "러닝벨트"
+    ],
+    "shopping_category": "sports",
+    "enabled": true
+  },
+  {
+    "keyword": "러닝조끼",
+    "slug": "k-eb9faceb8b9deca1b0eb81bc",
+    "category": "스포츠",
+    "aliases": [
+      "러닝조끼"
+    ],
+    "shopping_category": "sports",
+    "enabled": true
+  },
+  {
+    "keyword": "러닝양말",
+    "slug": "k-eb9faceb8b9dec9691eba790",
+    "category": "스포츠",
+    "aliases": [
+      "러닝양말"
+    ],
+    "shopping_category": "sports",
+    "enabled": true
+  },
+  {
+    "keyword": "러닝모자",
+    "slug": "k-eb9faceb8b9debaaa8ec9e90",
+    "category": "스포츠",
+    "aliases": [
+      "러닝모자"
+    ],
+    "shopping_category": "sports",
+    "enabled": true
+  },
+  {
+    "keyword": "스포츠선글라스",
+    "slug": "k-ec8aa4ed8facecb8a0ec84a0eab880eb9dbcec8aa4",
+    "category": "스포츠",
+    "aliases": [
+      "스포츠선글라스"
+    ],
+    "shopping_category": "sports",
+    "enabled": true
+  },
+  {
+    "keyword": "요가매트",
+    "slug": "k-ec9a94eab080eba7a4ed8ab8",
+    "category": "스포츠",
+    "aliases": [
+      "요가매트"
+    ],
+    "shopping_category": "sports",
+    "enabled": true
+  },
+  {
+    "keyword": "폼롤러",
+    "slug": "k-ed8fbceba1a4eb9fac",
+    "category": "스포츠",
+    "aliases": [
+      "폼롤러"
+    ],
+    "shopping_category": "sports",
+    "enabled": true
+  },
+  {
+    "keyword": "덤벨",
+    "slug": "k-eb8da4ebb2a8",
+    "category": "스포츠",
+    "aliases": [
+      "덤벨"
+    ],
+    "shopping_category": "sports",
+    "enabled": true
+  },
+  {
+    "keyword": "케틀벨",
+    "slug": "k-ecbc80ed8b80ebb2a8",
+    "category": "스포츠",
+    "aliases": [
+      "케틀벨"
+    ],
+    "shopping_category": "sports",
+    "enabled": true
+  },
+  {
+    "keyword": "풀업바",
+    "slug": "k-ed9280ec9785ebb094",
+    "category": "스포츠",
+    "aliases": [
+      "풀업바"
+    ],
+    "shopping_category": "sports",
+    "enabled": true
+  },
+  {
+    "keyword": "스텝퍼",
+    "slug": "k-ec8aa4ed859ded8dbc",
+    "category": "스포츠",
+    "aliases": [
+      "스텝퍼"
+    ],
+    "shopping_category": "sports",
+    "enabled": true
+  },
+  {
+    "keyword": "실내자전거",
+    "slug": "k-ec8ba4eb82b4ec9e90eca084eab1b0",
+    "category": "스포츠",
+    "aliases": [
+      "실내자전거"
+    ],
+    "shopping_category": "sports",
+    "enabled": true
+  },
+  {
+    "keyword": "러닝머신",
+    "slug": "k-eb9faceb8b9deba8b8ec8ba0",
+    "category": "스포츠",
+    "aliases": [
+      "러닝머신"
+    ],
+    "shopping_category": "sports",
+    "enabled": true
+  },
+  {
+    "keyword": "줄넘기",
+    "slug": "k-eca484eb8498eab8b0",
+    "category": "스포츠",
+    "aliases": [
+      "줄넘기"
+    ],
+    "shopping_category": "sports",
+    "enabled": true
+  },
+  {
+    "keyword": "푸시업바",
+    "slug": "k-ed91b8ec8b9cec9785ebb094",
+    "category": "스포츠",
+    "aliases": [
+      "푸시업바"
+    ],
+    "shopping_category": "sports",
+    "enabled": true
+  },
+  {
+    "keyword": "텐트",
+    "slug": "k-ed8590ed8ab8",
+    "category": "스포츠",
+    "aliases": [
+      "텐트"
+    ],
+    "shopping_category": "sports",
+    "enabled": true
+  },
+  {
+    "keyword": "캠핑의자",
+    "slug": "k-ecbaa0ed9591ec9d98ec9e90",
+    "category": "스포츠",
+    "aliases": [
+      "캠핑의자"
+    ],
+    "shopping_category": "sports",
+    "enabled": true
+  },
+  {
+    "keyword": "캠핑테이블",
+    "slug": "k-ecbaa0ed9591ed858cec9db4ebb894",
+    "category": "스포츠",
+    "aliases": [
+      "캠핑테이블"
+    ],
+    "shopping_category": "sports",
+    "enabled": true
+  },
+  {
+    "keyword": "침낭",
+    "slug": "k-ecb9a8eb82ad",
+    "category": "스포츠",
+    "aliases": [
+      "침낭"
+    ],
+    "shopping_category": "sports",
+    "enabled": true
+  },
+  {
+    "keyword": "캠핑매트",
+    "slug": "k-ecbaa0ed9591eba7a4ed8ab8",
+    "category": "스포츠",
+    "aliases": [
+      "캠핑매트"
+    ],
+    "shopping_category": "sports",
+    "enabled": true
+  },
+  {
+    "keyword": "랜턴",
+    "slug": "k-eb9e9ced84b4",
+    "category": "스포츠",
+    "aliases": [
+      "랜턴"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "아이스박스",
+    "slug": "k-ec9584ec9db4ec8aa4ebb095ec8aa4",
+    "category": "스포츠",
+    "aliases": [
+      "아이스박스"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "코펠",
+    "slug": "k-ecbd94ed8ea0",
+    "category": "스포츠",
+    "aliases": [
+      "코펠"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "등산스틱",
+    "slug": "k-eb93b1ec82b0ec8aa4ed8bb1",
+    "category": "스포츠",
+    "aliases": [
+      "등산스틱"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "등산배낭",
+    "slug": "k-eb93b1ec82b0ebb0b0eb82ad",
+    "category": "스포츠",
+    "aliases": [
+      "등산배낭"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "자전거",
+    "slug": "k-ec9e90eca084eab1b0",
+    "category": "스포츠",
+    "aliases": [
+      "자전거"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "자전거헬멧",
+    "slug": "k-ec9e90eca084eab1b0ed97aceba9a7",
+    "category": "스포츠",
+    "aliases": [
+      "자전거헬멧"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "자전거장갑",
+    "slug": "k-ec9e90eca084eab1b0ec9ea5eab091",
+    "category": "스포츠",
+    "aliases": [
+      "자전거장갑"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "축구공",
+    "slug": "k-ecb695eab5aceab3b5",
+    "category": "스포츠",
+    "aliases": [
+      "축구공"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "농구공",
+    "slug": "k-eb868deab5aceab3b5",
+    "category": "스포츠",
+    "aliases": [
+      "농구공"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "배구공",
+    "slug": "k-ebb0b0eab5aceab3b5",
+    "category": "스포츠",
+    "aliases": [
+      "배구공"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "테니스라켓",
+    "slug": "k-ed858ceb8b88ec8aa4eb9dbcecbc93",
+    "category": "스포츠",
+    "aliases": [
+      "테니스라켓"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "배드민턴라켓",
+    "slug": "k-ebb0b0eb939cebafbced84b4eb9dbcecbc93",
+    "category": "스포츠",
+    "aliases": [
+      "배드민턴라켓"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "탁구라켓",
+    "slug": "k-ed8381eab5aceb9dbcecbc93",
+    "category": "스포츠",
+    "aliases": [
+      "탁구라켓"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "골프채",
+    "slug": "k-eab3a8ed9484ecb184",
+    "category": "스포츠",
+    "aliases": [
+      "골프채"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "골프공",
+    "slug": "k-eab3a8ed9484eab3b5",
+    "category": "스포츠",
+    "aliases": [
+      "골프공"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "수경",
+    "slug": "k-ec8898eab2bd",
+    "category": "스포츠",
+    "aliases": [
+      "수경"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "수모",
+    "slug": "k-ec8898ebaaa8",
+    "category": "스포츠",
+    "aliases": [
+      "수모"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "스노클",
+    "slug": "k-ec8aa4eb85b8ed81b4",
+    "category": "스포츠",
+    "aliases": [
+      "스노클"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "오리발",
+    "slug": "k-ec98a4eba6acebb09c",
+    "category": "스포츠",
+    "aliases": [
+      "오리발"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "넷플릭스",
+    "slug": "k-eb84b7ed948ceba6adec8aa4",
+    "category": "엔터테인먼트",
+    "aliases": [
+      "넷플릭스"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "디즈니+",
+    "slug": "k-eb9494eca688eb8b882b",
+    "category": "엔터테인먼트",
+    "aliases": [
+      "디즈니+"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "티빙",
+    "slug": "k-ed8bb0ebb999",
+    "category": "엔터테인먼트",
+    "aliases": [
+      "티빙"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "웨이브",
+    "slug": "k-ec9ba8ec9db4ebb88c",
+    "category": "엔터테인먼트",
+    "aliases": [
+      "웨이브"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "쿠팡플레이",
+    "slug": "k-ecbfa0ed8ca1ed948ceba088ec9db4",
+    "category": "엔터테인먼트",
+    "aliases": [
+      "쿠팡플레이"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "왓챠",
+    "slug": "k-ec9993ecb1a0",
+    "category": "엔터테인먼트",
+    "aliases": [
+      "왓챠"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "애플tv",
+    "slug": "k-ec95a0ed948c7476",
+    "category": "엔터테인먼트",
+    "aliases": [
+      "애플tv"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "유튜브프리미엄",
+    "slug": "k-ec9ca0ed8a9cebb88ced9484eba6acebafb8ec9784",
+    "category": "엔터테인먼트",
+    "aliases": [
+      "유튜브프리미엄"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "스포티파이",
+    "slug": "k-ec8aa4ed8faced8bb0ed8c8cec9db4",
+    "category": "엔터테인먼트",
+    "aliases": [
+      "스포티파이"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "멜론",
+    "slug": "k-eba99ceba1a0",
+    "category": "엔터테인먼트",
+    "aliases": [
+      "멜론"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "지니뮤직",
+    "slug": "k-eca780eb8b88ebaea4eca781",
+    "category": "엔터테인먼트",
+    "aliases": [
+      "지니뮤직"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "벅스",
+    "slug": "k-ebb285ec8aa4",
+    "category": "엔터테인먼트",
+    "aliases": [
+      "벅스"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "플로",
+    "slug": "k-ed948ceba19c",
+    "category": "엔터테인먼트",
+    "aliases": [
+      "플로"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "바이브",
+    "slug": "k-ebb094ec9db4ebb88c",
+    "category": "엔터테인먼트",
+    "aliases": [
+      "바이브"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "애플뮤직",
+    "slug": "k-ec95a0ed948cebaea4eca781",
+    "category": "엔터테인먼트",
+    "aliases": [
+      "애플뮤직"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "방탄소년단",
+    "slug": "k-ebb0a9ed8384ec868ceb8584eb8ba8",
+    "category": "엔터테인먼트",
+    "aliases": [
+      "방탄소년단"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "블랙핑크",
+    "slug": "k-ebb894eb9e99ed9591ed81ac",
+    "category": "엔터테인먼트",
+    "aliases": [
+      "블랙핑크"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "세븐틴",
+    "slug": "k-ec84b8ebb890ed8bb4",
+    "category": "엔터테인먼트",
+    "aliases": [
+      "세븐틴"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "스트레이키즈",
+    "slug": "k-ec8aa4ed8ab8eba088ec9db4ed82a4eca688",
+    "category": "엔터테인먼트",
+    "aliases": [
+      "스트레이키즈"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "투모로우바이투게더",
+    "slug": "k-ed88acebaaa8eba19cec9ab0ebb094ec9db4ed88aceab28ceb8d94",
+    "category": "엔터테인먼트",
+    "aliases": [
+      "투모로우바이투게더"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "엔하이픈",
+    "slug": "k-ec9794ed9598ec9db4ed9488",
+    "category": "엔터테인먼트",
+    "aliases": [
+      "엔하이픈"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "에스파",
+    "slug": "k-ec9790ec8aa4ed8c8c",
+    "category": "엔터테인먼트",
+    "aliases": [
+      "에스파"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "아이브",
+    "slug": "k-ec9584ec9db4ebb88c",
+    "category": "엔터테인먼트",
+    "aliases": [
+      "아이브"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "르세라핌",
+    "slug": "k-eba5b4ec84b8eb9dbced958c",
+    "category": "엔터테인먼트",
+    "aliases": [
+      "르세라핌"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "뉴진스",
+    "slug": "k-eb89b4eca784ec8aa4",
+    "category": "엔터테인먼트",
+    "aliases": [
+      "뉴진스"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "엔믹스",
+    "slug": "k-ec9794ebafb9ec8aa4",
+    "category": "엔터테인먼트",
+    "aliases": [
+      "엔믹스"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "트와이스",
+    "slug": "k-ed8ab8ec9980ec9db4ec8aa4",
+    "category": "엔터테인먼트",
+    "aliases": [
+      "트와이스"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "레드벨벳",
+    "slug": "k-eba088eb939cebb2a8ebb2b3",
+    "category": "엔터테인먼트",
+    "aliases": [
+      "레드벨벳"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "아이들",
+    "slug": "k-ec9584ec9db4eb93a4",
+    "category": "엔터테인먼트",
+    "aliases": [
+      "아이들"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "있지",
+    "slug": "k-ec9e88eca780",
+    "category": "엔터테인먼트",
+    "aliases": [
+      "있지"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "라이즈",
+    "slug": "k-eb9dbcec9db4eca688",
+    "category": "엔터테인먼트",
+    "aliases": [
+      "라이즈"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "제로베이스원",
+    "slug": "k-eca09ceba19cebb2a0ec9db4ec8aa4ec9b90",
+    "category": "엔터테인먼트",
+    "aliases": [
+      "제로베이스원"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "보이넥스트도어",
+    "slug": "k-ebb3b4ec9db4eb84a5ec8aa4ed8ab8eb8f84ec96b4",
+    "category": "엔터테인먼트",
+    "aliases": [
+      "보이넥스트도어"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "투어스",
+    "slug": "k-ed88acec96b4ec8aa4",
+    "category": "엔터테인먼트",
+    "aliases": [
+      "투어스"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "데이식스",
+    "slug": "k-eb8db0ec9db4ec8b9dec8aa4",
+    "category": "엔터테인먼트",
+    "aliases": [
+      "데이식스"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "아이유",
+    "slug": "k-ec9584ec9db4ec9ca0",
+    "category": "엔터테인먼트",
+    "aliases": [
+      "아이유"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "태연",
+    "slug": "k-ed839cec97b0",
+    "category": "엔터테인먼트",
+    "aliases": [
+      "태연"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "임영웅",
+    "slug": "k-ec9e84ec9881ec9b85",
+    "category": "엔터테인먼트",
+    "aliases": [
+      "임영웅"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "영탁",
+    "slug": "k-ec9881ed8381",
+    "category": "엔터테인먼트",
+    "aliases": [
+      "영탁"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "이찬원",
+    "slug": "k-ec9db4ecb0acec9b90",
+    "category": "엔터테인먼트",
+    "aliases": [
+      "이찬원"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "성시경",
+    "slug": "k-ec84b1ec8b9ceab2bd",
+    "category": "엔터테인먼트",
+    "aliases": [
+      "성시경"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "박효신",
+    "slug": "k-ebb095ed9aa8ec8ba0",
+    "category": "엔터테인먼트",
+    "aliases": [
+      "박효신"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "폴킴",
+    "slug": "k-ed8fb4ed82b4",
+    "category": "엔터테인먼트",
+    "aliases": [
+      "폴킴"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "정승환",
+    "slug": "k-eca095ec8ab9ed9998",
+    "category": "엔터테인먼트",
+    "aliases": [
+      "정승환"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "이무진",
+    "slug": "k-ec9db4ebacb4eca784",
+    "category": "엔터테인먼트",
+    "aliases": [
+      "이무진"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "악뮤",
+    "slug": "k-ec9585ebaea4",
+    "category": "엔터테인먼트",
+    "aliases": [
+      "악뮤"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "잔나비",
+    "slug": "k-ec9e94eb8298ebb984",
+    "category": "엔터테인먼트",
+    "aliases": [
+      "잔나비"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "백예린",
+    "slug": "k-ebb0b1ec9888eba6b0",
+    "category": "엔터테인먼트",
+    "aliases": [
+      "백예린"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "볼빨간사춘기",
+    "slug": "k-ebb3bcebb9a8eab084ec82acecb698eab8b0",
+    "category": "엔터테인먼트",
+    "aliases": [
+      "볼빨간사춘기"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  },
+  {
+    "keyword": "비비",
+    "slug": "k-ebb984ebb984",
+    "category": "엔터테인먼트",
+    "aliases": [
+      "비비"
+    ],
+    "shopping_category": null,
+    "enabled": true
+  }
+]

@@ -1,11 +1,7 @@
 import { build } from 'esbuild'
-import { mkdtemp, rm } from 'node:fs/promises'
+import { mkdtemp,rm } from 'node:fs/promises'
 import { tmpdir } from 'node:os'
 import { join } from 'node:path'
 import { pathToFileURL } from 'node:url'
-const dir = await mkdtemp(join(tmpdir(), 'why-trending-test-'))
-try {
-  const outfile = join(dir, 'test.mjs')
-  await build({ entryPoints: ['tests/improvements.ts'], bundle: true, platform: 'node', format: 'esm', outfile, logLevel: 'silent' })
-  await import(pathToFileURL(outfile).href)
-} finally { await rm(dir, { recursive: true, force: true }) }
+const temp=await mkdtemp(join(tmpdir(),'trendpick-tests-'))
+try{const outfile=join(temp,'core.mjs');await build({entryPoints:['tests/core.ts'],outfile,bundle:true,platform:'node',format:'esm',logLevel:'silent'});await import(pathToFileURL(outfile).href);await import('./database.mjs');await import('./collector.mjs');const apiFile=join(temp,'api.mjs');await build({entryPoints:['tests/api.ts'],outfile:apiFile,bundle:true,platform:'node',format:'esm',logLevel:'silent'});await import(pathToFileURL(apiFile).href)}finally{await rm(temp,{recursive:true,force:true})}

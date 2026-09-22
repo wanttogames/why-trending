@@ -1,11 +1,7 @@
-node_modules
-dist
-.env
-.env.*
+node_modules/
+dist/
+.wrangler/
+.dev.vars*
+.env*
 !.env.example
-.wrangler
-.wrangler-dry-run
-.pages-functions-build
-.dev.vars
-.sites-runtime
 *.log

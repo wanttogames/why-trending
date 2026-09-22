@@ -1,0 +1,111 @@
+# 변경 파일 목록
+
+이전 제공 소스와 새 프로젝트의 파일 비교입니다. Git 커밋 diff가 아니며 운영 저장소에는 아직 적용하지 않았습니다. 기존 DB 테이블은 삭제하지 않습니다. 적용 스크립트는 기존 코드 디렉터리를 백업한 후 교체합니다.
+
+## 추가
+
+- `Apply-TrendPick.ps1`
+- `docs/MANUAL-TEST.md`
+- `docs/VALIDATION.md`
+- `public/ads.txt`
+- `public/og.png`
+- `scripts/budget.mjs`
+- `scripts/generate-seed.mjs`
+- `server/trendpick/cache.ts`
+- `server/trendpick/collector.ts`
+- `server/trendpick/context.ts`
+- `server/trendpick/mock.ts`
+- `server/trendpick/provider.ts`
+- `server/trendpick/service.ts`
+- `shared/config.ts`
+- `shared/errors.ts`
+- `shared/identity.ts`
+- `shared/math.ts`
+- `src/components/CompareForm.vue`
+- `src/components/ContentPanel.vue`
+- `src/components/RankingSection.vue`
+- `src/components/TrendChart.vue`
+- `src/lib/api.ts`
+- `src/lib/share.ts`
+- `src/pages/Compare.vue`
+- `src/pages/Explore.vue`
+- `src/pages/Home.vue`
+- `src/pages/Info.vue`
+- `src/pages/Keyword.vue`
+- `supabase/migrations/20260921_trendpick.sql`
+- `supabase/seeds/keywords.json`
+- `supabase/seeds/keywords.sql`
+- `tests/api.ts`
+- `tests/collector.mjs`
+- `tests/core.ts`
+- `tests/database.mjs`
+
+## 수정
+
+- `.env.example`
+- `.gitignore`
+- `README.md`
+- `index.html`
+- `package-lock.json`
+- `package.json`
+- `public/favicon.svg`
+- `server/metrics/subrequest-counter.ts`
+- `server/naver/client.ts`
+- `shared/types.ts`
+- `src/App.vue`
+- `src/router.ts`
+- `src/styles.css`
+- `tests/run.mjs`
+- `tsconfig.app.json`
+- `vite.config.ts`
+- `worker/collector.ts`
+- `worker/index.ts`
+- `wrangler.collector.toml`
+- `wrangler.jsonc`
+
+## 새 프로젝트에서 제외
+
+- `IMPROVEMENTS-FILES.txt`
+- `collector-batch-save-fix.zip`
+- `collector-top20-fix.zip`
+- `functions/[[path]].ts`
+- `functions/_shared/http.ts`
+- `functions/api/issues/[slug]/history.ts`
+- `functions/api/issues/[slug]/index.ts`
+- `functions/api/issues/[slug]/news.ts`
+- `functions/api/issues/index.ts`
+- `functions/api/search.ts`
+- `server/data-mode.ts`
+- `server/pipeline/collect.ts`
+- `server/pipeline/evidence.ts`
+- `server/pipeline/news-candidate-extractor.ts`
+- `server/pipeline/normalize.ts`
+- `server/pipeline/scoring.ts`
+- `server/providers/interfaces.ts`
+- `server/providers/mock-candidate.ts`
+- `server/providers/naver-news-candidate.ts`
+- `server/providers/naver-news.ts`
+- `server/providers/naver-trend.ts`
+- `server/providers/related-posts.ts`
+- `shared/keyword-search-config.ts`
+- `shared/mock-data.ts`
+- `shared/score-config.ts`
+- `src/api/issues.ts`
+- `src/components/CategoryTabs.vue`
+- `src/components/IssueHistoryChart.vue`
+- `src/components/IssueRankingItem.vue`
+- `src/components/IssueRankingList.vue`
+- `src/components/IssueScoreBadge.vue`
+- `src/components/LastUpdated.vue`
+- `src/components/NewsList.vue`
+- `src/components/RankChange.vue`
+- `src/components/RelatedPosts.vue`
+- `src/components/SearchBar.vue`
+- `src/composables/useDocumentMeta.ts`
+- `src/pages/HomePage.vue`
+- `src/pages/IssueDetailPage.vue`
+- `supabase/migrations/001_initial_schema.sql`
+- `supabase/migrations/20260917_cleanup_tft_semiconductor_data.sql`
+- `supabase/migrations/20260918_issue_evidence.sql`
+- `tests/fixture-result.log`
+- `tests/improvements.ts`

@@ -1,18 +1,21 @@
 {
-  "name": "waetteo",
+  "name": "trendpick",
   "private": true,
-  "version": "0.1.0",
+  "version": "0.2.0",
   "type": "module",
   "scripts": {
-    "dev": "vite",
-    "dev:worker": "npm run build && wrangler dev",
+    "dev": "wrangler dev --env preview",
+    "dev:worker": "npm run build && wrangler dev --env preview",
     "typecheck": "vue-tsc --noEmit",
     "build": "vue-tsc --noEmit && vite build",
     "preview": "vite preview",
     "deploy": "npm run build && wrangler deploy",
     "deploy:collector": "wrangler deploy --config wrangler.collector.toml",
     "cron:local": "wrangler dev --config wrangler.collector.toml --test-scheduled",
-    "test": "node tests/run.mjs"
+    "test": "node tests/run.mjs",
+    "seed:sql": "node scripts/generate-seed.mjs",
+    "dev:ui": "vite",
+    "budget": "node scripts/budget.mjs"
   },
   "dependencies": {
     "@supabase/supabase-js": "^2.57.4",
@@ -21,6 +24,7 @@
   },
   "devDependencies": {
     "@cloudflare/workers-types": "^5.20260916.1",
+    "@electric-sql/pglite": "^0.5.8",
     "@vitejs/plugin-vue": "^6.0.1",
     "esbuild": "^0.25.12",
     "typescript": "^5.9.2",

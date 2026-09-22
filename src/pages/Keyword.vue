@@ -1,0 +1,20 @@
+<script setup lang="ts">
+import { computed,ref,watch } from 'vue'
+import { useRoute } from 'vue-router'
+import { BRAND,PERIODS,PERIOD_LABELS,SUGGESTED_PAIRS,type Period } from '@shared/config'
+import { untoken,vsPath,token } from '@shared/identity'
+import { metrics,formatRate } from '@shared/math'
+import type { Envelope,TrendData } from '@shared/types'
+import { api,runtime,track } from '../lib/api'
+import TrendChart from '../components/TrendChart.vue'
+import ContentPanel from '../components/ContentPanel.vue'
+import AdSenseSlot from '../components/AdSenseSlot.vue'
+import { ADSENSE_SLOTS } from '../config/adsense'
+const route=useRoute(),period=ref<Period>('30d'),device=ref(''),gender=ref(''),age=ref(''),result=ref<Envelope<TrendData>|null>(null),loading=ref(false),error=ref(''),contentCount=ref(0)
+const shopping=computed(()=>route.path.startsWith('/shopping/')),keyword=computed(()=>{try{return untoken(String(route.params.keyword))}catch{return ''}}),series=computed(()=>result.value?.data.series[0]),m7=computed(()=>metrics(series.value?.points??[],7)),m30=computed(()=>metrics(series.value?.points??[],30))
+const pairs=computed(()=>SUGGESTED_PAIRS.filter(pair=>pair.some(q=>q.toLowerCase()===keyword.value)))
+let seq=0
+async function load(){const id=++seq;loading.value=true;error.value='';result.value=null;contentCount.value=0;try{const q=new URLSearchParams({q:keyword.value,period:period.value,shopping:shopping.value?'1':'0',device:device.value,gender:gender.value,age:age.value});const r=await api<Envelope<TrendData>>(`/api/keyword?${q}`);if(id===seq){result.value=r;document.title=`${keyword.value} 관심도 | ${BRAND.name}`}}catch(e){if(id===seq)error.value=(e as Error).message}finally{if(id===seq)loading.value=false}}
+watch([keyword,period,shopping,device,gender,age],load,{immediate:true})
+</script>
+<template><section class="page-intro"><span class="eyebrow">{{ shopping?'SHOPPING INSIGHT':'KEYWORD INSIGHT' }}</span><h1>{{ keyword }}</h1><p>{{ shopping?'쇼핑 검색 클릭 관심도':'검색 상대 관심도' }}를 기간별로 살펴보세요.</p></section><div class="toolbar"><div class="pills"><button v-for="p in ['7d','30d','90d','1y'] as const" :key="p" :class="{active:period===p}" @click="period=p;track('period_change')">{{ PERIOD_LABELS[p] }}</button></div></div><div v-if="shopping" class="filters"><label>기기<select v-model="device"><option value="">전체</option><option value="pc">PC</option><option value="mo">모바일</option></select></label><label>성별<select v-model="gender"><option value="">전체</option><option value="f">여성</option><option value="m">남성</option></select></label><label>연령<select v-model="age"><option value="">전체</option><option v-for="n in [10,20,30,40,50,60]" :key="n" :value="String(n)">{{ n }}대</option></select></label><p class="muted">선택 집단의 클릭 추이입니다. 별도 조회 간 지수를 인구 비중으로 비교하지 않습니다.</p></div><p v-if="loading" class="loading">관심도 데이터를 불러오는 중…</p><p v-if="error" role="alert" class="alert">{{ error }} <button @click="load">다시 시도</button></p><template v-if="result&&series"><p v-if="result.meta.message" class="notice">{{ result.meta.message }}</p><div class="summary-grid"><article class="metric-card"><span>최근 7일 · 직전 7일 대비</span><strong>{{ formatRate(m7) }}</strong></article><article class="metric-card"><span>최근 30일 · 직전 30일 대비</span><strong>{{ formatRate(m30) }}</strong></article></div><section class="panel"><h2>기간별 관심도</h2><TrendChart :series="result.data.series" :days="PERIODS[period]"/><p class="muted">{{ result.data.endDate }} 기준 · 최고 지수는 이 요청의 조회 범위 내 상대값입니다.</p></section><RouterLink v-if="!shopping&&result.data.shoppingCategory" class="secondary" :to="`/shopping/${token(keyword)}`">쇼핑 클릭 관심도도 보기 ↗</RouterLink><div v-if="pairs.length" class="panel"><h2>관련 비교</h2><RouterLink v-for="[a,b] in pairs" :key="a" class="pair-link" :to="vsPath(a,b)">{{ a }} vs {{ b }} ↗</RouterLink></div><ContentPanel :keyword="series.keyword" @loaded="contentCount=$event"/><AdSenseSlot v-if="runtime.ads&&runtime.mode==='real'&&contentCount>=3&&series.points.filter(p=>p.value!==null).length>=14" :slot-id="ADSENSE_SLOTS.detail1"/></template></template>

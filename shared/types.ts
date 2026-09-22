@@ -1,116 +1,15 @@
-export const CATEGORIES = ['전체', '연예', '스포츠', '게임', '경제', '사회', 'IT'] as const
-export type Category = (typeof CATEGORIES)[number]
-export type IssueStatus = 'NEW' | '급상승' | '상승' | '유지' | '하락'
-
-export interface IssueSnapshot {
-  collectedAt: string
-  trendScore: number
-  newsCount: number
-  issueScore: number
-  rank: number
-  rankChange: number
-}
-
-export interface NewsArticle {
-  id: string
-  title: string
-  description: string
-  url: string
-  publisher: string
-  publishedAt: string
-}
-
-export interface Issue {
-  id: string
-  keyword: string
-  slug: string
-  category: Exclude<Category, '전체'>
-  status: IssueStatus
-  rank: number
-  rankChange: number
-  issueScore: number
-  firstDetectedAt: string
-  lastDetectedAt: string
-  reason: string
-  relatedKeywords: string[]
-  evidence?: IssueEvidence
-  events?: IssueEvent[]
-  history?: IssueSnapshot[]
-  news?: NewsArticle[]
-}
-
-export interface ApiEnvelope<T> {
-  data: T
-  meta: { updatedAt: string; mode: 'mock' | 'real' }
-}
-
-export interface CandidateKeyword {
-  keyword: string
-  category: Exclude<Category, '전체'>
-  searchTerms?: string[]
-  relatedKeywords?: string[]
-  newsSignal?: NewsSignal
-  newsMetrics?: NewsCandidateMetrics
-}
-
-export interface NewsCandidateMetrics {
-  newsFrequencyScore: number
-  recentnessScore: number
-  sourceDiversityScore: number
-  articleCount: number
-}
-
-export interface CandidateDiscoveryStats {
-  newsSearchRequests: number
-  rawArticles: number
-  uniqueArticles: number
-  extractedCandidates: number
-  dedupedCandidates: number
-  fallbackUsed: boolean
-}
-
-export interface CandidateDiscoveryResult {
-  candidates: CandidateKeyword[]
-  stats: CandidateDiscoveryStats
-}
-
-export interface TrendSignal {
-  keyword: string
-  current: number
-  previous: number
-  growthRate: number
-  recentAverage: number
-  previousAverage: number
-  growthScore: number
-  levelScore: number
-}
-
-export interface NewsSignal {
-  keyword: string
-  articles: NewsArticle[]
-  recentCount: number
-  previousCount: number
-  publisherCount: number
-  latestPublishedAt: string | null
-}
-
+import type { Period } from './config'
 export interface WorkerEnv {
-  NAVER_CLIENT_ID?: string
-  NAVER_CLIENT_SECRET?: string
-  SUPABASE_URL?: string
-  SUPABASE_ANON_KEY?: string
-  SUPABASE_SERVICE_ROLE_KEY?: string
-  DATA_MODE?: string
+ NAVER_CLIENT_ID?:string; NAVER_CLIENT_SECRET?:string; SUPABASE_URL?:string; SUPABASE_SERVICE_ROLE_KEY?:string;
+ DATA_MODE?:string; SITE_URL?:string; COLLECTOR_CYCLE_HOURS?:string; COLLECTOR_TOKEN?:string; ADS_ENABLED?:string;
 }
-
-export interface IssueEvidence {
-  signal: 'news' | 'search'
-  trendStatus: 'rising' | 'stable' | 'unavailable'
-  recentCount: number
-  previousCount: number
-  publisherCount: number
-  summary: string
-  representative: { title: string; url: string; publishedAt: string } | null
-}
-export interface IssueEvent { title: string; description: string; eventAt: string }
-export interface RelatedPost { title: string; url: string; source: string; kind: 'blog' | 'cafe' }
+export interface Keyword { id?:number; keyword:string; slug:string; category:string; aliases:string[]; shopping_category?:string|null }
+export interface Point { date:string; value:number|null }
+export interface Metrics { asOf:string|null; currentScore:number|null; previousScore:number|null; change:number|null; changeRate:number|null; shortTermAvg:number|null; longTermAvg:number|null; trendScore:number; coverage:number; peakDate:string|null; peakValue:number|null; status:'ok'|'new'|'insufficient' }
+export interface Series { keyword:string; points:Point[] }
+export interface TrendData { series:Series[]; startDate:string; endDate:string; source:'search'|'shopping'; category?:string; shoppingCategory?:string|null; collectedAt:string }
+export interface Envelope<T> { data:T; meta:{ mode:'mock'|'real'; stale:boolean; updatedAt:string; message?:string } }
+export interface Ranking { keyword:Keyword; metrics:Metrics; updatedAt:string; source:'search'|'shopping' }
+export interface Comparison { a:string; b:string; shareA:number|null; shareB:number|null; metricsA:Metrics; metricsB:Metrics; trend:TrendData; period:Period }
+export interface ContentItem { title:string; description:string; url:string; source:string; publishedAt?:string }
+export interface ContentResult { news:ContentItem[]; blog:ContentItem[]; cafe:ContentItem[]; unavailable:string[] }

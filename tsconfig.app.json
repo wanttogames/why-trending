@@ -16,5 +16,5 @@
     "baseUrl": ".",
     "paths": { "@/*": ["src/*"], "@shared/*": ["shared/*"] }
   },
-  "include": ["src/**/*.ts", "src/**/*.vue", "functions/**/*.ts", "worker/**/*.ts", "shared/**/*.ts"]
+  "include": ["src/**/*.ts", "src/**/*.vue", "worker/**/*.ts", "shared/**/*.ts"]
 }

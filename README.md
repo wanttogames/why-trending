@@ -1,277 +1,253 @@
-# 왜떠?
+# TrendPick — 관심도·비교·쇼핑 트렌드
 
-대한민국에서 갑자기 관심이 증가하는 키워드를 찾고, 단순 순위뿐 아니라 **왜 뜨는지**를 함께 보여주는 실시간 이슈 탐지 서비스 MVP입니다.
+Vue 3 + Vite + TypeScript / Cloudflare Workers + Static Assets / Supabase PostgreSQL.
+기존 왜떠의 뉴스 의미 추론을 제거하고, NAVER가 제공하는 검색 상대 관심도와 쇼핑 검색 클릭 추이를 비교·탐색합니다. AI/LLM, 사건명 생성, 절대 검색량·판매량 추정은 사용하지 않습니다.
 
-> 이슈지수는 여러 공개 데이터의 증가 속도를 기반으로 계산한 자체 지표입니다. 실제 검색량이나 네이버 실시간 검색 순위가 아닙니다.
+서비스명: `shared/config.ts`의 `BRAND`에서 변경합니다. 기존 배포 대상 이름 `why-trending`, `waetteo-collector`는 그대로 유지했습니다.
 
-## 아키텍처
+## 기존 프로젝트에 적용
 
-```text
-Cloudflare Cron Worker (10분)
-  ├─ NaverNewsCandidateProvider (최신 뉴스 6개 seed 검색)
-  ├─ 제목 정제 / 반복 2~4-gram phrase 추출 / 유사 후보 제거
-  ├─ NaverSearchTrendProvider (상위 후보 25개 batch 검증)
-  ├─ Issue Score / 순위 / 상태 계산
-  └─ Supabase PostgreSQL 저장
+이 ZIP은 새 서비스의 **전체 소스**입니다. 옛 src/server/functions 파일이 남아 충돌하지 않도록 적용 스크립트를 제공합니다.
 
-Vue 3 Frontend
-  └─ Cloudflare Worker /api/*
-       └─ Supabase REST (Service Role은 서버에서만 사용)
+1. 기존 저장소에서 `git status`를 확인하고 로컬 변경을 먼저 커밋/보존합니다. 작업 트리가 깨끗하면 `git pull --ff-only origin main`.
+2. ZIP을 **기존 프로젝트 외부**에 압축 해제합니다.
+3. PowerShell에서 다음 실행(경로는 실제 다운로드 위치에 맞게 변경):
+
+```powershell
+& "C:\Downloads\trendpick\Apply-TrendPick.ps1" -ProjectPath "C:\work\why-trending"
+cd C:\work\why-trending
 ```
 
-Cloudflare Worker가 `/api/*`를 먼저 처리하고, 나머지 요청은 Static Assets 바인딩으로 Vue 앱에 전달합니다. 별도 Collector Worker가 Cron Trigger로 수집을 실행합니다. 브라우저는 NAVER 및 Supabase Service Role에 직접 접근하지 않습니다.
+스크립트는 기존 소스와 변경 대상 파일을 프로젝트 옆 `why-trending-backup-날짜`에 백업합니다. `.git`, 기존 Secret 파일, 기존 Supabase migration은 유지합니다. Git 원격 push나 배포는 수행하지 않습니다. 복원하려면 백업 파일을 되돌리거나 기존 Git 커밋을 사용합니다. 신규 DB 테이블은 옛 코드와 독립적이므로 롤백을 위해 삭제할 필요가 없습니다.
 
-## 주요 기능
+## Supabase 설정 / 실행할 SQL
 
-- 모바일 우선 실시간 이슈 TOP 20 및 카테고리 필터
-- NEW / 급상승 / 상승 / 유지 / 하락 상태와 순위 변동
-- 이슈지수, 최초·마지막 감지 시각, 뜨는 이유
-- 최근 24시간 이슈지수 그래프
-- 관련 뉴스 및 관련 키워드
-- 현재·과거 이슈를 고려한 검색 API 구조
-- URL 복사 및 Web Share API
-- 이슈별 title, description, Open Graph 메타데이터
-- API 키 없이 확인 가능한 mock 데이터 및 그래프
-- timeout, retry, 429 처리, 오류 파싱, 로그를 포함한 NAVER 공통 client
+Supabase SQL Editor에서 **아래 두 파일만 순서대로** 실행합니다.
 
-## 프로젝트 구조
+1. `supabase/migrations/20260921_trendpick.sql`
+2. `supabase/seeds/keywords.sql`
 
-```text
-src/                         Vue 3 UI
-  components/                순위, 점수, 그래프, 뉴스 등 UI 컴포넌트
-  pages/                     홈, 이슈 상세
-functions/api/               기존 Pages Functions 호환 코드
-worker/index.ts              API 라우터 + Static Assets 진입점
-worker/collector.ts          10분 주기 Cron Worker 진입점
-server/
-  naver/client.ts            NAVER API HUB 공통 client
-  providers/                 Candidate / Trend / News provider
-  pipeline/                  정규화, 점수 계산, 수집 오케스트레이션
-shared/                      공통 타입, 설정, mock 데이터
-supabase/migrations/         PostgreSQL migration
-wrangler.collector.toml      Cron Worker 설정
-```
+기존 `001_initial_schema.sql` 또는 과거 TFT 정리 migration을 다시 실행하지 마세요. 기존 keywords/news/issue_events 테이블은 삭제하지 않습니다.
+
+새 테이블:
+
+| 테이블 | 용도 |
+|---|---|
+| trend_keywords | 관리 후보 500개, alias 최대 5개, 카테고리, 활성 여부 |
+| shopping_categories | UI 카테고리 → NAVER 공식 쇼핑 분야 코드 |
+| trend_snapshots | 키워드/검색 또는 쇼핑별 최신 시계열, 수집 시각 |
+| trend_rankings | 기간별 자체 계산 결과/상승 정렬 |
+| search_content_cache | VS·키워드·콘텐츠·작업 캐시, 갱신 잠금 |
+| popular_comparisons | 비교·공유 활동 집계; 시간대 중복 제거 |
+| api_usage | 서비스별 월 API 시도 횟수 |
+| api_rate_window | 프로젝트 공통 초당 요청 제한 |
+
+쇼핑 키워드는 별도 중복 테이블 대신 `trend_keywords.shopping_category` FK로 관리하고, 쇼핑 시계열은 `trend_snapshots.source='shopping'`으로 구분합니다. 캐시·시계열 등은 RLS를 켜고 anon/authenticated 접근을 차단합니다. 서버 Service Role만 읽고 씁니다.
+
+`tp_save` RPC는 여러 snapshot/ranking을 **한 transaction**으로 저장합니다. 일부 constraint 오류 시 함께 롤백됩니다. `tp_claim_cache`/`tp_finish_cache`는 owner 토큰이 있는 갱신 잠금입니다. 동시 요청 중 한 요청만 공급자 API를 호출합니다.
+
+### 키워드 관리
+
+- `supabase/seeds/keywords.json`: 10개 카테고리 × 50개 = 500개, 이 중 쇼핑 190개.
+- seed는 관심도가 높다는 주장이 아니라 운영자가 선택한 분석 대상입니다.
+- 직접 DB에서 `enabled=false`로 제외할 수 있습니다. seed 재적용은 이미 비활성화한 항목을 켜지 않습니다.
+- JSON 수정 후 `npm run seed:sql`로 SQL 재생성. 실행 전 `npm run budget`로 호출 예산 확인.
+- alias는 같은 대상의 표기 변형만 넣습니다. 서로 다른 상품·인물을 한 그룹으로 묶지 마세요.
+- 1,000개로 늘릴 때 Collector의 `COLLECTOR_CYCLE_HOURS="6"`로 변경하고 실제 enabled 수/카테고리 분포에 따라 예산을 재계산합니다.
+
+쇼핑의 디지털/가전은 NAVER 디지털/가전 `50000003`, 생활/반려동물은 생활/건강 `50000008` 안의 관리 키워드로 구분합니다. UI 분류 ID를 API category로 보내지 않습니다. 공식 코드 매핑은 `shared/config.ts`와 SQL `shopping_categories`에 있습니다. 최신 NAVER 분류가 바뀌면 양쪽을 함께 갱신하고 해당 키워드가 속한 실제 분야를 확인하세요.
 
 ## 로컬 실행
 
-요구 사항: Node.js 20 이상
+Node.js 22 이상 권장.
 
-```bash
+```powershell
 npm install
-cp .env.example .env
+npm test
+npm run build
 npm run dev
 ```
 
-`npm run dev`는 Vite UI 개발 서버입니다. Worker API 요청이 실패하면 mock 데이터로 대체하지 않고 오류 상태를 표시합니다.
+`npm run dev`는 **preview 환경**의 Wrangler를 시작합니다. 기본 DATA_MODE=mock, 광고 꺼짐. `http://localhost:8787`에서 Worker API와 정적 파일을 함께 봅니다. 소스 수정 후 다시 `npm run build`합니다. `npm run dev:ui`는 Vite UI 개발용으로, 별도 Worker API 연결 없이 real API를 제공하지 않습니다.
 
-Worker API까지 함께 확인하려면:
+real 모드 로컬 확인은 `.env.example`을 `.dev.vars`로 복사하고 값 설정 후:
 
-```bash
+```powershell
 npm run build
-cp .env.example .dev.vars
-npm run dev:worker
+npx wrangler dev --env=""
 ```
 
-타입과 빌드 검증:
+`.env`의 `VITE_*` 변수로 Secret을 전달하지 않습니다. `.dev.vars`와 실제 Secret은 Git에 포함하지 않습니다.
 
-```bash
-npm run typecheck
-npm run build
-```
+### 환경변수 / Secret
 
-## 환경변수
+| 이름 | 설정 위치 | 설명 |
+|---|---|---|
+| NAVER_CLIENT_ID | 양쪽 Worker Secret | API HUB Key ID |
+| NAVER_CLIENT_SECRET | 양쪽 Worker Secret | API HUB Key |
+| SUPABASE_URL | 양쪽 Worker Secret/변수 | 프로젝트 URL |
+| SUPABASE_SERVICE_ROLE_KEY | 양쪽 Worker Secret | 서버 전용 DB 접근 |
+| DATA_MODE | 양쪽 Worker vars | mock / real. real 오류를 mock으로 전환하지 않음 |
+| SITE_URL | 메인 Worker vars | 실제 공개 HTTPS origin; 없으면 요청 origin |
+| ADS_ENABLED | 메인 Worker vars | 기본 false. 검토 후 true |
+| COLLECTOR_CYCLE_HOURS | Collector vars | 3 또는 6 |
+| COLLECTOR_TOKEN | Collector Secret, 선택 | 수동 POST /collect 인증 |
 
-| 이름 | 사용 위치 | 설명 |
-| --- | --- | --- |
-| `NAVER_CLIENT_ID` | Worker secret | NAVER API HUB Client ID |
-| `NAVER_CLIENT_SECRET` | Worker secret | NAVER API HUB Client Secret |
-| `SUPABASE_URL` | Worker secret | Supabase 프로젝트 URL |
-| `SUPABASE_ANON_KEY` | 선택 | 현재 MVP 프론트에서는 사용하지 않음 |
-| `SUPABASE_SERVICE_ROLE_KEY` | Worker secret | 서버 전용 DB 접근 키 |
-| `DATA_MODE` | Worker variable | `mock` 또는 `real` |
-
-`VITE_` 접두사가 붙은 Secret을 만들지 마세요. Vite의 `VITE_*` 값은 브라우저 번들에 포함됩니다.
-
-## Supabase 설정
-
-1. Supabase 프로젝트를 생성합니다.
-2. SQL Editor에서 `supabase/migrations/001_initial_schema.sql`을 실행합니다.
-3. Project Settings → API에서 Project URL과 Service Role Key를 확인합니다.
-4. Cloudflare API Worker와 Collector Worker에 `SUPABASE_URL`, `SUPABASE_SERVICE_ROLE_KEY`를 Secret으로 등록합니다.
-
-Migration은 다음 테이블을 만듭니다.
-
-- `keywords`: 키워드, 카테고리, 감지 시각, 현재 상태, 이유
-- `keyword_snapshots`: 시점별 트렌드·뉴스·이슈지수·순위
-- `news_articles`: 관련 뉴스. URL unique로 중복 차단
-- `issue_events`: 이슈의 주요 이벤트 확장용
-
-조회용 RLS policy는 공개 SELECT만 허용합니다. 쓰기는 Service Role을 사용하는 서버 수집기만 수행합니다.
-
-## NAVER API HUB 설정
-
-NAVER Cloud Platform의 NAVER API HUB Application에 다음 API를 추가합니다.
-
-- Data Lab Search Trend API
-- NAVER Search News API
-
-이 프로젝트는 API HUB 전용 헤더만 사용합니다.
-
-```text
-X-NCP-APIGW-API-KEY-ID
-X-NCP-APIGW-API-KEY
-```
-
-구형 `X-Naver-Client-Id`, `X-Naver-Client-Secret` 헤더는 사용하지 않습니다.
-
-Search Trend는 후보 키워드를 생성하지 않습니다. Collector는 수사·실적·컴백·우승·신작 게임·인공지능 등 순환 검색어의 뉴스 결과를 최신순으로 수집하고 URL과 정제 제목을 기준으로 중복을 제거합니다. 정제된 제목에서 여러 기사에 반복되는 2~4단어 phrase를 추출하고 뉴스 빈도·최신성·언론사 다양성으로 25개를 선정합니다. Search Trend는 후보를 최대 5개 그룹씩 묶어 최근 2일과 이전 5일의 상대적 관심도 상승을 검증합니다.
-
-## mock / real 모드
-
-### mock
-
-```text
-DATA_MODE=mock
-```
-
-손흥민, 아이폰18, TFT, 비트코인, 삼성전자, 프로야구 등의 샘플 이슈와 최근 24시간 그래프가 표시됩니다. Cron Worker는 외부 API와 DB 쓰기를 건너뜁니다.
-
-### real
-
-```text
-DATA_MODE=real
-```
-
-NAVER와 Supabase Secret이 모두 필요합니다. 정상 실행에서는 뉴스 제목에서 후보를 자동 생성합니다. 실제 모드에서는 고정 후보 fallback을 사용하지 않습니다. 뉴스 수집 실패 시 오류를 기록하며 기존 저장 결과를 유지합니다.
+NAVER HUB 인증: `X-NCP-APIGW-API-KEY-ID`, `X-NCP-APIGW-API-KEY`만 사용합니다. `SUPABASE_ANON_KEY`는 필요하지 않습니다.
 
 ## Cloudflare 배포
 
-### 1. API + Static Assets Worker
+Supabase SQL 적용 → Secret 설정 → Collector → 메인 순서입니다.
 
-Cloudflare Dashboard에서 Git 저장소를 Workers Builds에 연결합니다.
+```powershell
+npx wrangler secret put NAVER_CLIENT_ID --env=""
+npx wrangler secret put NAVER_CLIENT_SECRET --env=""
+npx wrangler secret put SUPABASE_URL --env=""
+npx wrangler secret put SUPABASE_SERVICE_ROLE_KEY --env=""
 
-- Build command: `npm run build`
-- Deploy command: `npx wrangler deploy`
-- Environment variables: `DATA_MODE`, `SUPABASE_URL`
-- Secrets: `SUPABASE_SERVICE_ROLE_KEY`
+npx wrangler secret put NAVER_CLIENT_ID --config wrangler.collector.toml --env=""
+npx wrangler secret put NAVER_CLIENT_SECRET --config wrangler.collector.toml --env=""
+npx wrangler secret put SUPABASE_URL --config wrangler.collector.toml --env=""
+npx wrangler secret put SUPABASE_SERVICE_ROLE_KEY --config wrangler.collector.toml --env=""
 
-`wrangler.jsonc`의 기본 Production `DATA_MODE`는 `real`입니다. 로컬 mock 실행은 `.dev.vars`에서 `DATA_MODE=mock`으로 재정의합니다. Vite의 `import.meta.env`나 `VITE_DATA_MODE`는 서버 모드 결정에 사용하지 않습니다.
-
-CLI를 사용한다면:
-
-```bash
-npx wrangler login
-npm run deploy
+npm run build
+npx wrangler deploy --config wrangler.collector.toml --env=""
+npx wrangler deploy --env=""
 ```
 
-`worker/index.ts`가 `/api/*`를 처리하며, 나머지 경로는 `env.ASSETS.fetch(request)`로 Vue 앱에 전달됩니다.
+기존 Worker에 같은 이름의 Secret이 있다면 다시 입력할 필요 없습니다. Preview Secret/vars는 production과 별개이며 preview 기본은 mock입니다. Cloudflare Git 연동을 이용한다면 메인 Build `npm run build`, Deploy `npx wrangler deploy --env=""`; Collector Deploy `npx wrangler deploy --config wrangler.collector.toml --env=""`. root directory는 package.json이 있는 경로입니다.
 
-### 2. Cron Collector Worker
+`assets.run_worker_first=true`로 API와 서버 HTML metadata를 Worker가 우선 처리합니다. `_redirects`는 사용하지 않습니다. 신규 service가 기본 `/`에 나오며 옛 `/issue/:slug`는 `/trending`으로 이동합니다. 옛 이슈 API는 404 JSON입니다.
 
-```bash
-npx wrangler secret put NAVER_CLIENT_ID --config wrangler.collector.toml
-npx wrangler secret put NAVER_CLIENT_SECRET --config wrangler.collector.toml
-npx wrangler secret put SUPABASE_URL --config wrangler.collector.toml
-npx wrangler secret put SUPABASE_SERVICE_ROLE_KEY --config wrangler.collector.toml
+### Cron / 첫 데이터
+
+실제 Cron은 `*/5 * * * *`입니다. **모든 키워드를 5분마다 수집하는 뜻이 아닙니다.**
+
+- 검색/쇼핑 작업을 번갈아 실행.
+- 각각 18개 조각으로 나누어 3시간에 한 번 전체 후보를 순환.
+- 6시간 설정이면 각각 36개 조각.
+- 매시 한 번 검색 랭킹 상위 1개 키워드의 뉴스/블로그/카페를 보강.
+- 매일 UTC 자정 무렵 오래된 캐시/집계를 정리.
+- 같은 예정 작업 재실행은 DB 작업 캐시로 중복 방지.
+- 첫 배포 직후 일부만 표시되고 **최초 전체 순환 완료까지 최대 3시간** 걸립니다.
+
+```powershell
+npx wrangler tail waetteo-collector
+curl.exe https://why-trending.wanttogames.workers.dev/api/trends
 ```
 
-`wrangler.collector.toml`의 `DATA_MODE`를 `real`로 변경한 뒤 배포합니다.
+수동 `/collect`는 `COLLECTOR_TOKEN`을 설정한 경우에만 Bearer 인증으로 실행합니다. 현재 시간에 해당하는 조각만 처리하며, 전체 후보를 강제로 한 번에 수집하지 않습니다. 토큰을 URL에 넣지 마세요.
 
-```bash
-npm run deploy:collector
+## 예산과 캐시
+
+요청한 한도 기준: 검색 775,000 / 검색 트렌드 50,000 / 쇼핑 50,000회/월. 실제 API HUB 계정의 한도·과금은 콘솔을 확인합니다.
+
+| 항목 | 기본 seed, 31일, 재시도 제외 |
+|---|---:|
+| 검색 트렌드 500개, 3시간 순환 | 26,784회 |
+| 쇼핑 190개, 카테고리별 batch | 32,736회 |
+| 상위 1개 관련 콘텐츠, 매시간 3종 | 최대 2,232회 |
+
+키워드 분할 경계와 카테고리 분리 때문에 단순 500/5 계산보다 호출량이 조금 더 큽니다. `npm run budget`은 seed 순서 기준 계산이며 기존 DB identity 값/비활성 후보에 따라 약간 달라질 수 있습니다.
+
+- DB `tp_permit`로 **실제 fetch 시도마다** 예약. 재시도도 포함.
+- 검색 트렌드/쇼핑 각각 **35,000회(70%)**, 검색 **500,000회(약 64.5%)**에서 차단.
+- 같은 Supabase를 쓰는 두 Worker 합산 초당 최대 40회로 제한. 같은 NAVER 키를 외부 서비스에서도 쓰면 그 서비스 호출은 이 DB가 세지 못하므로 콘솔로 확인해야 합니다.
+- VS/일반 키워드 캐시 1시간, 쇼핑 2시간, 콘텐츠 30분(Collector 예열 1시간).
+- Cloudflare 지역 캐시 + Supabase 공통 캐시. 다른 지역의 동시 miss도 DB 갱신 잠금으로 제한.
+- 첫 조회가 진행 중이면 잠깐 재시도를 안내; 이전 payload가 있으면 stale 데이터와 안내 표시.
+- 429/5xx는 최대 1회 재시도. 긴 Retry-After는 이번 실행을 중단하고 다음 수집에 맡김.
+- Collector 외부 fetch는 최대 45회에서 중단. 저장 여유를 남기기 위해 추가 batch 시작도 제한.
+- 인기 비교 집계는 동일 조합/이벤트의 시간대별 중복을 줄인 활동 지표입니다. 실제 사람 수가 아닙니다.
+
+```sql
+select month, service, calls from public.api_usage order by month desc,service;
+select source, period, count(*), min(recorded_at), max(recorded_at)
+from public.trend_rankings group by source,period order by source,period;
+select count(*) from public.trend_keywords where enabled;
 ```
 
-Cron은 `*/10 * * * *`로 설정되어 10분마다 실행됩니다. 로컬에서는 `npm run cron:local` 후 `/__scheduled` 테스트 경로를 사용할 수 있습니다.
+## 페이지와 API
 
-## API
+페이지: `/`, `/trending`, `/vs`, `/vs/:keywordA/:keywordB`, `/shopping`, `/shopping/:keyword`, `/search/:keyword`, `/about`, `/methodology`, `/privacy`, `/terms`.
 
-- `GET /api/trends?category=전체&limit=20`
-- `GET /api/issues?category=전체&limit=20`
-- `GET /api/issues/:slug`
-- `GET /api/issues/:slug/history`
-- `GET /api/issues/:slug/news`
-- `GET /api/search?q=손흥민`
+URL 토큰은 정규화된 검색어 UTF-8의 가역 hex(`k-...`)로 한글 제거/slug 충돌을 피합니다. 영문 raw 입력 URL도 서버가 안전한 canonical URL로 보냅니다. A/B 순서가 바뀌면 동일 비교 캐시와 URL을 사용합니다. 관리 alias가 같은 대상을 가리키면 비교를 거절합니다.
 
-## Issue Score
-
-가중치는 `shared/score-config.ts`에서 관리합니다.
-
-- 검색 트렌드 상승 35
-- 뉴스 출현 빈도 25
-- 뉴스 최신성 20
-- 언론사 다양성 10
-- 검색 관심도 수준 10
-
-각 신호는 0~100 범위로 정규화한 뒤 합산합니다. 원래 검색량이 큰 상시 키워드보다 최근 상승 변화량에 더 큰 가중치를 둡니다. 뉴스 seed 6회 + 상위 후보 보강 최대 2회, DataLab 최대 5회, Supabase 최대 6회(일일 정리 시 2회 추가)입니다. 정상 경로는 최대 19회, 정리 시 21회이며 재시도를 포함해 45회를 넘기지 않도록 제한합니다. 10분 주기이면 DataLab은 하루 약 720회를 사용합니다.
-
-## 현재 MVP에서 규칙 기반인 부분
-
-- 이슈 이유: 규칙 기반 문장. LLM 요약은 제외 범위
-- 후보 phrase와 관련 키워드: 형태소 분석기 없이 반복 n-gram과 불용어 규칙으로 추출
-- 고정 후보 목록: mock 개발용으로만 남겨두며 real 수집에서는 사용하지 않음
-- `DATA_MODE=mock`: API 키 없이 UI를 확인하기 위한 샘플 데이터
-
-운영 로그에서 후보 분포를 관찰한 뒤 불용어와 유사 후보 기준, 최소 이슈지수 임계값을 조정하는 것이 다음 단계입니다.
-
-
-## 2026-09-18: 뉴스 확산·근거·타임라인 개선
-
-추천 새 이름은 **이슈맥**(이슈의 맥락과 흐름)입니다. 기존 서비스명/도메인은 변경하지 않았습니다.
-제품/쇼핑 관심도 기능은 추가하지 않았습니다.
-
-### 적용 순서 (기존 프로젝트)
-
-1. 최신 Git 소스를 pull하고 제공된 패치 ZIP을 프로젝트 루트에 덮어씁니다. 로컬 변경이 있다면 먼저 보존하십시오.
-2. Supabase SQL Editor에서 **`supabase/migrations/20260918_issue_evidence.sql`만** 실행합니다. 초기 스키마나 과거 TFT 정리 SQL을 다시 실행하지 않습니다.
-3. `npm install`, `npm test`, `npm run build` 실행.
-4. `npx wrangler deploy --config wrangler.collector.toml`, `npx wrangler deploy` 실행. Git 연동 배포를 사용한다면 commit/push로 각각의 빌드를 실행해도 됩니다.
-5. 다음 Cron 실행 후 `/api/trends`의 `mode`, `data[].evidence`, 상세의 `events` 확인.
-
-새 migration은 nullable `keywords.evidence jsonb`와 뉴스 정리용 index만 추가합니다. 이전 버전으로 되돌려도 기존 컬럼은 유지할 수 있습니다.
-Secret은 기존 Worker env 설정을 그대로 사용합니다. 블로그·카페 결과를 가져오지 못하면 관련 글 영역에 부분 실패 상태를 표시하며 뉴스/순위에는 영향을 주지 않습니다.
-
-### 탐지와 설명
-
-- 뉴스 조기 감지: 점수 25 이상, 최소 기사 3건/출처 도메인 2곳. 최근 1시간 3건 이상이고 직전 1시간 대비 1.5배 이상이면 검색 상승이 없어도 선정합니다.
-- 검색 검증: 같은 뉴스 품질 기준을 통과하고 DataLab growthScore >= 5이면 선정 가능합니다.
-- DataLab은 일간 지표입니다. KST 전일까지 최근 2일/이전 5일을 비교하며 해당 날짜가 누락되면 unavailable로 취급합니다. 현재 10분의 검색량으로 표시하지 않습니다.
-- levelScore는 같은 키워드의 최근 7일 최고치 대비 최근 평균입니다. 서로 다른 batch의 원시 ratio를 순위에 직접 비교하지 않습니다.
-- Issue Score 가중치는 기존 35/25/20/10/10을 유지합니다. unavailable 검색은 점수 기여가 0이지만 UI에는 실제 0과 구분해 표시합니다.
-- 설명은 수집 표본의 최근/직전 1시간 기사 수, 출처 도메인 수, 검색 확인 상태와 대표 기사 링크·시각으로 구성합니다. 전체 보도량, 실제 검색량 또는 여론 수치가 아닙니다.
-
-### 발견 방식
-
-6개 검색어를 10분 단위로 각 그룹에서 순환 선택합니다.
-
-| 그룹 힌트 | 순환 검색어 |
+| API | 내용 |
 |---|---|
-| 사회 | 수사 / 사고 / 판결 |
-| 경제 | 실적 / 금리 / 투자 |
-| 연예 | 컴백 / 공연 / 출연 |
-| 스포츠 | 우승 / 이적 / 결승 |
-| 게임 | 신작 게임 / e스포츠 / 게임 업데이트 |
-| IT | 인공지능 / 반도체 / 보안 |
+| GET /api/config | 브랜드/모드/광고 여부; Secret 없음 |
+| GET /api/trends?period=7d&category=IT | 검색 상승 랭킹 |
+| GET /api/shopping?period=7d&category=appliances | 쇼핑 상승 랭킹 |
+| GET /api/vs?a=chatgpt&b=gemini&period=7d | 같은 요청에서 두 대상 비교 |
+| GET /api/keyword?q=러닝화&period=30d&shopping=1 | 단일 검색/쇼핑 시계열 |
+| GET /api/content?q=chatgpt | 관련 콘텐츠; 버튼 클릭 시 조회 |
+| GET /api/popular | 집계된 비교 또는 명시된 추천 예시 |
+| POST /api/events | 허용된 분석 이벤트 |
 
-검색 seed는 공식 카테고리 피드가 아닙니다. 제목 내 의미 단서로 카테고리를 우선 분류하고 근거가 없을 때 seed 힌트를 사용합니다. 형태소 분석기가 아니므로 고유명사·복합 사건의 정확성에는 한계가 있습니다.
-24시간 이내 기사만 사용하고 URL/제목 dedupe 후 반복 2~4단어 phrase를 추출합니다. 짧은 조사를 무조건 제거하지 않아 이름 훼손을 줄였습니다. 유사 phrase는 단어 유사도와 기사 집합의 80% 이상 포함 관계를 함께 확인하고 기사 근거를 합칩니다. 독립 사건이 완벽히 구분되는 것은 아니며 운영 표본을 보며 개선해야 합니다.
-상위 2개 후보에 추가 뉴스 검색을 실행해 근거를 보강합니다. 정상 요청은 뉴스 최대 8회, DataLab 5회입니다. DataLab 25개 후보·10분 주기 기준 재시도 제외 720회/일, 30일 21,600회입니다. 실제 계정 한도/비용은 API HUB 콘솔을 확인하십시오.
+쇼핑 필터: `device=pc|mo`, `gender=m|f`, `age=10|20|30|40|50|60`. 각 조건의 상대 클릭 추이이며 서로 다른 요청을 합쳐 연령/성별 점유율을 만들지 않습니다.
 
-### 화면과 API
+검색 API는 원문 탐색에만 사용합니다. 카페에는 API가 제공하지 않는 게시 시각을 만들지 않습니다. API에 없는 연관 검색어를 생성하지 않으며, 관련 VS는 관리된 비교 예시만 사용합니다.
 
-- 기존 API envelope와 광고 슬롯을 유지하고 `evidence`, `events` 필드만 추가.
-- 목록에 뉴스 확산/일간 검색 상승 라벨.
-- 상세에 대표 기사와 근거, 최초 감지/급상승 전환/출처 확산 타임라인. 이벤트는 배포 후부터 쌓이며 과거를 추정해서 채우지 않습니다.
-- 메인 목록은 가장 최근 snapshot 시각과 일치하는 키워드를 표시합니다. 성공 결과가 없으면 빈 목록, 수집 장애 시 이전 결과와 실제 마지막 업데이트 시각을 유지합니다.
-- `GET /api/issues/:slug/posts`: 블로그·카페 각 5개 관련 링크. 사용자가 상세의 버튼을 눌렀을 때만 조회하고 Cloudflare Cache API로 10분 캐시합니다. 부분 오류는 1분 캐시. 캐시는 지역별이며 전역 요청 한도를 보장하지 않습니다.
-- 게시물 시각을 임의 생성하지 않고 감정 분석/시간대별 반응 지표로 사용하지 않습니다. 원문은 수집하지 않습니다.
+## 계산식과 데이터 주의사항
 
-### 검증 범위
+- KST 전일까지 일간 데이터 요청. 누락은 null, 실제 0과 구분.
+- 랭킹의 ‘오늘’은 각 키워드 최신 관측 일간 데이터와 직전 일간 비교. `asOf`로 실제 기준일 표시.
+- 상승률 = (최근 N일 평균 − 이전 N일 평균) / 이전 N일 평균 × 100.
+- 이전 평균 0, 최근 평균 양수면 ‘신규 관심’. 양쪽 0 또는 누락은 62:38 같은 비율을 만들지 않음.
+- 두 구간의 관측률 각각 80% 이상일 때 상승률 표시.
+- 급상승 score = min(60, 양의 상승률 × 0.3) + min(25, 양의 (최근 최대 3일 평균 / max(이전 평균,0.01) − 1) × 25) + 이전 평균을 넘은 최근 관측일 비율 × 15. 0~100.
+- 이전 평균 0인 신규 관심은 첫 기여도를 35로 제한. 원시 ratio 크기로 다른 batch를 비교하지 않음.
+- VS = 같은 API 요청의 공통 날짜 평균 A/(A+B), B/(A+B). 실제 검색 횟수의 점유율이 아님.
+- 두 alias 그룹의 의미가 실제로 겹치는지 완벽하게 판별하지 않습니다. 관리 alias 외에는 사용자가 입력한 검색어 그대로 비교합니다.
 
-`npm test`는 실제 외부 API 대신 메모리 응답을 주입하는 회귀/Collector 통합 테스트입니다. 뉴스 조기 감지, 단일 출처 탈락, DataLab 누락, 이름 보존, slug, 실제 저장 payload, 관련 링크 안전성, 최신 배치 조회를 확인합니다.
-실제 NAVER·Supabase 호출, 운영 배포 및 브라우저 광고 노출은 별도 운영 확인이 필요합니다. Supabase 저장은 기존 bulk upsert/insert 방식으로 테이블 간 원자적 transaction은 아닙니다.
+## 공유 / SEO / 광고
 
-공식 문서:
+- Canvas PNG 저장, 링크 복사, 파일 공유 가능 시 Web Share. mock 공유 이미지는 가상 데이터 표시.
+- Worker가 초기 HTML의 title/description/canonical/OG를 주입하므로 JS를 실행하지 않는 링크 미리보기도 읽을 수 있음.
+- OG 이미지는 공통 A vs B 이미지. 수치가 들어가는 카드는 클라이언트 PNG입니다. 서버에서 동적 PNG 생성은 후속 기능.
+- VS는 실제 7일 캐시 데이터/관측률이 충분할 때만 index 허용. 일반 키워드 상세는 보수적으로 noindex 유지. sitemap은 주요 고정 페이지만 포함.
+- 기본 광고 OFF. real 데이터가 충분한 메인과 상세에서만 수동 슬롯 사용. 기존 publisher/slot 설정 재사용.
+- Auto Ads 설정은 AdSense 대시보드 설정이며 코드에서 변경하지 않습니다. 활성화 전 빈 페이지 자동 광고 제외와 적용 지역 동의 요구를 확인하세요.
+- 개인정보/약관 페이지 포함. 운영자 문의 링크는 기존 프로젝트 Issues이며 실제 운영 연락처로 바꿀 수 있습니다.
+
+## 검증
+
+```powershell
+npm test
+npm run typecheck
+npm run build
+npx wrangler deploy --dry-run --env=""
+npx wrangler deploy --dry-run --config wrangler.collector.toml --env=""
+```
+
+`npm test`:
+- 정규화/가역 slug/역순 비교 캐시
+- zero/missing/상승률/62:38 계산
+- Shopping Insight 요청 그룹 구조와 category 검사
+- PGlite(테스트 전용 PostgreSQL)로 실제 SQL migration/seed/RLS 권한/잠금/예산/transaction 실행
+- 실제 Collector 코드 + 가상 NAVER + 실제 SQL의 저장 및 중복 작업 방지
+- Worker JSON API routing, input 검증, edge cache, 정적 자산 전달
+
+실제 NAVER 키와 운영 Supabase 권한·데이터 응답, Cloudflare 운영 CPU 시간은 운영에서 추가 확인이 필요합니다. PGlite는 테스트 devDependency이며 Worker에 포함되지 않습니다. 이 전달본의 결과는 `docs/VALIDATION.md`에 기록했습니다.
+
+## 제거된 기능 / 재사용한 기능
+
+제거: 뉴스 n-gram, 사건 후보 추출·병합, 이슈지수/사건 상태, 이슈 타임라인, 왜 뜨는지 설명 생성, 기존 Pages Functions API.
+재사용: Vue/Vite/TS, Worker + Static Assets, Supabase SDK, NAVER HUB 공통 인증/timeout/오류 파싱/backoff, 카운터, AdSense 컴포넌트/slot.
+
+새 핵심 폴더: `shared`(브랜드/계산/타입/식별자), `server/trendpick`(공급자/캐시/서비스/수집), `worker`(HTTP/Cron), `src/pages`, `src/components`, `supabase`, `tests`.
+
+## 후속 기능
+
+운영 데이터에 따른 alias/카테고리 정비, 일반 키워드 index 허용 정책 확대, 서버 동적 OG PNG, 실제 성별/연령별 전용 endpoint 분석, 키워드 관리 UI, 봇 트래픽별 추가 요청 제한은 후속 범위입니다. 현재 집단 필터는 이미 구현되어 있지만 집단별 점유율 그래프는 만들지 않습니다. 회원가입·댓글·LLM·쇼핑 상품 가격/구매 링크는 구현하지 않습니다.
+
+## 공식 참고
+
 - https://api.ncloud-docs.com/docs/naver-api-hub-search-trend
+- https://api.ncloud-docs.com/docs/naver-api-hub-shopping-insight-keywords
+- https://api.ncloud-docs.com/docs/naver-api-hub-search-news
 - https://api.ncloud-docs.com/docs/naver-api-hub-search-blog
 - https://api.ncloud-docs.com/docs/naver-api-hub-search-cafearticle
 - https://guide.ncloud-docs.com/docs/apihub-overview
+
+API HUB 상세 명세에는 검색 그룹당 20개가 기재되어 있지만 이 프로젝트는 요청한 보수적 제한인 **5그룹 × alias 최대 5개**로 제한합니다. 쇼핑 그룹의 param은 명세대로 **검색어 1개**입니다.

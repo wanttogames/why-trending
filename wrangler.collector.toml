@@ -1,9 +1,17 @@
 name = "waetteo-collector"
 main = "worker/collector.ts"
-compatibility_date = "2026-09-01"
-
+compatibility_date = "2026-09-17"
 [triggers]
-crons = ["*/10 * * * *"]
-
+crons = ["*/5 * * * *"]
 [vars]
 DATA_MODE = "real"
+COLLECTOR_CYCLE_HOURS = "3"
+[observability]
+enabled = true
+[env.preview]
+name = "trendpick-collector-preview"
+[env.preview.vars]
+DATA_MODE = "mock"
+COLLECTOR_CYCLE_HOURS = "3"
+[env.preview.triggers]
+crons = []

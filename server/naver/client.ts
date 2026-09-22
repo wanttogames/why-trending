@@ -45,10 +45,11 @@ export class NaverClient {
   constructor(
     private readonly env: WorkerEnv,
     private readonly counter?: SubrequestCounter,
+    private readonly permit?: (service: string) => Promise<void>,
   ) {}
 
   async request<T>(path: string, options: RequestOptions = {}): Promise<T> {
-    const { method = 'GET', body, timeoutMs = 8_000, retries = 2 } = options
+    const { method = 'GET', body, timeoutMs = 8_000, retries = 1 } = options
     if (!this.env.NAVER_CLIENT_ID || !this.env.NAVER_CLIENT_SECRET) {
       throw new NaverApiError('NAVER API 인증 정보가 설정되지 않았습니다.', 500, 'MISSING_SECRET')
     }
@@ -57,9 +58,10 @@ export class NaverClient {
       const controller = new AbortController()
       const timer = setTimeout(() => controller.abort(), timeoutMs)
       try {
-        const kind: SubrequestKind = path.startsWith('/search/v1/news') ? 'naverNews'
+        await this.permit?.(path.startsWith('/search-trend/') ? 'trend' : path.startsWith('/shopping/') ? 'shopping' : 'search')
+        const kind: SubrequestKind = path.startsWith('/search/v1/') ? 'naverNews'
           : path.startsWith('/search-trend/') ? 'datalab'
-            : 'other'
+            : path.startsWith('/shopping/') ? 'shopping' : 'other'
         this.counter?.increment(kind)
         const response = await fetch(`${BASE_URL}${path}`, {
           method,
