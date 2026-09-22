@@ -1,22 +1,9 @@
-why-trending news-driven candidate discovery update
+Cloudflare Web Analytics 적용
 
-프로젝트 루트에서 압축을 풀어 기존 파일을 덮어쓰세요.
+1. index.html을 기존 프로젝트 루트에 덮어쓰세요.
+2. 이전 SEO 아카이브 패치를 적용한 경우 shared/archive.ts도 같은 위치에 덮어쓰세요.
+3. npm run build 후 메인 Worker를 배포하거나 Git 자동 배포를 이용하세요.
 
-핵심 변경
-- 고정 32개 정상 경로 제거
-- 뉴스 seed 6회로 최대 600개 제목 수집
-- deterministic 2~4단어 phrase 추출 및 유사 후보 제거
-- 상위 25개를 DataLab 5회 batch 검증
-- TOP20 bulk 저장
-- 실제 fetch subrequest 계측
-- 고정 후보는 뉴스 후보가 5개 미만일 때만 fallback
-
-검증
-npm run typecheck
-npm run build
-npx wrangler deploy --dry-run
-npx wrangler deploy --config wrangler.collector.toml --dry-run
-
-배포 후 실행
-curl.exe -X POST https://waetteo-collector.<account>.workers.dev/__scheduled
-npx wrangler tail waetteo-collector
+수정: Vue HTML 및 서버 생성 아카이브 HTML의 body 끝에 제공된 스크립트 1회 삽입.
+TypeScript/Vite 빌드 성공. 실제 분석 수신은 배포 후 확인 필요.
+DB migration, Secret 변경, Collector 재배포는 필요 없습니다.
