@@ -15,7 +15,7 @@ watch(()=>route.fullPath,()=>{
 onMounted(async()=>{try{runtime.value=await api('/api/config')}catch{}})
 </script>
 <template>
- <header class="site-header"><div class="shell nav"><RouterLink class="brand" to="/"><span class="brand-icon">↗</span>{{ BRAND.name }}<small>BETA</small></RouterLink><nav aria-label="주 메뉴"><RouterLink to="/trending">급상승</RouterLink><RouterLink to="/vs">A vs B</RouterLink><RouterLink to="/shopping">쇼핑 탐색</RouterLink></nav><form class="header-search" @submit.prevent="search"><label class="sr-only" for="global-search">키워드 검색</label><input id="global-search" v-model="query" placeholder="관심 있는 키워드" maxlength="60"/><button aria-label="검색">⌕</button></form></div></header>
+ <header class="site-header"><div class="shell nav"><RouterLink class="brand" to="/"><span class="brand-icon">↗</span>{{ BRAND.name }}<small>BETA</small></RouterLink><nav aria-label="주 메뉴"><RouterLink to="/trending">급상승</RouterLink><RouterLink to="/vs">A vs B</RouterLink><RouterLink to="/shopping">쇼핑 탐색</RouterLink><RouterLink to="/issues">이슈 기록</RouterLink></nav><form class="header-search" @submit.prevent="search"><label class="sr-only" for="global-search">키워드 검색</label><input id="global-search" v-model="query" placeholder="관심 있는 키워드" maxlength="60"/><button aria-label="검색">⌕</button></form></div></header>
  <div v-if="error" class="shell alert">{{ error }}</div>
  <div v-if="runtime.mode==='mock'" class="demo-banner">체험 모드 · 표시된 관심도는 가상 데이터입니다.</div>
  <main class="shell"><RouterView /></main>

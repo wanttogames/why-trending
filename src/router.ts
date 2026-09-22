@@ -1,4 +1,5 @@
 import { createRouter,createWebHistory } from 'vue-router'
+import Issues from './pages/Issues.vue'
 import Home from './pages/Home.vue'
 import Compare from './pages/Compare.vue'
 import Explore from './pages/Explore.vue'
@@ -10,6 +11,6 @@ export default createRouter({history:createWebHistory(),scrollBehavior:()=>({top
  {path:'/shopping',component:Explore},{path:'/shopping/:keyword',component:Keyword},
  {path:'/search/:keyword',component:Keyword},
  ...['about','methodology','privacy','terms'].map(page=>({path:`/${page}`,component:Info,props:{page}})),
- {path:'/issue/:slug',redirect:'/trending'},
+ {path:'/issue/:slug',component:Issues},{path:'/issues',component:Issues},
  {path:'/:pathMatch(.*)*',component:Info,props:{page:'404'}}
 ]})

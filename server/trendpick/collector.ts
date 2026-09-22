@@ -40,7 +40,8 @@ export async function collect(env:WorkerEnv,scheduledTime=Date.now()){
     const keyword=(top?.[0]?.trend_keywords as unknown as {keyword?:string})?.keyword
     if(keyword)try{await cached(ctx,`content:${keyword.toLowerCase()}`,3600,()=>fetchContent(ctx,keyword))}catch{}
    }
-   if(minutes%288===0&&ctx.counter.snapshot().total<40)await ctx.db.rpc('tp_cleanup')
+   if(ctx.counter.snapshot().total<40){try{const {data,error}=await ctx.db.rpc('tp_archive_refresh');if(error)throw error;console.info('[archive] refreshed',{count:data})}catch(error){console.error('[archive] refresh failed',error)}}
+   if(minutes%288===0&&ctx.counter.snapshot().total<42){const {data,error}=await ctx.db.rpc('tp_archive_cleanup');if(error)console.error('[archive] cleanup failed',error);else console.info('[archive] cleanup',data)}
    console.info('[collector]',{kind,slot,shards,candidates:keys.length,saved,failures})
    // A failed shard is retryable on a duplicate execution; existing data stays intact.
    if(!saved&&failures)throw new Error('수집 실패: 기존 데이터 유지')

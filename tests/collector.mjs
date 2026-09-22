@@ -10,6 +10,7 @@ try{
  await db.exec('create role anon;create role authenticated;create role service_role;')
  await db.exec(await readFile('supabase/migrations/20260921_trendpick.sql','utf8'))
  await db.exec(await readFile('supabase/seeds/keywords.sql','utf8'))
+ await db.exec(await readFile('supabase/migrations/20260923_issue_archive.sql','utf8'))
  const outfile=join(temp,'collector.mjs');await build({entryPoints:['server/trendpick/collector.ts'],bundle:true,format:'esm',platform:'node',outfile,logLevel:'silent'})
  const {collect}=await import(pathToFileURL(outfile).href)
  const counts={naver:0,db:0};const response=data=>new Response(JSON.stringify(data),{headers:{'Content-Type':'application/json'}})

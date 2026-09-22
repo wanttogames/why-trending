@@ -1,3 +1,4 @@
+import { isArchivePath,cachedArchive } from './archive'
 import { InputError } from '../shared/errors'
 import { BRAND,NOTICE,SUGGESTED_PAIRS } from '../shared/config'
 import { canonicalPair,untoken,vsPath,normalize } from '../shared/identity'
@@ -70,8 +71,6 @@ async function cachedApi(request:Request,env:Env){
 async function page(request:Request,env:Env){
  const url=new URL(request.url),parts=url.pathname.split('/').filter(Boolean)
  if(parts[0]==='issue')return new Response(null,{status:301,headers:{Location:'/trending'}})
- if(url.pathname==='/robots.txt')return new Response(`User-agent: *\nDisallow: /api/\nSitemap: ${env.SITE_URL||url.origin}/sitemap.xml`,{headers:{'Content-Type':'text/plain'}})
- if(url.pathname==='/sitemap.xml')return new Response(`<?xml version="1.0" encoding="UTF-8"?><urlset xmlns="http://www.sitemaps.org/schemas/sitemap/0.9">${['/','/trending','/vs','/shopping','/about','/methodology'].map(p=>`<url><loc>${escape((env.SITE_URL||url.origin)+p)}</loc></url>`).join('')}</urlset>`,{headers:{'Content-Type':'application/xml'}})
  const staticNames:Record<string,string>={'/trending':'급상승 관심도','/vs':'A vs B 비교','/shopping':'쇼핑 클릭 관심도','/about':'서비스 소개','/methodology':'계산 방법','/privacy':'개인정보처리방침','/terms':'이용약관'}
  let title=staticNames[url.pathname]?`${staticNames[url.pathname]} | ${BRAND.name}`:`${BRAND.name} · ${BRAND.tagline}`,description=BRAND.description as string,indexable=['/','/trending','/vs','/shopping','/about','/methodology','/privacy','/terms'].includes(url.pathname),canonical=url.pathname
  if(parts[0]==='vs'&&parts.length===3){
@@ -102,4 +101,4 @@ async function page(request:Request,env:Env){
  const result=html.transform(asset);const headers=new Headers(result.headers);headers.set('Cache-Control','no-cache');headers.set('X-Content-Type-Options','nosniff')
  return new Response(result.body,{status:asset.status,headers})
 }
-export default {async fetch(request:Request,env:Env){try{return (new URL(request.url).pathname==='/api'||new URL(request.url).pathname.startsWith('/api/'))?await cachedApi(request,env):await page(request,env)}catch(error){console.error('[worker]',{message:error instanceof Error?error.message:'database error'});return json({error:error instanceof Error?error.message:'데이터를 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.'},error instanceof InputError?400:503)}}}
+export default {async fetch(request:Request,env:Env){try{if(isArchivePath(new URL(request.url).pathname))return await cachedArchive(request,env);return (new URL(request.url).pathname==='/api'||new URL(request.url).pathname.startsWith('/api/'))?await cachedApi(request,env):await page(request,env)}catch(error){console.error('[worker]',{message:error instanceof Error?error.message:'database error'});return json({error:error instanceof Error?error.message:'데이터를 불러오지 못했습니다. 잠시 후 다시 시도해 주세요.'},error instanceof InputError?400:503)}}}
